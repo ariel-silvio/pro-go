@@ -22,7 +22,13 @@ Menu (top right) → **Reset demo**. Clears `localStorage` and returns to S1.
 
 ## Routes
 
-`#/customer/invite` (S1), `#/customer/scan` (S2), `#/customer/result` (S3), `#/customer/plan` (S4), `#/customer/slot` (S5), `#/customer/visit` (S6), `#/customer/after` (S7), `#/colourist`, `#/salon`, `#/ceo`.
+`#/customer/invite` (S1), `#/customer/scan` (S2), `#/customer/result` (S3), `#/customer/plan` (S4), `#/customer/slot` (S5), `#/customer/visit` (S6), `#/customer/after` (S7), `#/customer/adjust` (S8, only after Flat or Worse), `#/colourist`, `#/salon`, `#/ceo`.
+
+## Connect the feedback form
+
+1. Create the Google Form (3 questions: "Would you try this?", "What would you pay per home visit?", "What is confusing?", plus short-answer fields `variant`, `persona`, `plan`). Do not ask for names, emails or phone numbers.
+2. In the form: ⋮ → **Get pre-filled link**, type `v1` / `customer` / `essential` in the three fields, copy the link.
+3. In `src/config.ts`: set `FEEDBACK_FORM_URL` to the part before `?`, and set `FEEDBACK_FIELDS` to the three `entry.NNN` IDs from the link.
 
 ## Where to edit
 
@@ -31,7 +37,7 @@ Menu (top right) → **Reset demo**. Clears `localStorage` and returns to S1.
 | Feedback form URL, exchange rate, pilot communities | `src/config.ts` |
 | Colours, radius, spacing (Team D Brand Kit v2.1) | `src/styles/tokens.css` |
 | Screen titles and side-panel text | `src/screens/registry.ts` |
-| Mock data (Phase 1) | `src/data/mock.ts` |
+| Mock data, prices, slots, scan scores | `src/data/mock.ts` |
 
 ## Third-party licences
 

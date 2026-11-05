@@ -1,11 +1,5 @@
 import { MessageSquare } from 'lucide-react';
-import { CONFIG, feedbackReady } from '../config';
-
-export function feedbackUrl(params: Record<string, string> = {}) {
-  const url = new URL(CONFIG.FEEDBACK_FORM_URL);
-  Object.entries(params).forEach(([k, v]) => url.searchParams.set(k, v));
-  return url.toString();
-}
+import { feedbackReady, feedbackUrl } from '../config';
 
 const base = 't-label inline-flex min-h-11 items-center gap-2 border px-4';
 
