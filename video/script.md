@@ -1,7 +1,7 @@
-# 12 weeks with Layla — shooting script v1
+# 12 weeks with Layla — shooting script v2
 
 Team D · L'Oréal Groupe innovation team · M4 (open innovation) · 8:00 · due Tue 10 Nov, upload by 20:00 CET
-Draft 5 Nov 2026. Brackets `[ ]` are blanks to fill before recording. Grey notes for the editor are in *italics*.
+Draft 5 Nov 2026, reviewed against M2 and M3. Brackets `[ ]` are blanks to fill before recording. Grey notes for the editor are in *italics*.
 
 **The idea in one line:** we never show Layla's face. We show her hands, her hair, her phone, her home. The audience fills in the rest, and the speakers on the right talk straight to the CEO.
 
@@ -16,11 +16,11 @@ Draft 5 Nov 2026. Brackets `[ ]` are blanks to fill before recording. Grey notes
 | # | Time | Left / full screen | Speaker | Words |
 |---|---|---|---|---|
 | Cold open | 0:00–0:15 | Layla, the first scan, 58 | — | — |
-| 1 | 0:15–1:30 | Week 0 · The gap | Amjad (C. Innovation) | 173 |
+| 1 | 0:15–1:30 | Week 0 · The gap | Amjad (C. Innovation) | 175 |
 | 2 | 1:30–2:45 | Week 1 · Who, and why them | Ariel (C. Technology & AI) | 171 + blanks |
-| 3 | 2:45–4:00 | Week 2 · How we work together | Qhakazile (C. Operations) | 177 |
-| 4 | 4:00–5:15 | Week 4 · Why everyone wins | Rebecca (C. Marketing & Creative) | 165 |
-| 5 | 5:15–6:30 | Week 10 · The pilot | Saja (C. Customer Experience) | 174 |
+| 3 | 2:45–4:00 | Week 2 · How we work together | Qhakazile (C. Operations) | 173 |
+| 4 | 4:00–5:15 | Week 4 · Why everyone wins | Rebecca (C. Marketing & Creative) | 164 |
+| 5 | 5:15–6:30 | Week 10 · The pilot | Saja (C. Customer Experience) | 175 |
 | 6 | 6:30–7:50 | Week 12 · The rules, and our ask | Ignacio (C. Financial) | 183 |
 | Close | 7:50–8:00 | Closing card | — | — |
 
@@ -62,7 +62,7 @@ Each speaker: about 170 words, read calmly. **Time yourself: 65 to 75 seconds.**
 >
 > That's what PRO•GO changes. A twelve-week plan. We measure her hair. A professional from her own salon comes to her home, twice. Twelve weeks later, we measure again. If it didn't work, she sees it. So do we.
 >
-> L'Oréal can do most of this already. The science, the products, thousands of partner salons.
+> L'Oréal can do most of this already. The science, the products, the salons that already trust us.
 >
 > What we can't do is the hard part in the middle. Getting a licensed professional into a private home in Dubai, on time, insured, with the right permit. A home visit there needs its own permit, tied to the person who walks through the door. We've never run that. And Layla's living room is not the place to learn.
 >
@@ -106,7 +106,7 @@ Each speaker: about 170 words, read calmly. **Time yourself: 65 to 75 seconds.**
 
 **CARD** (3 s): Week 2 · How we work together
 
-**LEFT.** Layla clip 3: gloved hands, a brush, colour going on. On the side table, a plain ivory kit and a small card: *Partner salon*. Slow drift, nothing hurried.
+**LEFT.** Layla clip 3: Dana's gloved hands section and comb Layla's hair, seen from behind; a plain ivory kit box on the side table. Slow drift, nothing hurried. *Editor: add a small tag, Jost spaced caps, lower left of the panel: "FROM HER PARTNER SALON".*
 **ON SCREEN, left:** *Visit 1 of 2. My colourist. My living room.*
 
 **QHAKAZILE MATHEBULA · Chief Operations Officer** · lower third: *Qhakazile Mathebula* / *CHIEF OPERATIONS OFFICER*
@@ -117,9 +117,9 @@ Each speaker: about 170 words, read calmly. **Time yourself: 65 to 75 seconds.**
 >
 > The model is a paid pilot, not an acquisition. We pay [PARTNER] per visit, for ninety days. We would ask one thing in return: in our two pilot communities, no colour service with another hair brand while the test runs.
 >
-> The data stays where it's created. Hair results belong to L'Oréal and the salon. Booking data belongs to [PARTNER]. We share what we need to run the pilot. Nothing more.
+> The data stays where it's created. Hair results stay with L'Oréal and the salon, with Layla's consent. Booking data stays with [PARTNER].
 >
-> And the money has to work. Layla pays about AED 450 to 600 a visit. The fee to [PARTNER] has to fit inside that, or we lose money on every visit.
+> And the money has to work. Our target price is AED 450 to 600 a visit. The fee to [PARTNER] has to fit inside that, or we lose money on every visit.
 >
 > If it works, BOLD, our venture fund, looks at a longer deal. **[LENS]** But only after the numbers give us the right to ask.
 
@@ -131,7 +131,7 @@ Each speaker: about 170 words, read calmly. **Time yourself: 65 to 75 seconds.**
 
 **CARD** (3 s): Week 4 · Why everyone wins
 
-**LEFT.** The service diagram, built step by step: Scan → Professional from her partner salon → 12-week plan → Re-measure. As S4 names each party, a small tag lights under the diagram: *Salon earns* · *[PARTNER] grows* · *L'Oréal learns*.
+**LEFT.** The service diagram, the five steps of M3's "How it works", built one by one: Her salon invites her and runs a free scan → Same colourist booked on WhatsApp → Home visit: scan, colour, treatment → Re-scan: she sees the result → Next visit booked before she leaves. A thin line under step 2 and 3 reads *run by [PARTNER]*. As S4 names each party, a tag lights up: *Salon earns* · *[PARTNER] grows* · *L'Oréal learns*.
 **ON SCREEN, left:** *Week 4. Nothing to report.*
 
 **REBECCA FERNANDES · Chief Marketing & Creative Officer** · lower third: *Rebecca Fernandes* / *CHIEF MARKETING & CREATIVE OFFICER*
@@ -140,9 +140,9 @@ Each speaker: about 170 words, read calmly. **Time yourself: 65 to 75 seconds.**
 >
 > That's exactly what we want. Because look at who's winning while she isn't looking.
 >
-> The salon keeps a client who could have drifted to a box from the supermarket. It earns on a visit it couldn't have made alone. Our target is ten percent more income for partner salons by 2030. And the professional stays theirs. We don't hire her. We never will.
+> The salon keeps a client who could have drifted to a box from the pharmacy. It earns on a visit it couldn't have made alone. Our target is ten percent more income for partner salons by 2030. And the professional stays theirs. We don't hire her. We never will.
 >
-> [PARTNER] gets something a startup can't buy. The name of L'Oréal behind it, and a door to salons it could never sign one by one.
+> [PARTNER] gets something it can't buy. The name of L'Oréal behind it, and a door to salons it could never sign one by one.
 >
 > And L'Oréal learns. For the first time, we see what our products do to real hair, in real homes, over twelve weeks. Not in a lab. Not in a survey. That is worth more than the margin on any single visit.
 >
@@ -154,7 +154,7 @@ Each speaker: about 170 words, read calmly. **Time yourself: 65 to 75 seconds.**
 
 **CARD** (3 s): Week 10 · The pilot
 
-**LEFT.** Layla clip 4: from behind, by the window, brushing. The light catches the shine. Then the app panel (p4): before 58, after 66, "Illustrative".
+**LEFT.** Layla clip 4: from behind, by the window, brushing. The light catches the shine. Then the app panel (p4, still to film): before 58, after 66, "Illustrative". *Crop out the "Demo control" box.*
 **ON SCREEN, left:** *Week 10. Visit 2 of 2.*
 
 **SAJA ALOWAYSHIQ · Chief Customer Experience Officer** · lower third: *Saja AlOwayshiq* / *CHIEF CUSTOMER EXPERIENCE OFFICER*
@@ -163,9 +163,9 @@ Each speaker: about 170 words, read calmly. **Time yourself: 65 to 75 seconds.**
 >
 > Here is ours. Dubai. Two communities, Downtown and Business Bay. Three to five partner salons. Ninety days, from the second quarter of 2027.
 >
-> No app at the start. We match each client to a professional by hand, and that's on purpose. The AI comes after the test proves people want this. Not before.
+> No new app at the start. We match each client to a professional by hand, on purpose. The app comes in 2028, after the test proves people want this.
 >
-> One unit owns it: the PRO•GO venture unit, inside Professional Products. One leader, not a committee, with the salons, the budget and the authority to stop it.
+> One unit owns it: the PRO•GO venture unit, inside Professional Products. One leader, not a committee, with the salons and the budget. Your Innovation Board reviews it every quarter.
 >
 > Every week we watch three numbers. How many book a second PRO•GO visit within ninety days. Whether each visit makes money after we pay the salon and [PARTNER]. And whether the hair score actually moves.
 >
@@ -180,7 +180,7 @@ Each speaker: about 170 words, read calmly. **Time yourself: 65 to 75 seconds.**
 
 **CARD** (3 s): Week 12 · The rules, and our ask
 
-**LEFT.** Layla clip 5: two hands, the phone, a number rising. Then **full screen**: the score graphic, 58 to 74, "Illustrative". The music lifts here, once. Back to split for the rules.
+**LEFT.** Layla clip 5: two hands hold the phone, a blank ivory screen with a gold line rising. *Editor: lay the 58 → 74 count on the phone screen, or cut straight to the score.* Then **full screen**: the score graphic, 58 to 74, "Illustrative". The music lifts here, once. Back to split for the rules.
 **ON SCREEN, left:** *Week 12. 74. She renewed.*
 
 **IGNACIO MONTERO ALCANTARA · Chief Financial Officer** · lower third: *Ignacio Montero Alcantara* / *CHIEF FINANCIAL OFFICER*
@@ -214,7 +214,7 @@ Each speaker: about 170 words, read calmly. **Time yourself: 65 to 75 seconds.**
 **CLOSING CARD** (ink, one line, Bodoni, white):
 > Our ask: 90 days in Dubai, with [PARTNER] and our partner salons.
 
-Hold 5 s. Silence. Then the end credits, if the course needs them (team names, "Student project. Fictional characters, simulated data. AI use disclosed.").
+Hold 5 s. Silence. Then the end credits, if the course needs them (team names, "Student project for IE Business School. Not affiliated with L'Oréal or [PARTNER]. Fictional characters, simulated data. AI use disclosed.").
 
 ---
 
@@ -224,7 +224,10 @@ Hold 5 s. Silence. Then the end credits, if the course needs them (team names, "
 |---|---|---|
 | `[PARTNER]`, its proof line, options B and C | Team | Fri 6 Nov |
 | ~~Speaker order~~ set by role (see table); cities optional | Ariel | now |
-| Pilot owner = Chief Operations Officer (proposed, ch. 5) | Team | Fri 6 Nov |
+| Pilot owner = PRO•GO venture unit, one leader (M2 operating model) | — | done |
+| Pilot communities Downtown and Business Bay (D14, proposed) | Team | Fri 6 Nov |
+| Home-visit permit rule, verified with Dubai Municipality or a legal contact | Team | before recording ch. 1–3 |
+| Film prototype shot p4 (re-scan 58 → 66), demo control hidden | Ariel / Claude Code | Sat 7 Nov |
 | Per-visit payment and exclusivity (ch. 3) | Team | Fri 6 Nov |
 | ~~Week-8 score~~ fixed: 66 at week 10 in app, chart and script | — | done |
 
@@ -234,4 +237,6 @@ Hold 5 s. Silence. Then the end credits, if the course needs them (team names, "
 - EUR 10m staged, EUR 3m now, EUR 7m after the Q4 2027 review; review criteria = repeat bookings and positive margin per visit: M2 dashboard.
 - 300 subscribers in 2027, 40 % repeat-visit rate in 2027, salon income +10 % by 2030: M2 dashboard, Team D proposal.
 - Home-visit permit tied to named staff: BusinessDubai, Gulf News. Not verified with Dubai Municipality.
+- Target price AED 450–600 per visit, break-even about AED 420–500: M3 frame 3, D15 (Team D model, LOW).
+- PRO•GO venture unit inside Professional Products; Innovation Board reviews quarterly; BOLD handles partnerships; app built in 2028: M2 dashboard (operating model, funding path).
 - Layla, 34, and her scores 58, 66, 74: invented. Always shown with "Illustrative".
