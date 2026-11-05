@@ -22,7 +22,7 @@ Menu (top right) → **Reset demo**. Clears `localStorage` and returns to S1.
 
 ## Routes
 
-`#/customer/invite` (S1), `#/customer/scan` (S2), `#/customer/result` (S3), `#/customer/plan` (S4), `#/customer/slot` (S5), `#/customer/visit` (S6), `#/customer/after` (S7), `#/customer/adjust` (S8, only after Flat or Worse), `#/colourist`, `#/salon`, `#/ceo`.
+`#/customer/invite` (S1), `#/customer/scan` (S2), `#/customer/result` (S3), `#/customer/plan` (S4), `#/customer/slot` (S5), `#/customer/visit` (S6), `#/customer/after` (S7), `#/customer/adjust` (S8, only after Flat or Worse), `#/colourist` (Dana's day), `#/salon` (partner salon dashboard), `#/ceo` (scoreboard and margin calculator). The tabs under the banner switch persona.
 
 ## Connect the feedback form
 
@@ -37,7 +37,7 @@ Menu (top right) → **Reset demo**. Clears `localStorage` and returns to S1.
 | Feedback form URL, exchange rate, pilot communities | `src/config.ts` |
 | Colours, radius, spacing (Team D Brand Kit v2.1) | `src/styles/tokens.css` |
 | Screen titles and side-panel text | `src/screens/registry.ts` |
-| Mock data, prices, slots, scan scores | `src/data/mock.ts` |
+| Mock data, prices, slots, scan scores, clients, KPIs, calculator defaults | `src/data/mock.ts` |
 
 ## Third-party licences
 
