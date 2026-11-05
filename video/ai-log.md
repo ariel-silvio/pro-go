@@ -8,6 +8,8 @@ The individual 2-page report is out of scope: no AI is used there.
 | ≤ 5 Nov 2026 | Claude (claude.ai, project "Corporate Entrepreneurship") | Storyline options, script drafts, beat sheet, recording setup guide, graphics design, `render.py`, sample clips v1 | Planning chat (see the claude.ai project) | Whole video |
 | 5 Nov 2026 | Claude Code (cloud session) | Font setup (`video/fonts/`, converted from @fontsource woff2), prototype filming script `video/scripts/film_prototype.cjs`, test stills of the prototype | Handoff file `handoff-m4-video.md` (Step 0 and Step 3) | Prototype footage, left half of the split screen |
 | 5 Nov 2026 | Claude Code (cloud session) | Five Layla scene prompts | Handoff Step 4 (rules: no faces, Dubai daylight, ivory and gold, 5–8 s, 16:9) | `video/layla-prompts.md`; clips made later by a teammate |
+| 5 Nov 2026 | Claude Code (cloud session) | `video/render.py` saved from the planning chat; chart right edge moved 1760 → 1720 px for the 160 px margin; 3 sample clips re-rendered and uploaded to Descript as `Graphics/*_v1.mp4` | "Upload the three sample clips" (handoff Step 1) | Descript project, Graphics/ |
+| 5 Nov 2026 | Agent Underlord (Descript) | Removed the failed composition "Graphics sample v1" and 3 empty media items | "Delete the composition 'Graphics sample v1' and the three failed media files …" | Descript project clean-up |
 
 ## Layla scene prompts (full text in `layla-prompts.md`)
 
