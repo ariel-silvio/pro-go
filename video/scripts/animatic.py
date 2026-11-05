@@ -28,7 +28,7 @@ def speaker_panel(n, name, role, first):
     for i, ln in enumerate(R.wrap(d, f"“{first}”", f, 720)[:7]):
         d.text((80, 440 + i * 46), ln, font=f, fill=(231, 225, 216))
     d.text((80, 760), "Recording to come · about 70 s · looking screen-left", font=R.font(R.SANS, 24), fill=(150, 144, 136))
-    R.spaced(d, (560, 170), "ANIMATIC V1", R.font(R.SANS_M, 18), (150, 144, 136), 4)
+    R.spaced(d, (560, 170), "ANIMATIC V2", R.font(R.SANS_M, 18), (150, 144, 136), 4)
     return img
 
 def layla_line(text):
@@ -131,12 +131,14 @@ ff(*ins, "-filter_complex", fc, "-map", f"[{last}]", "-t", "7.3", "-an", *ENC, c
 seq.append(full("out/p1_scan_result_58.mp4", "cold_p1", 3.7, "pad=1920:1080:480:0:color=0xF7F3EC,fps=30"))
 seq.append(full("out/01_opening_slate.mp4", "slate"))
 
-lefts = {1: [norm_left(L.format(1), "layla"), norm_left("out/p1_scan_result_58.mp4", "panel")],
-         2: [norm_left(L.format(2), "layla"), norm_left("out/p3_booking_confirmation.mp4", "panel")],
-         3: [norm_left(L.format(3), "layla")],
-         4: [norm_left("out/m4/service_diagram.png", "still", 10)],
-         5: [norm_left(L.format(4), "layla"), norm_left("out/p4_rescan_66.mp4", "panel")],
-         6: [norm_left(L.format(5), "layla")]}
+lefts = {1: [norm_left(L.format(1), "layla"), norm_left(L.format("1b"), "layla"), norm_left(L.format("1c"), "layla"),
+             norm_left("out/p1_scan_result_58.mp4", "panel")],
+         2: [norm_left(L.format(2), "layla"), norm_left(L.format("2c"), "layla"), norm_left("out/p3_booking_confirmation.mp4", "panel")],
+         3: [norm_left(L.format(3), "layla"), norm_left(L.format("3c"), "layla"), norm_left(L.format("3d"), "layla")],
+         4: [norm_left(L.format("4b"), "layla"), norm_left(L.format("4c"), "layla"), norm_left("out/m4/service_diagram.png", "still", 10)],
+         5: [norm_left(L.format(4), "layla"), norm_left(L.format("5b"), "layla"), norm_left(L.format("5c"), "layla"),
+             norm_left("out/p4_rescan_66.mp4", "panel")],
+         6: [norm_left(L.format(5), "layla"), norm_left(L.format("6b"), "layla"), norm_left(L.format("6c"), "layla")]}
 for i, (key, name, role, lt) in enumerate(SPK, start=1):
     seq.append(full(M4.format(CARDS[i - 1]), f"card{i}"))
     panel = png(speaker_panel(i, name, role, first_line(key)), f"spk{i}.png")
@@ -155,7 +157,7 @@ seq.append(full(M4.format("closing_card"), "closing"))
 seq.append(still(png(credits(), "credits.png"), "credits", 5))
 
 lst = os.path.join(TMP, "all.txt"); open(lst, "w").write("".join(f"file '{os.path.abspath(p)}'\n" for p in seq))
-final = os.path.join(OUT, "animatic_v1.mp4"); part = final.replace(".mp4", ".part.mp4")
+final = os.path.join(OUT, "animatic_v2.mp4"); part = final.replace(".mp4", ".part.mp4")
 ff("-f", "concat", "-safe", "0", "-i", lst, "-f", "lavfi", "-i", "anullsrc=r=48000:cl=stereo",
    "-map", "0:v", "-map", "1:a", "-c:v", "copy", "-c:a", "aac", "-shortest", "-movflags", "+faststart", part)
 os.replace(part, final); print("wrote", final)

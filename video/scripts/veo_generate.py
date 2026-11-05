@@ -51,8 +51,12 @@ def to_delivery(raw, out):
 
 def generate(model, n, prompt, out):
     body = {"model": model, "input": prompt + CENTRE + " Avoid: " + NEGATIVE + ".",
-            "response_format": {"type": "video", "aspect_ratio": "16:9"}}
-    t = time.time(); d = call("POST", f"{API}/interactions", body)
+            "response_format": {"type": "video", "aspect_ratio": "16:9"}, "background": True}
+    # Background mode: the request returns at once and we poll. A held-open request is cut after
+    # about 30 s somewhere upstream of this session (seen 5 Nov 2026: HTTP 502 "upstream request failed").
+    t = time.time(); d = call("POST", f"{API}/interactions", body, timeout=60)
+    while d.get("status") in ("in_progress", "queued", "pending") and time.time() - t < 600:
+        time.sleep(10); d = call("GET", f"{API}/interactions/{d['id']}", timeout=120)
     vids = [c for s in d.get("steps", []) if s.get("type") == "model_output"
             for c in s.get("content", []) if c.get("type") == "video"]
     if d.get("status") != "completed" or not vids:

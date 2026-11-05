@@ -43,3 +43,25 @@ Use: left half, S5. Pairs with `p4_rescan` if the team keeps the week-8 re-scan 
 > Close-up, 16:9, 6 seconds. Two hands hold a smartphone in portrait at chest height, a woman's glossy coloured hair falling over one shoulder in soft focus, no face visible. The screen shows a simple light layout with a single large number gently counting up and a thin gold line rising, no other readable text. Warm Dubai daylight in a calm ivory interior. Slow push-in, shallow depth of field, calm and quietly satisfied mood.
 
 Use: left half, S6. Screen content is replaced by the score graphic (58 to 74, marked "Illustrative") or by prototype footage.
+
+---
+
+## Extra clips (B-roll, v2): two or three per chapter so the left half changes every 6–8 s
+
+Continuity line added to every prompt: *"Layla: long, glossy, warm-brown hair with soft caramel highlights, an ivory silk blouse; never her face."* Generated with Gemini Omni 1.2 Flash via `scripts/broll.py`, same centre-framing, anatomy and avoid lines as above.
+
+| ID | Chapter | Prompt |
+|---|---|---|
+| 1b | Week 0 | Extreme close-up: her fingers lift the coloured ends of her hair to the window light; the ends look a little dry. Bright Dubai apartment, morning. Slow push-in. |
+| 1c | Week 0 | A bathroom shelf in soft daylight: her hand picks up a plain, unbranded box of home hair colour, looks at it, and puts it back. No text, no logo. Static shot. |
+| 2b | Week 1 | Over the shoulder from behind: she sits on a cream sofa and types a short message on her phone; the screen is a soft blur, not readable. Late afternoon light. |
+| 2c | Week 1 | A phone lies on a light wooden side table; its screen lights up softly with a new message; a cup and a small plant beside it. Shallow focus, warm evening light. |
+| 3b | Week 2 | Seen from inside the apartment: the front door opens; only a professional's hand and a small ivory case with a thin gold line come into frame. No faces. |
+| 3c | Week 2 | Gloved hands mix hair colour in a small black bowl with a tint brush, on a white table by a window. Close-up, slow and careful. |
+| 3d | Week 2 | From behind: gloved hands divide her hair into neat sections with a tail comb and clip them. Calm living room, soft daylight. |
+| 4b | Week 4 | Her hands open a plain ivory parcel on a hallway console: a small colour-care kit inside, thin gold line, no text. |
+| 4c | Week 4 | From behind in a bright bathroom: she smooths a hair mask through her lengths with both hands. Steam-soft light, slow. |
+| 5b | Week 10 | From behind: she walks slowly down a bright corridor towards a window; her glossy hair moves as she walks. |
+| 5c | Week 10 | Close-up: gloved hands rinse her hair over a portable basin; water and light, calm. From behind and above, no face. |
+| 6b | Week 12 | Close-up: her finger taps once on a phone screen; the screen is plain ivory with a thin gold line, no text. |
+| 6c | Week 12 | Wide, from behind: she stands on a balcony at golden hour, the Dubai skyline soft in the distance, her hair moving in the breeze. Slow, final shot. |
