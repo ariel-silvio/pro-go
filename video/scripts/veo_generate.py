@@ -1,7 +1,8 @@
 """Generate the Layla scenes with Veo (Gemini API).
 
 The API key is NOT in this script or the repo: the cloud environment's network proxy adds the
-x-goog-api-key header to requests for generativelanguage.googleapis.com.
+x-goog-api-key header to requests for generativelanguage.googleapis.com. For a one-off run the key can
+instead come from the GEMINI_API_KEY environment variable (never written to disk).
 
 Usage (from video/):
   python3 scripts/veo_generate.py --list-models
@@ -17,7 +18,8 @@ NEGATIVE = ("face, eyes, lips, profile, logo, brand name, readable text, waterma
 
 def call(method, url, body=None):
     data = json.dumps(body).encode() if body is not None else None
-    req = urllib.request.Request(url, data=data, method=method, headers={"Content-Type": "application/json"})
+    req = urllib.request.Request(url, data=data, method=method, headers={"Content-Type": "application/json",
+                                 **({"x-goog-api-key": os.environ["GEMINI_API_KEY"]} if os.environ.get("GEMINI_API_KEY") else {})})
     try:
         with urllib.request.urlopen(req, timeout=120) as r:
             raw = r.read()
