@@ -16,9 +16,11 @@ import argparse, base64, json, os, re, subprocess, sys, time, urllib.request, ur
 
 API = "https://generativelanguage.googleapis.com/v1beta"
 MODEL = "gemini-omni-1.2-flash"
-CENTRE = " Subject centred in the frame, main action in the middle third, empty calm space at the sides."
+CENTRE = (" Subject centred in the frame, main action in the middle third, empty calm space at the sides."
+          " Natural human anatomy: realistic, relaxed arm, wrist and elbow movement, small slow gestures.")
 NEGATIVE = ("face, eyes, lips, profile, logo, brand name, readable text, watermark, fast motion, "
-            "camera shake, neon, cold blue light, cluttered background, extra fingers, distorted hands")
+            "camera shake, neon, cold blue light, cluttered background, extra fingers, distorted hands, "
+            "unnatural joints, twisted or hyperextended elbow, bending arms, morphing limbs")
 
 def call(method, url, body=None, timeout=900):
     data = json.dumps(body).encode() if body is not None else None
