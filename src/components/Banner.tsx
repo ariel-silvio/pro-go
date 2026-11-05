@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { Menu, X } from 'lucide-react';
 import { resetDemo } from '../state/store';
+import { PersonaSwitcher } from './PersonaSwitcher';
 
 export function Banner() {
   const [open, setOpen] = useState(false);
   return (
-    <div className="sticky top-0 z-20 flex items-center justify-between border-b border-gold bg-ink pl-4 text-paper">
+    <div className="sticky top-0 z-20">
+    <div className="relative flex items-center justify-between border-b border-gold bg-ink pl-4 text-paper">
       <span className="t-label py-2">Prototype, simulated data</span>
       <button type="button" aria-label={open ? 'Close menu' : 'Open menu'} aria-expanded={open}
         onClick={() => setOpen((o) => !o)}
@@ -19,6 +21,8 @@ export function Banner() {
           </button>
         </div>
       )}
+    </div>
+    <PersonaSwitcher />
     </div>
   );
 }

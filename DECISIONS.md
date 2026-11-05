@@ -45,3 +45,20 @@ Defaults picked where the handoff was ambiguous or not possible in this environm
 | # | Decision | Why |
 |---|---|---|
 | V-1 | The plan screen (S4) shows the **90-day plan price** as the headline ("AED 900 per 90-day plan", "Subscription, renews every 90 days"), with the per-visit amount in the small print. Before, "per visit" was the headline. | M1 ("care subscriptions"), M2 (active care subscribers) and M3 D7 ("a measured plan, not single bookings"). Per-visit numbers stay as internal unit economics (M2 KPI: margin per visit). Side-panel test note updated to "AED 900 to 1,200 for a 90-day plan". Prices and variants unchanged. |
+
+## Phase 2 — Colourist, salon and CEO views (5 Nov 2026)
+
+**Built:** persona switcher (Customer, Colourist, Salon, CEO) under the banner; Colourist view (Dana's three visits, last scan, local notes, 5-step visit checklist, Maya's patch-test and "did not improve" flags from the customer demo); Salon view (alerts, 12 fictional clients with consent, simulated invite, colourist roster with home-service permit checkbox that blocks assignment, salon share slider, income-uplift target, cannibalisation monitor); CEO scoreboard (six KPIs with targets and "Team D proposal" tags, optional simulated values under a SIMULATED watermark, margin per visit calculator, "Where the first EUR 3m goes" table).
+**Skipped:** nothing from §5 Phase 2. Guided tour, auto-play, PWA, QR and S9 stay in Phase 3.
+**Check:** 30 automated checks pass at 390 and 1280 px (alert after Flat, consent rule, permit block, checklist, calculator defaults 375 / +125 / 25%, price 370 turns negative, simulated toggle off by default, EUR 3m total 3,000, Reset clears all Phase 2 state); customer flow still passes; Lighthouse mobile Performance 98–99, Accessibility 100 on all three new views.
+
+| # | Decision | Why |
+|---|---|---|
+| P2-1 | "Q4 2027 **review**" and "2028 review" in the UI, not "gate". | Brand kit and M3 board say review, never gate (see `video/consistency-m2-m3-m4.md`, item G). Handoff wording was "gate". |
+| P2-2 | Salon share (35%, editable) and the calculator's "pay to partner salon" (AED 230) are **separate inputs and do not match**: 35% of AED 500 is AED 175, not 230. | Both defaults come from the handoff. Kept both and did not link them, so neither changes silently. **Team to decide** whether AED 230 = salon share + colourist time, or the share should be about 46%. |
+| P2-3 | Calculator margin = price − (salon pay + travel + products). Visits per day changes only "margin per colourist day". | The handoff lists visits per day as an input but gives no formula that uses it per visit. |
+| P2-4 | All three colourists (Dana, Rana, Lina) sit in Salon Aurora's roster; Lina's permit starts unchecked. | The roster is the salon owner's view; an unchecked colourist shows the permit risk from the first click. |
+| P2-5 | Simulated KPI values (212 subscribers, 43% repeat, AED +125, 58%, 4%, +3%) are invented, hidden by default and watermarked. AED +125 matches the calculator defaults. | Handoff: "Do not show invented values by default." |
+| P2-6 | Appendix B line "minimum-income guarantee" shown as "minimum-income floor". | Gate 5 bans "guarantee" in user-facing text; same meaning. |
+| P2-7 | Appendix B "Manual-MVP tools (WhatsApp, …)" shown as "chat booking". | No real brand names in the UI (handoff §12). |
+| P2-8 | Customer tab returns to the last customer screen, not S1. | Keeps the 3-minute click path smooth when switching back and forth. |

@@ -59,10 +59,11 @@ export const salons = [
   { id: 'noor', name: 'Atelier Noor', area: 'Business Bay' },
 ];
 
+// Salon Aurora's colourist roster. Lina's home-service permit is not verified yet (shows the Dubai permit risk).
 export const colourists = [
-  { id: 'dana', name: 'Dana', initial: 'D', salon: 'aurora' },
-  { id: 'rana', name: 'Rana', initial: 'R', salon: 'marjan' },
-  { id: 'lina', name: 'Lina', initial: 'L', salon: 'noor' },
+  { id: 'dana', name: 'Dana', initial: 'D', salon: 'aurora', permitDefault: true },
+  { id: 'rana', name: 'Rana', initial: 'R', salon: 'aurora', permitDefault: true },
+  { id: 'lina', name: 'Lina', initial: 'L', salon: 'aurora', permitDefault: false },
 ];
 
 export const customer = { name: 'Maya', age: 34, area: 'Business Bay', cycleWeeks: 8 };
@@ -110,3 +111,73 @@ export function aiNotes(scan: Scan, cycleWeeks = customer.cycleWeeks): string[] 
   if (notes.length === 0) notes.push('Scores are in a good range: keep your colour cycle and care kit.');
   return notes;
 }
+
+// ---------- Phase 2: colourist, salon and CEO views ----------
+
+// Dana's day. Maya's card reads live demo state; the other two are fixed.
+export const todaysVisits = [
+  { id: 'v-hala', time: '10:00', customer: 'Hala', area: 'Downtown Dubai', service: 'Essential: roots touch-up + treatment', scan: 64, note: 'Prefers ammonia-free colour.' },
+  { id: 'v-sara', time: '14:00', customer: 'Sara', area: 'Business Bay', service: 'Signature: balayage touch-up + treatment', scan: 71, note: 'Second visit of her plan.' },
+  { id: 'v-maya', time: '18:00', customer: 'Maya', area: 'Business Bay', service: '', scan: firstScan.index, note: 'First visit. Low moisture.' },
+];
+
+export const visitSteps = ['Scan', 'Colour', 'Treatment', 'Re-scan', 'Book next visit'];
+
+// Salon Aurora's client records (fictional). Only clients who agreed to be contacted can be invited.
+export const salonClients = [
+  { id: 'c-maya', name: 'Maya', lastVisit: '3 Mar 2027', cycleWeeks: 8, consent: true, active: true },
+  { id: 'c-hala', name: 'Hala', lastVisit: '10 Mar 2027', cycleWeeks: 6, consent: true, active: true },
+  { id: 'c-sara', name: 'Sara', lastVisit: '24 Feb 2027', cycleWeeks: 10, consent: true, active: true },
+  { id: 'c-noura', name: 'Noura', lastVisit: '17 Mar 2027', cycleWeeks: 8, consent: true, active: false },
+  { id: 'c-reem', name: 'Reem', lastVisit: '2 Mar 2027', cycleWeeks: 12, consent: false, active: false },
+  { id: 'c-leila', name: 'Leila', lastVisit: '28 Feb 2027', cycleWeeks: 8, consent: true, active: false },
+  { id: 'c-dina', name: 'Dina', lastVisit: '19 Mar 2027', cycleWeeks: 6, consent: false, active: false },
+  { id: 'c-amira', name: 'Amira', lastVisit: '11 Mar 2027', cycleWeeks: 10, consent: true, active: false },
+  { id: 'c-yasmin', name: 'Yasmin', lastVisit: '5 Mar 2027', cycleWeeks: 8, consent: true, active: false },
+  { id: 'c-farah', name: 'Farah', lastVisit: '22 Feb 2027', cycleWeeks: 12, consent: false, active: false },
+  { id: 'c-lara', name: 'Lara', lastVisit: '14 Mar 2027', cycleWeeks: 8, consent: true, active: false },
+  { id: 'c-hind', name: 'Hind', lastVisit: '8 Mar 2027', cycleWeeks: 10, consent: true, active: false },
+];
+
+// Cannibalisation monitor, simulated pilot month.
+export const cannibalisation = [
+  { salon: 'Salon Aurora', movedToHome: 18, newToSalon: 0 },
+  { salon: 'Studio Marjan', movedToHome: 11, newToSalon: 1 },
+  { salon: 'Atelier Noor', movedToHome: 7, newToSalon: 0 },
+];
+
+// CEO scoreboard. Targets from the M2 dashboard (Team D proposal). `sim` values are invented, shown only on demand.
+export interface Kpi { id: string; name: string; target: string; later: string; definition: string; sim: string; simOnTrack: boolean; }
+export const kpis: Kpi[] = [
+  { id: 'subs', name: 'Active care subscribers', target: '300 in 2027', later: '25k in 2030 · 1m in 2035',
+    definition: 'Customers with an active product subscription linked to a certified professional.', sim: '212', simOnTrack: false },
+  { id: 'repeat', name: 'Repeat-visit rate', target: '40% pass line, 2027 pilot', later: '60% in 2030 · 70% in 2035',
+    definition: 'Share of customers who book a second at-home PRO•GO visit within 90 days, instead of going back to the salon chair.', sim: '43%', simOnTrack: true },
+  { id: 'margin', name: 'Margin per visit', target: 'Positive by Q4 2027', later: 'Checked at the Q4 2027 review',
+    definition: 'Visit price minus pay to the partner salon, travel and products.', sim: 'AED +125', simOnTrack: true },
+  { id: 'retention', name: '90-day subscription retention', target: '60% or more by end 2028', later: '',
+    definition: 'Share of subscribers who renew their 90-day plan.', sim: '58%', simOnTrack: false },
+  { id: 'newsalon', name: 'New-to-salon customers', target: '30% of PRO•GO clients', later: '2028 review',
+    definition: 'PRO•GO clients who were not clients of the partner salon before.', sim: '4%', simOnTrack: false },
+  { id: 'uplift', name: 'Partner salon income uplift', target: '+10% per partner salon by 2030', later: '',
+    definition: 'Extra income for each partner salon from PRO•GO visits and its share.', sim: '+3%', simOnTrack: false },
+];
+
+// Margin per visit calculator defaults (Team D estimates, LOW confidence).
+export const calcDefaults = { price: 500, salonPay: 230, travel: 60, products: 85, visitsPerDay: 2.5 };
+
+// Appendix B: where the first EUR 3m goes (Team D assumptions, LOW). EUR thousands.
+export const firstThreeMillion = [
+  { line: 'PRO•GO venture team (about 5 people, 12 months)', k: 700 },
+  { line: 'Customer acquisition (resident events, concierge, launch offers)', k: 400 },
+  { line: 'Contingency (about 13%)', k: 350 },
+  { line: 'Prep for the 2028 build (design, discovery, vendors)', k: 300 },
+  { line: 'Partner salon onboarding and minimum-income floor', k: 250 },
+  { line: 'Legal, permits, insurance, data protection, claims review', k: 200 },
+  { line: 'Quality and safety (dermatologist advisor, mystery visits)', k: 150 },
+  { line: 'Research and measurement', k: 150 },
+  { line: 'Products and samples', k: 150 },
+  { line: 'Professional training, certification, scan kits', k: 120 },
+  { line: 'Manual-MVP tools (chat booking, CRM, payments, dashboard)', k: 120 },
+  { line: 'Visit delivery (about 1,800 visits at about EUR 60)', k: 110 },
+];

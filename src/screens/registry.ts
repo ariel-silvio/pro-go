@@ -38,9 +38,18 @@ export const customerScreens: ScreenMeta[] = [
 ];
 
 export const otherScreens: ScreenMeta[] = [
-  { id: 'Colourist', path: '/colourist', title: 'Colourist view', seeing: 'Coming in Phase 2.', tests: '—' },
-  { id: 'Salon', path: '/salon', title: 'Salon view', seeing: 'Coming in Phase 2.', tests: '—' },
-  { id: 'CEO', path: '/ceo', title: 'CEO scoreboard', seeing: 'Coming in Phase 2.', tests: '—' },
+  { id: 'Colourist', path: '/colourist', title: "Dana's day",
+    seeing: "The colourist's view: today's home visits with first names only, the last scan, local notes and a step-by-step visit checklist.",
+    tests: 'A salon colourist can run home visits with a simple checklist, inside the manual MVP.',
+    note: "Maya's card follows the customer demo: plan, patch test and a flag if her result did not improve." },
+  { id: 'Salon', path: '/salon', title: 'Partner salon dashboard',
+    seeing: 'The salon owner invites consenting clients, checks which colourists hold a home-service permit, sets its revenue share and watches cannibalisation.',
+    tests: 'Salons see PRO•GO as extra income, not as a rival for their chairs.',
+    note: 'Untick a permit to see a colourist blocked from home visits: this is the Dubai permit risk. Set S7 to Flat or Worse to see the alert.' },
+  { id: 'CEO', path: '/ceo', title: 'CEO scoreboard',
+    seeing: 'The six board KPIs with their targets, and a calculator for margin per visit, the riskiest number.',
+    tests: 'A visit at about AED 500 leaves a positive margin per visit after paying the salon, travel and products.',
+    note: 'Targets only by default. "Show simulated demo data" fills the tiles with invented values under a SIMULATED watermark.' },
 ];
 
 export const allScreens = [...customerScreens, ...otherScreens];
