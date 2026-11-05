@@ -11,7 +11,16 @@ Draft 5 Nov 2026, reviewed against M2 and M3. Brackets `[ ]` are blanks to fill 
 
 **Partner (working assumption, team to confirm Fri 6 Nov):** ServiceMarket, the operator for salon work outside the salon: a company that already runs home beauty visits in Dubai (booking, routing, insurance, payment) and knows the home-service permit process. The professional always comes from the partner salon; the permit sits with the salon and its named staff (FACTS.md, to verify with Dubai Municipality). That is the one piece L'Oréal can't build fast. If the team picks a different kind of partner on Friday, chapters 2–4 change; the rest holds.
 
-**Music:** one cue for the whole film. Sparse piano over a low string pad, warm, not corporate. It lifts once, at the week-12 re-scan, and drops out completely under the ask. *Descript stock library.*
+**Sound design (the whole film):** one music cue that grows with Layla's twelve weeks, a few real sounds from her side of the screen, and silence where it matters. Nothing loud, no whooshes, no stock "corporate" beats.
+
+| Layer | What | Level in the mix |
+|---|---|---|
+| Voice | The six speakers, Studio Sound on, matched loudness | Always first. Target about −16 LUFS for the film |
+| Music | One cue: felt piano, a slow three-note motif, over a warm low string pad. Develops: piano alone (weeks 0–1) → pad joins (week 2) → light movement (week 4) → strings rise (week 10) → one swell at 74 (week 12) → silence under the ask | 15–18 dB under the voice while anyone speaks; can rise in gaps without speech |
+| Week tick | One soft, dry clock-like tick on every chapter card. The same sound each time, so the weeks feel counted | Just audible |
+| Layla's world | Room tone, air conditioning, a far-off city, and the small sounds listed per scene (phone, cup, comb, brush) | Low; under the music. Never over a speaker's words |
+
+*Sources: Descript's stock music and sound-effect library (licensed for this use), or Agent Underlord ("add calm felt-piano stock music under the whole composition, ducked under speech"). Avoid recognisable sounds: no WhatsApp tone, no iPhone ringtones or haptics, no famous tracks. If the team uses AI-generated music, log it in `ai-log.md`. The raw Gemini Omni clips (`out/layla/*_raw.mp4`) have AI-generated ambient sound; usable as room tone, but then it is AI audio and must be disclosed.*
 
 | # | Time | Left / full screen | Speaker | Words |
 |---|---|---|---|---|
@@ -41,7 +50,7 @@ Each speaker: about 170 words, read calmly. **Time yourself: 65 to 75 seconds.**
 > No one has ever measured what it does to it.
 > Today her salon sends her a free hair scan.
 
-**SOUND.** Room tone. The air conditioning. One piano note as 58 lands.
+**SOUND.** No music yet. Room tone: the air conditioning, a far-off city through glass. A soft, generic phone tap as she starts the scan, then a faint rising shimmer while it runs. **One piano note as 58 lands**, left to ring. On the opening slate, the piano motif begins: three notes, slow.
 
 *Cut to the opening slate (4 s): "12 weeks with Layla".*
 
@@ -53,6 +62,7 @@ Each speaker: about 170 words, read calmly. **Time yourself: 65 to 75 seconds.**
 
 **LEFT.** Layla clip 1 continues, then the app panel: her score, 58, and the four bars.
 **ON SCREEN, left, once:** *Week 0.*
+**SOUND.** Week tick on the card. Piano motif alone, sparse, a long gap between phrases. Room tone stays under the Layla shots. Let the music thin out on "If it didn't work, she sees it" so the line lands in near-silence.
 
 **AMJAD SAAD BENSALAMAH · Chief Innovation Officer** · lower third: *Amjad Saad Bensalamah* / *CHIEF INNOVATION OFFICER*
 
@@ -78,6 +88,7 @@ Each speaker: about 170 words, read calmly. **Time yourself: 65 to 75 seconds.**
 
 **LEFT.** Layla clip 2: the phone on a marble counter, a hand picks it up. Then the app panel (p3): the message from Salon Aurora. "Dana will visit you on Wed 14 Apr, 18:00."
 **ON SCREEN, left:** *Wednesday, 18:00. Dana, from my salon.*
+**SOUND.** Week tick. Ceramic cup set down on marble; one short, soft message chime (generic, not WhatsApp) as the booking arrives; the phone lifted off the counter. Piano continues, a little warmer.
 
 **ARIEL DE SILVIO · Chief Technology & AI Officer** · lower third: *Ariel De Silvio* / *CHIEF TECHNOLOGY & AI OFFICER*
 
@@ -107,6 +118,7 @@ Each speaker: about 170 words, read calmly. **Time yourself: 65 to 75 seconds.**
 
 **LEFT.** Layla clip 3: Dana's gloved hands section and comb Layla's hair, seen from behind; a plain ivory kit box on the side table. Slow drift, nothing hurried. *Editor: add a small tag, Jost spaced caps, lower left of the panel: "FROM HER PARTNER SALON".*
 **ON SCREEN, left:** *Visit 1 of 2. My colourist. My living room.*
+**SOUND.** Week tick. A quiet doorbell or knock at the very start (the visit begins), then a fine comb through hair, the light stretch of a glove. The low string pad joins the piano here: the first time Layla is not alone.
 
 **QHAKAZILE MATHEBULA · Chief Operations Officer** · lower third: *Qhakazile Mathebula* / *CHIEF OPERATIONS OFFICER*
 
@@ -132,6 +144,7 @@ Each speaker: about 170 words, read calmly. **Time yourself: 65 to 75 seconds.**
 
 **LEFT.** The service diagram, the five steps of M3's "How it works", built one by one: Her salon invites her and runs a free scan → Same colourist booked on WhatsApp → Home visit: scan, colour, treatment → Re-scan: she sees the result → Next visit booked before she leaves. A thin line under step 2 and 3 reads *run by ServiceMarket*. As S4 names each party, a tag lights up: *Salon earns* · *ServiceMarket grows* · *L'Oréal learns*.
 **ON SCREEN, left:** *Week 4. Nothing to report.*
+**SOUND.** Week tick. Calm, almost nothing on Layla's side: room tone only. As each diagram step appears, a very soft, low click (felt, not digital). Music gets a gentle pulse, the lightest movement of the film. "Nothing happens" should sound like a quiet, good week.
 
 **REBECCA FERNANDES · Chief Marketing & Creative Officer** · lower third: *Rebecca Fernandes* / *CHIEF MARKETING & CREATIVE OFFICER*
 
@@ -155,6 +168,7 @@ Each speaker: about 170 words, read calmly. **Time yourself: 65 to 75 seconds.**
 
 **LEFT.** Layla clip 4: from behind, by the window, brushing. The light catches the shine. Then the app panel (p4, still to film): before 58, after 66, "Illustrative". *Crop out the "Demo control" box.*
 **ON SCREEN, left:** *Week 10. Visit 2 of 2.*
+**SOUND.** Week tick. Slow brush strokes through long hair, curtains moving, the city far below. Strings rise a little under "the real numbers come from the pilot": the film starts to lift.
 
 **SAJA ALOWAYSHIQ · Chief Customer Experience Officer** · lower third: *Saja AlOwayshiq* / *CHIEF CUSTOMER EXPERIENCE OFFICER*
 
@@ -181,6 +195,7 @@ Each speaker: about 170 words, read calmly. **Time yourself: 65 to 75 seconds.**
 
 **LEFT.** Layla clip 5: two hands hold the phone, a blank ivory screen with a gold line rising. *Editor: lay the 58 → 74 count on the phone screen, or cut straight to the score.* Then **full screen**: the score graphic, 58 to 74, "Illustrative". The music lifts here, once. Back to split for the rules.
 **ON SCREEN, left:** *Week 12. 74. She renewed.*
+**SOUND.** Week tick. A soft phone tap; the same scan shimmer as in the cold open, so the audience hears the loop close. As the score counts 58 → 74, faint ticks under the count, then **the one music swell of the film on 74**. Back to a steady, quiet pad for the rules. **Music drops out completely on "So this is our ask"**: only room tone under the ask, and the last line, "Layla already did", in near-silence.
 
 **IGNACIO MONTERO ALCANTARA · Chief Financial Officer** · lower third: *Ignacio Montero Alcantara* / *CHIEF FINANCIAL OFFICER*
 
@@ -198,8 +213,6 @@ Each speaker: about 170 words, read calmly. **Time yourself: 65 to 75 seconds.**
 >
 > And we stop after two missed reviews in a row. Stopping early is cheaper than being right too late.
 >
-> *(Music drops out.)*
->
 > **[LENS, from here to the end]** So this is our ask. Not a big bet. Ninety days in Dubai, inside the three million euros already planned. It buys proof, not volume. ServiceMarket at the door, the salon in the room, and your support.
 >
 > Give us twelve weeks. Layla already did.
@@ -213,7 +226,7 @@ Each speaker: about 170 words, read calmly. **Time yourself: 65 to 75 seconds.**
 **CLOSING CARD** (ink, one line, Bodoni, white):
 > Our ask: 90 days in Dubai, with ServiceMarket and our partner salons.
 
-Hold 5 s. Silence. Then the end credits, if the course needs them (team names, "Student project for IE Business School. Not affiliated with L'Oréal or ServiceMarket. Fictional characters, simulated data. AI use disclosed.").
+**SOUND.** One second of silence, then the opening piano motif returns once and resolves on its last note as the card holds. Fade to black on the decay. Hold 5 s. Then the end credits, if the course needs them (team names, "Student project for IE Business School. Not affiliated with L'Oréal or ServiceMarket. Fictional characters, simulated data. AI use disclosed.").
 
 ---
 
