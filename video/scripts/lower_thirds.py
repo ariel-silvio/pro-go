@@ -8,7 +8,7 @@ from render import W, H, IVORY, GOLD, GOLD_TXT, INK, font, SANS_M, clamp, ease
 TEAM = [  # chapter order
     ("S1_Amjad", "Amjad Saad Bensalamah", "CHIEF INNOVATION OFFICER"),
     ("S2_Ariel", "Ariel De Silvio", "CHIEF TECHNOLOGY & AI OFFICER"),
-    ("S3_Mathebula", "Ohakazile Mathebula", "CHIEF OPERATIONS OFFICER"),   # spelling to confirm
+    ("S3_Qhakazile", "Qhakazile Mathebula", "CHIEF OPERATIONS OFFICER"),
     ("S4_Rebecca", "Rebecca Fernandes", "CHIEF MARKETING & CREATIVE OFFICER"),
     ("S5_Saja", "Saja AlOwayshiq", "CHIEF CUSTOMER EXPERIENCE OFFICER"),
     ("S6_Ignacio", "Ignacio Montero Alcantara", "CHIEF FINANCIAL OFFICER"),

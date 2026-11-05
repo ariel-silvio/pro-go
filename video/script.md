@@ -16,7 +16,7 @@ Draft 5 Nov 2026. Brackets `[ ]` are blanks to fill before recording. Grey notes
 | Cold open | 0:00–0:15 | Layla, the first scan, 58 | — | — |
 | 1 | 0:15–1:30 | Week 0 · The gap | Amjad (C. Innovation) | 172 |
 | 2 | 1:30–2:45 | Week 1 · Who, and why them | Ariel (C. Technology & AI) | 165 + blanks |
-| 3 | 2:45–4:00 | Week 2 · How we work together | Ohakazile (C. Operations) | 170 |
+| 3 | 2:45–4:00 | Week 2 · How we work together | Qhakazile (C. Operations) | 170 |
 | 4 | 4:00–5:15 | Week 4 · Why everyone wins | Rebecca (C. Marketing & Creative) | 165 |
 | 5 | 5:15–6:30 | Week 8 · The pilot | Saja (C. Customer Experience) | 167 |
 | 6 | 6:30–7:50 | Week 12 · The rules, and our ask | Ignacio (C. Financial) | 169 |
@@ -103,7 +103,7 @@ Each speaker: about 170 words, read calmly. **Time yourself: 65 to 75 seconds.**
 **LEFT.** Layla clip 3: gloved hands, a brush, colour going on. On the side table, a plain ivory kit and a small card: *Partner salon*. Slow drift, nothing hurried.
 **ON SCREEN, left:** *My colourist. My living room.*
 
-**OHAKAZILE MATHEBULA · Chief Operations Officer** · lower third: *Ohakazile Mathebula* / *CHIEF OPERATIONS OFFICER*
+**QHAKAZILE MATHEBULA · Chief Operations Officer** · lower third: *Qhakazile Mathebula* / *CHIEF OPERATIONS OFFICER*
 
 > Week two. Dana arrives. The same colourist Layla has trusted for years, now in her living room.
 >
@@ -213,7 +213,7 @@ Hold 5 s. Silence. Then the end credits, if the course needs them (team names, "
 | Blank | Who decides | By |
 |---|---|---|
 | `[PARTNER]`, its proof line, options B and C | Team | Fri 6 Nov |
-| ~~Speaker order~~ set by role (see table); spelling of "Ohakazile" to confirm; cities optional | Ariel | now |
+| ~~Speaker order~~ set by role (see table); cities optional | Ariel | now |
 | Pilot owner = Chief Operations Officer (proposed, ch. 5) | Team | Fri 6 Nov |
 | Stop line `[one in four]` | Team | Fri 6 Nov |
 | Per-visit payment and exclusivity (ch. 3) | Team | Fri 6 Nov |
