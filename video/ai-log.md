@@ -14,6 +14,7 @@ The individual 2-page report is out of scope: no AI is used there.
 | 5 Nov 2026 | Claude Code (cloud session) | Shooting script v1 (`video/script.md`): cold open, six chapters, closing card, Layla's on-screen lines, picture and sound notes, blanks for the partner | "I would like first to create the script. Take the role of a cinematographic copywriter and producer, avoid AI language, make it very impactful, engaging and beautiful scenes." | Whole video; the team edits the text |
 | 5 Nov 2026 | Claude Code (cloud session) | Speaker order by role in `script.md`; six lower-third overlays (`scripts/lower_thirds.py`, RGBA PNG) and one ProRes 4444 test (`LT_S2_Ariel_test.mov`) uploaded to Descript `Graphics/LowerThirds/` | "These are the group members, with respective fictional roles. Use them for the video." (team board screenshots) | Lower thirds, one per speaker |
 | 5 Nov 2026 | Claude Code (cloud session) | Name corrected to Qhakazile; remaining five ProRes 4444 lower thirds and all six PNGs uploaded to Descript `Graphics/LowerThirds/` | "Qhakazile" | Lower thirds |
+| 5 Nov 2026 | Agent Underlord (Descript) | New composition "Graphics review v1" (25 s): slate, chapter card, two prototype panels, score counter (13.5 AI credits) | "Create a NEW composition named 'Graphics review v1' … in this order …" | Review timeline in Descript |
 
 ## Layla scene prompts (full text in `layla-prompts.md`)
 
