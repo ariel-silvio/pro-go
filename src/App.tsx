@@ -9,6 +9,8 @@ import ColouristHome from './screens/ColouristHome';
 import SalonHome from './screens/SalonHome';
 import CeoScoreboard from './screens/CeoScoreboard';
 import { StoreProvider } from './state/store';
+import { TourBar, TourProvider } from './tour/Tour';
+import S9Account from './screens/S9Account';
 import S1Invite from './screens/S1Invite';
 import S2Scan from './screens/S2Scan';
 import S3Result from './screens/S3Result';
@@ -26,6 +28,7 @@ export default function App() {
 
   return (
     <StoreProvider>
+      <TourProvider>
       <PhoneFrame side={<SidePanel screen={findScreen(pathname)} />}>
         <Banner />
         <main ref={mainRef} className="flex flex-1 flex-col overflow-y-auto">
@@ -38,6 +41,7 @@ export default function App() {
             <Route path="/customer/visit" element={<S6Visit />} />
             <Route path="/customer/after" element={<S7After />} />
             <Route path="/customer/adjust" element={<S8Adjust />} />
+            <Route path="/customer/account" element={<S9Account />} />
             <Route path="/colourist" element={<ColouristHome />} />
             <Route path="/salon" element={<SalonHome />} />
             <Route path="/ceo" element={<CeoScoreboard />} />
@@ -46,7 +50,9 @@ export default function App() {
           </Routes>
           <Footer />
         </main>
+        <TourBar />
       </PhoneFrame>
+      </TourProvider>
     </StoreProvider>
   );
 }

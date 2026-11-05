@@ -11,9 +11,10 @@ permissions:
   pages: write
   id-token: write
 
+# GitHub's recommended Pages setting: one deploy at a time, never cancel one that is publishing.
 concurrency:
-  group: pages-${{ github.ref }}
-  cancel-in-progress: true
+  group: pages-${{ github.event_name == 'pull_request' && github.ref || 'deploy' }}
+  cancel-in-progress: false
 
 jobs:
   build:

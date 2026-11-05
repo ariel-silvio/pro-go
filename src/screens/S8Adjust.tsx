@@ -12,7 +12,7 @@ export default function S8Adjust() {
         <Label>Plan adjustment</Label>
         <Headline>Your result did not improve as hoped</Headline>
       </div>
-      <p className="t-quote">Dana and your salon will adjust your treatment. No extra charge for the next scan.</p>
+      <p data-tour="adjust" className="t-quote">Dana and your salon will adjust your treatment. No extra charge for the next scan.</p>
       <ColouristCard />
       <ul className="flex flex-col gap-2 text-sm leading-relaxed">
         <li><span className="t-card-title">Today:</span> Salon Aurora has been told and will call you.</li>

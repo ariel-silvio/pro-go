@@ -31,7 +31,7 @@ export default function S5Slot() {
       </fieldset>
 
       {slot && (
-        <div className="bg-ivory p-4" aria-live="polite">
+        <div data-tour="chat" className="bg-ivory p-4" aria-live="polite">
           <p className="t-source mb-2 text-center text-muted">Message from Salon Aurora (simulated chat)</p>
           <div className="ml-auto max-w-[85%] border border-hairline bg-paper px-3 py-2">
             <p className="text-sm leading-relaxed">

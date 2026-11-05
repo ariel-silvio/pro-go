@@ -49,8 +49,8 @@ function MarginCalculator() {
         <p className="t-source text-muted">Exchange rate: {CONFIG.AED_PER_EUR} AED per euro.</p>
       </Card>
 
-      <div className={`border-2 p-4 ${positive ? 'border-positive' : 'border-negative'}`} aria-live="polite">
-        <p className={`t-label ${positive ? 'text-positive' : 'text-negative'}`}>{positive ? '▲ Positive margin' : '▼ Negative margin'}</p>
+      <div data-tour="calc" className={`border-2 p-4 ${positive ? 'border-positive' : 'border-negative'}`} aria-live="polite">
+        <p className={`t-label ${positive ? 'text-positive' : 'text-negative'}`}>{positive ? '▲ Positive margin' : '▼ Negative margin'} at {aed(c.price)}</p>
         <dl className="mt-3 grid grid-cols-3 gap-2">
           <div><dt className="t-source text-muted">Variable cost</dt><dd className="t-card-title">{aed(cost)}</dd></div>
           <div><dt className="t-source text-muted">Margin per visit</dt><dd className={`t-card-title ${positive ? 'text-positive' : 'text-negative'}`}>{margin >= 0 ? '+' : '−'}{aed(Math.abs(margin))}</dd></div>
