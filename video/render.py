@@ -68,7 +68,7 @@ def chapter(t, week="Week 0", n="1", title="The problem"):
     return img
 
 # ---------- scene 3: score counter (6 s) ----------
-PTS = [(0, 58), (2, 61), (4, 64), (6, 67), (8, 70), (10, 72), (12, 74)]
+PTS = [(0, 58), (2, 59), (4, 61), (6, 62), (8, 64), (10, 66), (12, 74)]  # visit 1 wk 2, visit 2 wk 10 (66 = prototype re-scan)
 def score(t):
     img = Image.new("RGB", (W, H), IVORY); d = ImageDraw.Draw(img)
     a1 = ease(t / 0.5)

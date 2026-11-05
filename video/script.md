@@ -7,6 +7,8 @@ Draft 5 Nov 2026. Brackets `[ ]` are blanks to fill before recording. Grey notes
 
 **Format:** 16:9. Split screen during the chapters: Layla or the app on the left (960 × 1080), the speaker on the right. Full screen for the cold open, chapter cards, the score and the closing card. Every speaker looks screen-left, towards Layla, and turns to the lens for the one line marked **[LENS]**.
 
+**Visits:** two home visits in twelve weeks, eight weeks apart, as in the prototype. Week 2 = visit 1 (chapter 3), week 10 = visit 2 (chapter 5). Weeks 0, 1, 4 and 12 happen at home without a visit: phone scan, booking, a quiet week, phone re-scan. Layla's on-screen line says "Visit 1 of 2" and "Visit 2 of 2" so viewers can count.
+
 **Assumption for chapters 2–4:** `[PARTNER]` is a company that already runs licensed home beauty visits in Dubai (booking, routing, permits, insurance, payment). That is the one piece L'Oréal can't build fast. If the team picks a different kind of partner on Friday, chapters 2–4 change; the rest holds.
 
 **Music:** one cue for the whole film. Sparse piano over a low string pad, warm, not corporate. It lifts once, at the week-12 re-scan, and drops out completely under the ask. *Descript stock library.*
@@ -14,12 +16,12 @@ Draft 5 Nov 2026. Brackets `[ ]` are blanks to fill before recording. Grey notes
 | # | Time | Left / full screen | Speaker | Words |
 |---|---|---|---|---|
 | Cold open | 0:00–0:15 | Layla, the first scan, 58 | — | — |
-| 1 | 0:15–1:30 | Week 0 · The gap | Amjad (C. Innovation) | 172 |
+| 1 | 0:15–1:30 | Week 0 · The gap | Amjad (C. Innovation) | 173 |
 | 2 | 1:30–2:45 | Week 1 · Who, and why them | Ariel (C. Technology & AI) | 165 + blanks |
 | 3 | 2:45–4:00 | Week 2 · How we work together | Qhakazile (C. Operations) | 170 |
 | 4 | 4:00–5:15 | Week 4 · Why everyone wins | Rebecca (C. Marketing & Creative) | 165 |
-| 5 | 5:15–6:30 | Week 8 · The pilot | Saja (C. Customer Experience) | 167 |
-| 6 | 6:30–7:50 | Week 12 · The rules, and our ask | Ignacio (C. Financial) | 169 |
+| 5 | 5:15–6:30 | Week 10 · The pilot | Saja (C. Customer Experience) | 177 |
+| 6 | 6:30–7:50 | Week 12 · The rules, and our ask | Ignacio (C. Financial) | 176 |
 | Close | 7:50–8:00 | Closing card | — | — |
 
 **Why this order:** each chapter goes to the role that would own that answer at L'Oréal. Innovation names the gap, Technology picks the partner, Operations runs the collaboration, Marketing explains the value, Customer Experience runs the pilot through Layla's eyes, and Finance sets the money rules and makes the ask.
@@ -57,7 +59,7 @@ Each speaker: about 170 words, read calmly. **Time yourself: 65 to 75 seconds.**
 >
 > She's thirty-four, she lives in Dubai, and every eight weeks she colours her hair. Sometimes at the salon, sometimes with a box from the pharmacy. Both work. Neither tells her what's happening to her hair in between.
 >
-> That's what PRO•GO changes. A twelve-week plan. We measure her hair. A professional from her own salon comes to her home. Twelve weeks later, we measure again. If it didn't work, she sees it. So do we.
+> That's what PRO•GO changes. A twelve-week plan. We measure her hair. A professional from her own salon comes to her home, twice. Twelve weeks later, we measure again. If it didn't work, she sees it. So do we.
 >
 > L'Oréal can do most of this already. The science, the products, thousands of partner salons.
 >
@@ -101,7 +103,7 @@ Each speaker: about 170 words, read calmly. **Time yourself: 65 to 75 seconds.**
 **CARD** (3 s): Week 2 · How we work together
 
 **LEFT.** Layla clip 3: gloved hands, a brush, colour going on. On the side table, a plain ivory kit and a small card: *Partner salon*. Slow drift, nothing hurried.
-**ON SCREEN, left:** *My colourist. My living room.*
+**ON SCREEN, left:** *Visit 1 of 2. My colourist. My living room.*
 
 **QHAKAZILE MATHEBULA · Chief Operations Officer** · lower third: *Qhakazile Mathebula* / *CHIEF OPERATIONS OFFICER*
 
@@ -142,16 +144,16 @@ Each speaker: about 170 words, read calmly. **Time yourself: 65 to 75 seconds.**
 
 ---
 
-## CHAPTER 5 · WEEK 8 · The pilot · 5:15–6:30 · Q5a
+## CHAPTER 5 · WEEK 10 · The pilot · 5:15–6:30 · Q5a
 
-**CARD** (3 s): Week 8 · The pilot
+**CARD** (3 s): Week 10 · The pilot
 
 **LEFT.** Layla clip 4: from behind, by the window, brushing. The light catches the shine. Then the app panel (p4): before 58, after 66, "Illustrative".
-**ON SCREEN, left:** *Week 8. Second visit.*
+**ON SCREEN, left:** *Week 10. Visit 2 of 2.*
 
 **SAJA ALOWAYSHIQ · Chief Customer Experience Officer** · lower third: *Saja AlOwayshiq* / *CHIEF CUSTOMER EXPERIENCE OFFICER*
 
-> Week eight. Second visit, second scan. This is where a pilot either teaches you something or just spends your money.
+> Week ten. Dana's second visit, eight weeks after the first, and a second scan. This is where a pilot either teaches you something or just spends your money.
 >
 > Here is ours. Dubai. Two communities, Downtown and Business Bay. Three to five partner salons. Ninety days, from the second quarter of 2027.
 >
@@ -161,9 +163,9 @@ Each speaker: about 170 words, read calmly. **Time yourself: 65 to 75 seconds.**
 >
 > Every week we watch three numbers. How many clients book a second visit. Whether each visit makes money after we pay the salon and [PARTNER]. And whether the hair score actually moves.
 >
-> Layla went from fifty-eight to sixty-six by week eight. She's an example, so that number is illustrative. **[LENS]** The real numbers come from the pilot. That's the whole reason to run it.
+> Layla went from fifty-eight to sixty-six by week ten. She's an example, so that number is illustrative. **[LENS]** The real numbers come from the pilot. That's the whole reason to run it.
 
-*Check: the score chart in `render.py` shows 70 at week 8. Change it to 66 so the chart matches the app and this line.*
+*Visit 2 falls eight weeks after visit 1, like her colour cycle and the prototype (14 Apr → 9 Jun).*
 *Check: Downtown and Business Bay are "proposed" in the prototype config. Confirm.*
 
 ---
@@ -177,7 +179,7 @@ Each speaker: about 170 words, read calmly. **Time yourself: 65 to 75 seconds.**
 
 **IGNACIO MONTERO ALCANTARA · Chief Financial Officer** · lower third: *Ignacio Montero Alcantara* / *CHIEF FINANCIAL OFFICER*
 
-> Week twelve. Layla scans again. Seventy-four. And she renews, without anyone asking her to.
+> Week twelve. No visit this time. Layla scans again on her phone. Seventy-four. And she renews, without anyone asking her to.
 >
 > One Layla proves nothing. Three hundred would. That's our target for 2027.
 >
@@ -217,7 +219,7 @@ Hold 5 s. Silence. Then the end credits, if the course needs them (team names, "
 | Pilot owner = Chief Operations Officer (proposed, ch. 5) | Team | Fri 6 Nov |
 | Stop line `[one in four]` | Team | Fri 6 Nov |
 | Per-visit payment and exclusivity (ch. 3) | Team | Fri 6 Nov |
-| Week-8 score: 66 in the app, 70 in the chart | Ariel | before rendering |
+| ~~Week-8 score~~ fixed: 66 at week 10 in app, chart and script | — | done |
 
 ## Sources for every number spoken or shown
 - 8–12 weeks between colour visits: Salonist guide; HJI 2017 (LOW confidence).
