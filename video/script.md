@@ -9,7 +9,7 @@ Draft 5 Nov 2026. Brackets `[ ]` are blanks to fill before recording. Grey notes
 
 **Visits:** two home visits in twelve weeks, eight weeks apart, as in the prototype. Week 2 = visit 1 (chapter 3), week 10 = visit 2 (chapter 5). Weeks 0, 1, 4 and 12 happen at home without a visit: phone scan, booking, a quiet week, phone re-scan. Layla's on-screen line says "Visit 1 of 2" and "Visit 2 of 2" so viewers can count.
 
-**Assumption for chapters 2–4:** `[PARTNER]` is a company that already runs licensed home beauty visits in Dubai (booking, routing, permits, insurance, payment). That is the one piece L'Oréal can't build fast. If the team picks a different kind of partner on Friday, chapters 2–4 change; the rest holds.
+**Assumption for chapters 2–4:** `[PARTNER]` is the operator for salon work outside the salon: a company that already runs home beauty visits in Dubai (booking, routing, insurance, payment) and knows the home-service permit process. The professional always comes from the partner salon; the permit sits with the salon and its named staff (FACTS.md, to verify with Dubai Municipality). That is the one piece L'Oréal can't build fast. If the team picks a different kind of partner on Friday, chapters 2–4 change; the rest holds.
 
 **Music:** one cue for the whole film. Sparse piano over a low string pad, warm, not corporate. It lifts once, at the week-12 re-scan, and drops out completely under the ask. *Descript stock library.*
 
@@ -17,8 +17,8 @@ Draft 5 Nov 2026. Brackets `[ ]` are blanks to fill before recording. Grey notes
 |---|---|---|---|---|
 | Cold open | 0:00–0:15 | Layla, the first scan, 58 | — | — |
 | 1 | 0:15–1:30 | Week 0 · The gap | Amjad (C. Innovation) | 173 |
-| 2 | 1:30–2:45 | Week 1 · Who, and why them | Ariel (C. Technology & AI) | 165 + blanks |
-| 3 | 2:45–4:00 | Week 2 · How we work together | Qhakazile (C. Operations) | 170 |
+| 2 | 1:30–2:45 | Week 1 · Who, and why them | Ariel (C. Technology & AI) | 171 + blanks |
+| 3 | 2:45–4:00 | Week 2 · How we work together | Qhakazile (C. Operations) | 177 |
 | 4 | 4:00–5:15 | Week 4 · Why everyone wins | Rebecca (C. Marketing & Creative) | 165 |
 | 5 | 5:15–6:30 | Week 10 · The pilot | Saja (C. Customer Experience) | 177 |
 | 6 | 6:30–7:50 | Week 12 · The rules, and our ask | Ignacio (C. Financial) | 176 |
@@ -82,17 +82,20 @@ Each speaker: about 170 words, read calmly. **Time yourself: 65 to 75 seconds.**
 
 > Week one. Layla books her first visit. She thinks she's talking to her salon, and she is. But behind that message sits [PARTNER].
 >
-> [PARTNER] already runs home beauty visits in Dubai. [One sentence of proof: how many visits, how many professionals, since when. From the team's research.] They hold what we don't: the permits, the scheduling, the insurance, the payments.
+> [PARTNER] already runs home beauty visits in Dubai. [One sentence of proof: how many visits, how many professionals, since when. From the team's research.] Think of them as the operator for salon work outside the salon. They know how to get a salon's staff licensed for home visits, and they already run the booking, the insurance and the payments.
 >
 > We looked at others. [Option B] [one reason it fails]. [Option C] [one reason it fails].
 >
-> [PARTNER] was the only one happy to stay in the background and let the salon stay in front. Layla will never see their logo. They're fine with that.
+> [PARTNER]'s model already works behind other brands. The salon stays in front.
 >
 > That mattered more than anything on their spec sheet. If Layla ever feels that an app replaced her colourist, PRO•GO is finished. Her colourist is the reason she says yes in the first place.
 >
 > So our test for a partner was simple. **[LENS]** Do they make the salon stronger, or do they take its place?
 >
 > [PARTNER] makes it stronger. That's why them.
+
+*Length: 171 words before the blanks. Keep the proof sentence to about 12 words and each option to one short clause; if the part runs over 75 s, cut "That mattered more than anything on their spec sheet."*
+*Check once the partner is chosen: "[PARTNER]'s model already works behind other brands" must be true of the real company (white-label or B2B work). If not, say instead: "[PARTNER] is happy to work under the salon's name." only if they have said so publicly; otherwise drop the line.*
 
 *Editor: on "behind that message sits [PARTNER]", the partner's name can appear in the lower left in Jost spaced caps, if the team approves using the real name.*
 
@@ -109,9 +112,9 @@ Each speaker: about 170 words, read calmly. **Time yourself: 65 to 75 seconds.**
 
 > Week two. Dana arrives. The same colourist Layla has trusted for years, now in her living room.
 >
-> Three partners make that hour happen, and each does only what it does best. The salon brings Dana and the relationship. L'Oréal brings the products, the measurement and the plan. [PARTNER] brings the visit itself: booking, route, permit, insurance, payment.
+> Three partners make that hour happen, and each does only what it does best. The salon brings Dana and the relationship. L'Oréal brings the products, the measurement and the plan. [PARTNER] brings everything around the visit: booking, route, insurance, payment, and the permit paperwork for each salon.
 >
-> The model is a paid pilot. Not an acquisition. Not a joint venture. We pay [PARTNER] per visit, for ninety days. We ask one thing in return: in our two pilot communities, no colour service with another hair brand while the test runs.
+> The model is a paid pilot. Not an acquisition. Not a joint venture. We pay [PARTNER] per visit, for ninety days. We would ask one thing in return: in our two pilot communities, no colour service with another hair brand while the test runs.
 >
 > The data stays where it's created. Hair results belong to L'Oréal and the salon. Booking data belongs to [PARTNER]. We share what we need to run the pilot. Nothing more. Once a month, the three of us sit at one table and read the same numbers.
 >
