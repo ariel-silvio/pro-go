@@ -14,13 +14,15 @@ Draft 5 Nov 2026. Brackets `[ ]` are blanks to fill before recording. Grey notes
 | # | Time | Left / full screen | Speaker | Words |
 |---|---|---|---|---|
 | Cold open | 0:00–0:15 | Layla, the first scan, 58 | — | — |
-| 1 | 0:15–1:30 | Week 0 · The gap | [S1] | 172 |
-| 2 | 1:30–2:45 | Week 1 · Who, and why them | [S2] | 165 + blanks |
-| 3 | 2:45–4:00 | Week 2 · How we work together | [S3] | 170 |
-| 4 | 4:00–5:15 | Week 4 · Why everyone wins | [S4] | 165 |
-| 5 | 5:15–6:30 | Week 8 · The pilot | [S5] | 167 |
-| 6 | 6:30–7:50 | Week 12 · The rules, and our ask | [S6] | 169 |
+| 1 | 0:15–1:30 | Week 0 · The gap | Amjad (C. Innovation) | 172 |
+| 2 | 1:30–2:45 | Week 1 · Who, and why them | Ariel (C. Technology & AI) | 165 + blanks |
+| 3 | 2:45–4:00 | Week 2 · How we work together | Ohakazile (C. Operations) | 170 |
+| 4 | 4:00–5:15 | Week 4 · Why everyone wins | Rebecca (C. Marketing & Creative) | 165 |
+| 5 | 5:15–6:30 | Week 8 · The pilot | Saja (C. Customer Experience) | 167 |
+| 6 | 6:30–7:50 | Week 12 · The rules, and our ask | Ignacio (C. Financial) | 169 |
 | Close | 7:50–8:00 | Closing card | — | — |
+
+**Why this order:** each chapter goes to the role that would own that answer at L'Oréal. Innovation names the gap, Technology picks the partner, Operations runs the collaboration, Marketing explains the value, Customer Experience runs the pilot through Layla's eyes, and Finance sets the money rules and makes the ask.
 
 Each speaker: about 170 words, read calmly. **Time yourself: 65 to 75 seconds.** Under 62 s and you risk the 1-minute rule.
 
@@ -49,7 +51,7 @@ Each speaker: about 170 words, read calmly. **Time yourself: 65 to 75 seconds.**
 **LEFT.** Layla clip 1 continues, then the app panel: her score, 58, and the four bars.
 **ON SCREEN, left, once:** *Week 0.*
 
-**[S1] · lower third: [Name] · [Role · City]**
+**AMJAD SAAD BENSALAMAH · Chief Innovation Officer** · lower third: *Amjad Saad Bensalamah* / *CHIEF INNOVATION OFFICER*
 
 > Layla is made up. Everything about her is real.
 >
@@ -74,7 +76,7 @@ Each speaker: about 170 words, read calmly. **Time yourself: 65 to 75 seconds.**
 **LEFT.** Layla clip 2: the phone on a marble counter, a hand picks it up. Then the app panel (p3): the message from Salon Aurora. "Dana will visit you on Wed 14 Apr, 18:00."
 **ON SCREEN, left:** *Wednesday, 18:00. Dana, from my salon.*
 
-**[S2] · lower third**
+**ARIEL DE SILVIO · Chief Technology & AI Officer** · lower third: *Ariel De Silvio* / *CHIEF TECHNOLOGY & AI OFFICER*
 
 > Week one. Layla books her first visit. She thinks she's talking to her salon, and she is. But behind that message sits [PARTNER].
 >
@@ -101,7 +103,7 @@ Each speaker: about 170 words, read calmly. **Time yourself: 65 to 75 seconds.**
 **LEFT.** Layla clip 3: gloved hands, a brush, colour going on. On the side table, a plain ivory kit and a small card: *Partner salon*. Slow drift, nothing hurried.
 **ON SCREEN, left:** *My colourist. My living room.*
 
-**[S3] · lower third**
+**OHAKAZILE MATHEBULA · Chief Operations Officer** · lower third: *Ohakazile Mathebula* / *CHIEF OPERATIONS OFFICER*
 
 > Week two. Dana arrives. The same colourist Layla has trusted for years, now in her living room.
 >
@@ -124,7 +126,7 @@ Each speaker: about 170 words, read calmly. **Time yourself: 65 to 75 seconds.**
 **LEFT.** The service diagram, built step by step: Scan → Professional from her partner salon → 12-week plan → Re-measure. As S4 names each party, a small tag lights under the diagram: *Salon earns* · *[PARTNER] grows* · *L'Oréal learns*.
 **ON SCREEN, left:** *Week 4. Nothing to report.*
 
-**[S4] · lower third**
+**REBECCA FERNANDES · Chief Marketing & Creative Officer** · lower third: *Rebecca Fernandes* / *CHIEF MARKETING & CREATIVE OFFICER*
 
 > Week four. Nothing happens in week four. Layla uses her kit, the colour holds, and she doesn't think about us once.
 >
@@ -147,7 +149,7 @@ Each speaker: about 170 words, read calmly. **Time yourself: 65 to 75 seconds.**
 **LEFT.** Layla clip 4: from behind, by the window, brushing. The light catches the shine. Then the app panel (p4): before 58, after 66, "Illustrative".
 **ON SCREEN, left:** *Week 8. Second visit.*
 
-**[S5] · lower third**
+**SAJA ALOWAYSHIQ · Chief Customer Experience Officer** · lower third: *Saja AlOwayshiq* / *CHIEF CUSTOMER EXPERIENCE OFFICER*
 
 > Week eight. Second visit, second scan. This is where a pilot either teaches you something or just spends your money.
 >
@@ -155,7 +157,7 @@ Each speaker: about 170 words, read calmly. **Time yourself: 65 to 75 seconds.**
 >
 > No app at the start. We match each client to a professional by hand, and that's on purpose. The AI comes after the test proves people want this. Not before. By hand, every mistake is one we can see.
 >
-> One person owns it: [Owner, role]. Not a committee. One name, with the salons, the budget and the authority to stop it.
+> One person owns it: our Chief Operations Officer. Not a committee. One name, with the salons, the budget and the authority to stop it.
 >
 > Every week we watch three numbers. How many clients book a second visit. Whether each visit makes money after we pay the salon and [PARTNER]. And whether the hair score actually moves.
 >
@@ -173,7 +175,7 @@ Each speaker: about 170 words, read calmly. **Time yourself: 65 to 75 seconds.**
 **LEFT.** Layla clip 5: two hands, the phone, a number rising. Then **full screen**: the score graphic, 58 to 74, "Illustrative". The music lifts here, once. Back to split for the rules.
 **ON SCREEN, left:** *Week 12. 74. She renewed.*
 
-**[S6] · lower third**
+**IGNACIO MONTERO ALCANTARA · Chief Financial Officer** · lower third: *Ignacio Montero Alcantara* / *CHIEF FINANCIAL OFFICER*
 
 > Week twelve. Layla scans again. Seventy-four. And she renews, without anyone asking her to.
 >
@@ -211,8 +213,8 @@ Hold 5 s. Silence. Then the end credits, if the course needs them (team names, "
 | Blank | Who decides | By |
 |---|---|---|
 | `[PARTNER]`, its proof line, options B and C | Team | Fri 6 Nov |
-| Speaker order S1–S6, names, roles, cities | Team | Fri 6 Nov |
-| `[Owner, role]` for the pilot | Team | Fri 6 Nov |
+| ~~Speaker order~~ set by role (see table); spelling of "Ohakazile" to confirm; cities optional | Ariel | now |
+| Pilot owner = Chief Operations Officer (proposed, ch. 5) | Team | Fri 6 Nov |
 | Stop line `[one in four]` | Team | Fri 6 Nov |
 | Per-visit payment and exclusivity (ch. 3) | Team | Fri 6 Nov |
 | Week-8 score: 66 in the app, 70 in the chart | Ariel | before rendering |

@@ -8,6 +8,7 @@ Production files for Team D's 8-minute M4 video. The human editor does the final
 - `scripts/film_prototype.cjs`: films the prototype at 390 × 844 (deviceScaleFactor 2), JPEG q92 frames.
 - `scripts/panel.sh`: phone frames → 960 × 1080 left-half panel (phone on ivory). Layout: 16:9; left half = app or Layla, right half = speaker, looking screen-left.
 - `scripts/mock_split.py`: full-frame layout mock with the lower third.
+- `scripts/lower_thirds.py`: the six lower thirds (team, roles, order) as transparent PNGs; `--mov KEY` adds a 4 s ProRes 4444 overlay with fades.
 - `scripts/make_fonts.py`: builds `fonts/*.ttf` from @fontsource (Bodoni Moda 500, Jost 400/500, SIL OFL 1.1). The Latin subset has no "→" glyph: draw arrows as shapes.
 
 Setup: `npm ci && pip install pillow fonttools brotli && python3 video/scripts/make_fonts.py`
