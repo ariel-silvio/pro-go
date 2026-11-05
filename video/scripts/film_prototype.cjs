@@ -10,7 +10,7 @@ const shots = [
   { name: 'p1_scan_result_58', route: '#/customer/result', state: seed },
   { name: 'p2_professional_partner_salon', route: '#/customer/slot', state: { ...seed, slotId: null } },
   { name: 'p3_booking_confirmation', route: '#/customer/slot', state: seed },
-  { name: 'p4_rescan', route: '#/customer/after', state: seed },
+  { name: 'p4_rescan', route: '#/customer/after', state: seed, hide: ['Demo control', 'Book my next visit'] },
 ];
 const only = (process.env.ONLY || '').split(',').filter(Boolean);
 (async () => {
@@ -22,6 +22,14 @@ const only = (process.env.ONLY || '').split(',').filter(Boolean);
     const page = await ctx.newPage();
     await page.goto(base + s.route); await page.waitForLoadState('networkidle');
     await page.evaluate(() => document.fonts.ready); await page.waitForTimeout(400);
+    if (s.hide) await page.evaluate((texts) => {   // hide demo-only UI in the recording, not in the app
+      document.querySelectorAll('p').forEach((p) => {
+        if (texts.some((t) => p.textContent.includes(t))) p.parentElement.style.display = 'none';
+      });
+      document.querySelectorAll('a,button').forEach((b) => {
+        if (texts.some((t) => b.textContent.toLowerCase().includes(t.toLowerCase()))) b.style.display = 'none';
+      });
+    }, s.hide);
     if (mode === '--stills') {
       await page.screenshot({ path: path.join(out, s.name + '.jpg'), type: 'jpeg', quality: 92, fullPage: true });
     } else {

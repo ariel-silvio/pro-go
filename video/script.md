@@ -166,7 +166,7 @@ Each speaker: about 170 words, read calmly. **Time yourself: 65 to 75 seconds.**
 
 **CARD** (3 s): Week 10 · The pilot
 
-**LEFT.** Layla clip 4: from behind, by the window, brushing. The light catches the shine. Then the app panel (p4, still to film): before 58, after 66, "Illustrative". *Crop out the "Demo control" box.*
+**LEFT.** Layla clip 4: from behind, by the window, brushing. The light catches the shine. Then the app panel (p4, `Prototype/p4_rescan_66_panel.mp4`): before 58, after 66, "Illustrative".
 **ON SCREEN, left:** *Week 10. Visit 2 of 2.*
 **SOUND.** Week tick. Slow brush strokes through long hair, curtains moving, the city far below. Strings rise a little under "the real numbers come from the pilot": the film starts to lift.
 
@@ -239,7 +239,6 @@ Each speaker: about 170 words, read calmly. **Time yourself: 65 to 75 seconds.**
 | Pilot owner = PRO•GO venture unit, one leader (M2 operating model) | — | done |
 | Pilot communities Downtown and Business Bay (D14, proposed) | Team | Fri 6 Nov |
 | Home-visit permit rule, verified with Dubai Municipality or a legal contact | Team | before recording ch. 1–3 |
-| Film prototype shot p4 (re-scan 58 → 66), demo control hidden | Ariel / Claude Code | Sat 7 Nov |
 | Per-visit payment and exclusivity (ch. 3) | Team | Fri 6 Nov |
 | ~~Week-8 score~~ fixed: 66 at week 10 in app, chart and script | — | done |
 
