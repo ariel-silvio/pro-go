@@ -15,6 +15,7 @@ The individual 2-page report is out of scope: no AI is used there.
 | 5 Nov 2026 | Claude Code (cloud session) | Speaker order by role in `script.md`; six lower-third overlays (`scripts/lower_thirds.py`, RGBA PNG) and one ProRes 4444 test (`LT_S2_Ariel_test.mov`) uploaded to Descript `Graphics/LowerThirds/` | "These are the group members, with respective fictional roles. Use them for the video." (team board screenshots) | Lower thirds, one per speaker |
 | 5 Nov 2026 | Claude Code (cloud session) | Name corrected to Qhakazile; remaining five ProRes 4444 lower thirds and all six PNGs uploaded to Descript `Graphics/LowerThirds/` | "Qhakazile" | Lower thirds |
 | 5 Nov 2026 | Agent Underlord (Descript) | New composition "Graphics review v1" (25 s): slate, chapter card, two prototype panels, score counter (13.5 AI credits) | "Create a NEW composition named 'Graphics review v1' … in this order …" | Review timeline in Descript |
+| 5 Nov 2026 | Agent Underlord (Descript) | Stock search for the five Layla scenes; composition "Layla scenes v1" holds 1 loose match (scene 4); scenes 1, 2, 3, 5 had no clip without faces or off-palette (7.7 AI credits) | "Find stock video clips for a short film about a woman named Layla in Dubai … NO visible faces …" | Test only |
 
 ## Layla scene prompts (full text in `layla-prompts.md`)
 
