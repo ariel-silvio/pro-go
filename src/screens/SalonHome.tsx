@@ -4,9 +4,9 @@ import { Avatar, Card, Chip, Headline, Label, Note, Screen } from '../components
 import { cannibalisation, colourists, plansFor, priceVariants, salonClients, scenarios } from '../data/mock';
 import { useStore } from '../state/store';
 
-function Section({ title, children, chip }: { title: string; children: React.ReactNode; chip?: React.ReactNode }) {
+function Section({ title, children, chip, tour }: { title: string; children: React.ReactNode; chip?: React.ReactNode; tour?: string }) {
   return (
-    <section className="flex flex-col gap-3">
+    <section data-tour={tour} className="flex flex-col gap-3">
       <div className="flex items-center justify-between gap-2 border-b border-hairline pb-2">
         <h2 className="t-label text-gold-text">{title}</h2>{chip}
       </div>
@@ -79,7 +79,7 @@ export default function SalonHome() {
         <p className="t-source text-muted">"Invite" is simulated: no message is sent.</p>
       </Section>
 
-      <Section title="Colourist roster" chip={<Chip kind="low">Permit rule not verified</Chip>}>
+      <Section tour="permits" title="Colourist roster" chip={<Chip kind="low">Permit rule not verified</Chip>}>
         <ul className="flex flex-col gap-2">
           {colourists.map((c) => {
             const ok = !!state.permits[c.id];

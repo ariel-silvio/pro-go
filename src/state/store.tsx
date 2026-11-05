@@ -31,6 +31,7 @@ export type Action =
   | { type: 'reserve' }
   | { type: 'chooseSlot'; slotId: string }
   | { type: 'toggleCheck'; id: string }
+  | { type: 'setCheck'; id: string; value: boolean }
   | { type: 'setScenario'; scenario: Scenario }
   | { type: 'bookNext' }
   | { type: 'renew' }
@@ -41,7 +42,8 @@ export type Action =
   | { type: 'setShare'; value: number }
   | { type: 'toggleSim' }
   | { type: 'setCalc'; key: keyof typeof calcDefaults; value: number }
-  | { type: 'resetCalc' };
+  | { type: 'resetCalc' }
+  | { type: 'demoReset' };
 
 function randomVariant(): VariantId {
   return priceVariants[Math.floor(Math.random() * priceVariants.length)].id;
@@ -69,6 +71,7 @@ function reducer(state: DemoState, a: Action): DemoState {
     case 'choosePlan': return { ...state, plan: a.plan };
     case 'reserve': return { ...state, reserved: true };
     case 'chooseSlot': return { ...state, slotId: a.slotId };
+    case 'setCheck': return { ...state, checklist: { ...state.checklist, [a.id]: a.value } };
     case 'toggleCheck': return { ...state, checklist: { ...state.checklist, [a.id]: !state.checklist[a.id] } };
     case 'setScenario': return { ...state, scenario: a.scenario, alerts: withAlert(state, a.scenario) };
     case 'bookNext': return { ...state, nextBooked: true };
@@ -81,6 +84,8 @@ function reducer(state: DemoState, a: Action): DemoState {
     case 'toggleSim': return { ...state, showSim: !state.showSim };
     case 'setCalc': return { ...state, calc: { ...state.calc, [a.key]: a.value } };
     case 'resetCalc': return { ...state, calc: { ...calcDefaults } };
+    // Clean state for the guided tour and recorded demo: always price variant v1 (AED 450/600).
+    case 'demoReset': return { ...initialState(), variantId: 'v1' };
   }
 }
 

@@ -32,7 +32,7 @@ export default function S4Plan() {
         <li><span className="t-card-title">Day 56 to 70:</span> second home visit, with a before-and-after scan.</li>
       </ol>
 
-      <fieldset className="flex flex-col gap-3">
+      <fieldset data-tour="plans" className="flex flex-col gap-3">
         <legend className="t-label mb-2 text-muted">Choose a plan</legend>
         {plans.map((p) => {
           const selected = state.plan === p.id;

@@ -23,7 +23,7 @@ export default function S6Visit() {
         {checklistItems.map((c) => {
           const on = !!state.checklist[c.id];
           return (
-            <li key={c.id}>
+            <li key={c.id} data-tour={c.id === 'patch' ? 'patch' : undefined}>
               <button type="button" role="checkbox" aria-checked={on} onClick={() => dispatch({ type: 'toggleCheck', id: c.id })}
                 className={`flex min-h-14 w-full items-start gap-3 border p-3 text-left ${c.id === 'patch' ? 'border-ink' : 'border-hairline'}`}>
                 <span className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center border ${on ? 'border-ink bg-ink text-paper' : 'border-muted'}`}>

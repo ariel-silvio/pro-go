@@ -37,6 +37,7 @@ export function NextVisitActions() {
       {state.renewed
         ? <Note>Plan renewal noted. No payment in this prototype.</Note>
         : <button type="button" className={btnSecondary} onClick={() => dispatch({ type: 'renew' })}>Renew my 90-day plan</button>}
+      {(state.nextBooked || state.renewed) && <LinkButton to="/customer/account" secondary>See my plan summary</LinkButton>}
     </div>
   );
 }
@@ -53,7 +54,7 @@ export default function S7After() {
         <Label>Before and after</Label>
         <Headline>Your scan shows a change since your first visit</Headline>
       </div>
-      <div className="grid grid-cols-2 border border-hairline">
+      <div data-tour="before-after" className="grid grid-cols-2 border border-hairline">
         <div className="p-4"><p className="t-label text-muted">Before · 14 Apr</p><p className="t-kpi mt-1">{firstScan.index}</p></div>
         <div className="border-l border-hairline bg-ivory p-4">
           <p className="t-label text-muted">After · 9 Jun</p>

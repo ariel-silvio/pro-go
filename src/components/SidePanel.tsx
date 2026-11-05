@@ -1,6 +1,12 @@
 import type { ScreenMeta } from '../screens/registry';
+import { resetDemo } from '../state/store';
+import { useTour } from '../tour/Tour';
+
+const qrSrc = `${import.meta.env.BASE_URL}qr.png`;
+const smallBtn = 't-label min-h-11 border border-ink px-3 hover:bg-paper';
 
 export function SidePanel({ screen }: { screen?: ScreenMeta }) {
+  const tour = useTour();
   return (
     <aside className="w-80 shrink-0 self-center" aria-label="What you are seeing">
       <p className="t-label text-gold-text">What you are seeing</p>
@@ -19,6 +25,15 @@ export function SidePanel({ screen }: { screen?: ScreenMeta }) {
       <p className="t-card-body mt-8 border border-hairline bg-source-note p-4 text-ink">
         Honesty note: classmates are not Dubai women who colour their hair. Their answers are a rehearsal and a usability check, not evidence of demand.
       </p>
+      <div className="mt-6 flex flex-wrap gap-2">
+        <button type="button" className={smallBtn} onClick={() => tour.start(false)}>Guided tour</button>
+        <button type="button" className={smallBtn} onClick={() => tour.start(true)}>Play demo</button>
+        <button type="button" className={smallBtn} onClick={resetDemo}>Reset</button>
+      </div>
+      <div className="mt-6 flex items-center gap-4">
+        <img src={qrSrc} alt="QR code that opens this prototype on a phone" width={96} height={96} className="border border-hairline bg-paper" />
+        <p className="t-card-body text-muted">Scan to open on your phone.<br /><span className="text-ink">ariel-silvio.github.io/pro-go</span></p>
+      </div>
     </aside>
   );
 }

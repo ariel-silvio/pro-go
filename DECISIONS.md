@@ -62,3 +62,18 @@ Defaults picked where the handoff was ambiguous or not possible in this environm
 | P2-6 | Appendix B line "minimum-income guarantee" shown as "minimum-income floor". | Gate 5 bans "guarantee" in user-facing text; same meaning. |
 | P2-7 | Appendix B "Manual-MVP tools (WhatsApp, …)" shown as "chat booking". | No real brand names in the UI (handoff §12). |
 | P2-8 | Customer tab returns to the last customer screen, not S1. | Keeps the 3-minute click path smooth when switching back and forth. |
+
+## Phase 3 — Demo and sharing (5 Nov 2026)
+
+**Built:** guided tour (menu and side panel: 10 steps following the §16 click path, gold highlight on the element each step is about, Back / Next / Close); 3-minute auto-play for screen recording (`?demo=1`, or "Play 3-minute demo" in the menu), with pause and replay; S9 account and plan summary; QR code (`public/qr.png`, `docs/qr.png`, also on the desktop side panel); add-to-home-screen manifest and "PG" monogram icons; Reset in the side panel too; version stamp (commit and build time) in the menu.
+**Skipped:** service worker (P3-1).
+**Check:** 22 automated checks pass (tour order, highlights, state set by the tour, S9, QR loads, auto-play walks all 10 steps in about 180 s and drops the price to AED 360); Phase 1 and 2 suites still pass; QR decoded back to the URL; Lighthouse mobile Performance 97–99, Accessibility 100.
+
+| # | Decision | Why |
+|---|---|---|
+| P3-1 | Install to home screen with a **manifest and icons only, no service worker** (no `vite-plugin-pwa`). | A service worker caches the app, so phones keep an old version after each deploy. We already hit stale versions on 5 Nov; with the board on 7 Nov, fresh content matters more than offline use. iOS "Add to Home Screen" and Chrome install both work without one. |
+| P3-2 | Tour and auto-play start from a clean demo with price variant **v1** (AED 450/600 per visit, AED 900/1,200 per plan). | The recording and live demo always show the same numbers. Visitors who browse on their own still get a random variant. |
+| P3-3 | Auto-play timings: S1 10 s, S2 8 s, S3 17 s, S4 25 s, S5 15 s, S6 15 s, S7 20 s, S8 20 s, Salon 25 s, CEO 25 s = 180 s. On the CEO step the price drops from AED 500 to 360 after 6 s, crossing break-even at AED 375. | Handoff §16 timings; S2 and S3 share its 25 s. |
+| P3-4 | Version stamp in the menu (`Version <commit> · <build time UTC>`). | Lets anyone check which version their phone is showing. |
+| P3-5 | Deploy workflow uses GitHub's recommended Pages concurrency: one deploy at a time, never cancel a deploy that is publishing. | Three Phase 2 deploys hung on GitHub's side; cancelling mid-publish is a known way to leave Pages stuck. |
+| P3-6 | S9 copy: renewal 13 Jul 2027 (90 days after 14 Apr), "cancel any time before". | Illustrative; no payment exists. |

@@ -11,7 +11,7 @@ export default function S1Invite() {
   return (
     <Screen>
       <Steps current={1} />
-      <div>
+      <div data-tour="invite">
         <Label>Salon Aurora · Downtown Dubai</Label>
         <Headline>Salon Aurora invites you to PRO•GO Colour Plan</Headline>
       </div>
