@@ -20,8 +20,8 @@ Draft 5 Nov 2026. Brackets `[ ]` are blanks to fill before recording. Grey notes
 | 2 | 1:30–2:45 | Week 1 · Who, and why them | Ariel (C. Technology & AI) | 171 + blanks |
 | 3 | 2:45–4:00 | Week 2 · How we work together | Qhakazile (C. Operations) | 177 |
 | 4 | 4:00–5:15 | Week 4 · Why everyone wins | Rebecca (C. Marketing & Creative) | 165 |
-| 5 | 5:15–6:30 | Week 10 · The pilot | Saja (C. Customer Experience) | 177 |
-| 6 | 6:30–7:50 | Week 12 · The rules, and our ask | Ignacio (C. Financial) | 176 |
+| 5 | 5:15–6:30 | Week 10 · The pilot | Saja (C. Customer Experience) | 174 |
+| 6 | 6:30–7:50 | Week 12 · The rules, and our ask | Ignacio (C. Financial) | 183 |
 | Close | 7:50–8:00 | Closing card | — | — |
 
 **Why this order:** each chapter goes to the role that would own that answer at L'Oréal. Innovation names the gap, Technology picks the partner, Operations runs the collaboration, Marketing explains the value, Customer Experience runs the pilot through Layla's eyes, and Finance sets the money rules and makes the ask.
@@ -39,6 +39,7 @@ Each speaker: about 170 words, read calmly. **Time yourself: 65 to 75 seconds.**
 > Layla. 34. Dubai.
 > She colours her hair every eight weeks.
 > No one has ever measured what it does to it.
+> Today her salon sends her a free hair scan.
 
 **SOUND.** Room tone. The air conditioning. One piano note as 58 lands.
 
@@ -112,15 +113,17 @@ Each speaker: about 170 words, read calmly. **Time yourself: 65 to 75 seconds.**
 
 > Week two. Dana arrives. The same colourist Layla has trusted for years, now in her living room.
 >
-> Three partners make that hour happen, and each does only what it does best. The salon brings Dana and the relationship. L'Oréal brings the products, the measurement and the plan. [PARTNER] brings everything around the visit: booking, route, insurance, payment, and the permit paperwork for each salon.
+> Three partners make that hour happen. The salon brings Dana and the relationship. L'Oréal brings the products, the measurement and the plan. [PARTNER] brings everything around the visit: booking, route, insurance, payment, and the permit paperwork for each salon.
 >
-> The model is a paid pilot. Not an acquisition. Not a joint venture. We pay [PARTNER] per visit, for ninety days. We would ask one thing in return: in our two pilot communities, no colour service with another hair brand while the test runs.
+> The model is a paid pilot, not an acquisition. We pay [PARTNER] per visit, for ninety days. We would ask one thing in return: in our two pilot communities, no colour service with another hair brand while the test runs.
 >
-> The data stays where it's created. Hair results belong to L'Oréal and the salon. Booking data belongs to [PARTNER]. We share what we need to run the pilot. Nothing more. Once a month, the three of us sit at one table and read the same numbers.
+> The data stays where it's created. Hair results belong to L'Oréal and the salon. Booking data belongs to [PARTNER]. We share what we need to run the pilot. Nothing more.
 >
-> If it works, we talk about a longer contract. Maybe more than that. **[LENS]** But only after the numbers give us the right to ask.
+> And the money has to work. Layla pays about AED 450 to 600 a visit. The fee to [PARTNER] has to fit inside that, or we lose money on every visit.
+>
+> If it works, we talk about a longer contract. **[LENS]** But only after the numbers give us the right to ask.
 
-*Team to agree: per-visit payment and the exclusivity clause are Team D proposals, not facts.*
+*Team to agree: per-visit payment and the exclusivity clause are Team D proposals, not facts. AED 450–600 per visit and break-even about AED 420–500 are M3 frame 3 / D15 (LOW). The partner's fee must come out of the existing €3m lines (manual-MVP tools, legal and permits, visit delivery): Ignacio to check.*
 
 ---
 
@@ -160,11 +163,11 @@ Each speaker: about 170 words, read calmly. **Time yourself: 65 to 75 seconds.**
 >
 > Here is ours. Dubai. Two communities, Downtown and Business Bay. Three to five partner salons. Ninety days, from the second quarter of 2027.
 >
-> No app at the start. We match each client to a professional by hand, and that's on purpose. The AI comes after the test proves people want this. Not before. By hand, every mistake is one we can see.
+> No app at the start. We match each client to a professional by hand, and that's on purpose. The AI comes after the test proves people want this. Not before.
 >
-> One person owns it: our Chief Operations Officer. Not a committee. One name, with the salons, the budget and the authority to stop it.
+> One unit owns it: the PRO•GO venture unit, inside Professional Products. One leader, not a committee, with the salons, the budget and the authority to stop it.
 >
-> Every week we watch three numbers. How many clients book a second visit. Whether each visit makes money after we pay the salon and [PARTNER]. And whether the hair score actually moves.
+> Every week we watch three numbers. How many book a second PRO•GO visit within ninety days. Whether each visit makes money after we pay the salon and [PARTNER]. And whether the hair score actually moves.
 >
 > Layla went from fifty-eight to sixty-six by week ten. She's an example, so that number is illustrative. **[LENS]** The real numbers come from the pilot. That's the whole reason to run it.
 
@@ -182,25 +185,27 @@ Each speaker: about 170 words, read calmly. **Time yourself: 65 to 75 seconds.**
 
 **IGNACIO MONTERO ALCANTARA · Chief Financial Officer** · lower third: *Ignacio Montero Alcantara* / *CHIEF FINANCIAL OFFICER*
 
-> Week twelve. No visit this time. Layla scans again on her phone. Seventy-four. And she renews, without anyone asking her to.
+> Week twelve. No visit this time. Layla scans again on her phone. Seventy-four. And she renews.
 >
 > One Layla proves nothing. Three hundred would. That's our target for 2027.
 >
 > So we write the rules now, before we fall in love with the idea.
 >
-> We scale if at least forty percent of clients book again, and every visit makes money. Then the next seven million euros are released at the end-2027 gate, and we add salons.
+> We go ahead if at least forty percent book a second visit within ninety days, and every visit makes money. Then the next seven million euros are released at the Q4 2027 review, and we add salons.
 >
-> We adapt if people come back but the money doesn't work. We change the price, the services, or the deal with [PARTNER].
+> We change course if people come back but the money doesn't work. New price, new services, or a new deal with [PARTNER].
 >
-> We stop if fewer than [one in four] come back. No second try. We keep what we learned and close it. Stopping early is cheaper than being right too late.
+> We fall back if salons won't send their colourists out. Then we test a salon subscription instead. Cheaper, safer.
+>
+> And we stop after two missed reviews in a row. Stopping early is cheaper than being right too late.
 >
 > *(Music drops out.)*
 >
-> **[LENS, from here to the end]** So this is our ask. Not a big bet. Ninety days in Dubai, inside the three million euros already planned. [PARTNER] at the door, the salon in the room, and your support when the first numbers come in.
+> **[LENS, from here to the end]** So this is our ask. Not a big bet. Ninety days in Dubai, inside the three million euros already planned. It buys proof, not volume. [PARTNER] at the door, the salon in the room, and your support.
 >
 > Give us twelve weeks. Layla already did.
 
-*Team to agree: the stop line "[one in four]" is a Team D proposal. The 40 % repeat rate, 300 clients, EUR 3m now and EUR 7m after the Q4 2027 gate come from the M2 dashboard (FACTS.md).*
+*Go / change / fall back / stop rule follow M3 frame 4 ("After the test we decide"). The 40 % repeat rate (second PRO•GO visit within 90 days), 300 clients, EUR 3m now and EUR 7m after the Q4 2027 review come from the M2 dashboard. "Buys proof, not volume" is the M3 CEO line.*
 
 ---
 
@@ -220,14 +225,13 @@ Hold 5 s. Silence. Then the end credits, if the course needs them (team names, "
 | `[PARTNER]`, its proof line, options B and C | Team | Fri 6 Nov |
 | ~~Speaker order~~ set by role (see table); cities optional | Ariel | now |
 | Pilot owner = Chief Operations Officer (proposed, ch. 5) | Team | Fri 6 Nov |
-| Stop line `[one in four]` | Team | Fri 6 Nov |
 | Per-visit payment and exclusivity (ch. 3) | Team | Fri 6 Nov |
 | ~~Week-8 score~~ fixed: 66 at week 10 in app, chart and script | — | done |
 
 ## Sources for every number spoken or shown
 - 8–12 weeks between colour visits: Salonist guide; HJI 2017 (LOW confidence).
 - Dubai pilot, 2 communities, 3–5 partner salons, 90 days, manual matching, Q2 2027: M2 dashboard.
-- EUR 10m staged, EUR 3m now, EUR 7m after the Q4 2027 gate; gate = repeat bookings and positive margin per visit: M2 dashboard.
+- EUR 10m staged, EUR 3m now, EUR 7m after the Q4 2027 review; review criteria = repeat bookings and positive margin per visit: M2 dashboard.
 - 300 subscribers in 2027, 40 % repeat-visit rate in 2027, salon income +10 % by 2030: M2 dashboard, Team D proposal.
 - Home-visit permit tied to named staff: BusinessDubai, Gulf News. Not verified with Dubai Municipality.
 - Layla, 34, and her scores 58, 66, 74: invented. Always shown with "Illustrative".
