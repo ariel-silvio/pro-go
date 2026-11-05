@@ -24,6 +24,13 @@ Deploy: `.github/workflows/deploy.yml` typechecks, builds and runs the claims ch
 - **Install on a phone:** Safari → Share → Add to Home Screen; Chrome → Install app. No offline mode (see P3-1).
 - **Which version am I seeing?** Menu → the last line shows the commit and build time.
 
+## Board and video assets
+
+- `docs/screens/` — S1, S3, S4, S7 at 1170 × 2532.
+- `docs/miro-product-image.png` — 2400 × 1600 (3:2) for the Miro "Product or service name" box.
+- `docs/demo-script.md` — 3-minute click path, what to say, recording tips, forum message.
+- Regenerate after a change: `npm run build`, `npx vite preview --port 4174`, then `node scripts/capture-board.cjs`.
+
 ## Reset the demo
 
 Menu (top right) → **Reset demo**. Clears `localStorage` and returns to S1.

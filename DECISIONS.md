@@ -77,3 +77,16 @@ Defaults picked where the handoff was ambiguous or not possible in this environm
 | P3-4 | Version stamp in the menu (`Version <commit> · <build time UTC>`). | Lets anyone check which version their phone is showing. |
 | P3-5 | Deploy workflow uses GitHub's recommended Pages concurrency: one deploy at a time, never cancel a deploy that is publishing. | Three Phase 2 deploys hung on GitHub's side; cancelling mid-publish is a known way to leave Pages stuck. |
 | P3-6 | S9 copy: renewal 13 Jul 2027 (90 days after 14 Apr), "cancel any time before". | Illustrative; no payment exists. |
+
+## Phase 4 — Board and video assets (5 Nov 2026)
+
+**Built:** `docs/screens/` (S1, S3, S4, S7 at 1170 × 2532), `docs/miro-product-image.png` (2400 × 1600, 3:2: S3 and S7 in phone frames on ivory, title, three lines, QR and disclaimer, no logos), `docs/demo-script.md` (3-minute click path with what to say, recording tips, forum message draft), `scripts/capture-board.cjs` to regenerate all images.
+**Skipped:** nothing from §15.
+**Check:** image sizes verified (1170 × 2532 and 2400 × 1600); brand fonts checked as loaded in the composite; images reviewed by eye.
+
+| # | Decision | Why |
+|---|---|---|
+| P4-1 | Board screenshots hide the dashed demo-only control (Improved / Flat / Worse) on S7. | It is a presenter control, not part of the customer's screen. The live prototype keeps it. |
+| P4-2 | Screenshots use a fixed demo state: price variant v1, Essential plan, Wed 14 Apr, patch test done, Improved. | Same numbers as the auto-play and the video. |
+| P4-3 | The composite carries its own disclaimer and the "Prototype, simulated data" banner shows on both phones. The per-screen PNGs show the banner but not the footer (it is below the fold). | The footer disclaimer is at the bottom of each screen; on the board the composite's disclaimer covers it. Add the disclaimer next to any single screenshot used alone. |
+| P4-4 | Composite label reads "Team D · Product prototype", not "L'Oréal Groupe · Team D". | No L'Oréal marks in prototype images (handoff §8, §12). |
