@@ -10,6 +10,7 @@ The individual 2-page report is out of scope: no AI is used there.
 | 5 Nov 2026 | Claude Code (cloud session) | Five Layla scene prompts | Handoff Step 4 (rules: no faces, Dubai daylight, ivory and gold, 5–8 s, 16:9) | `video/layla-prompts.md`; clips made later by a teammate |
 | 5 Nov 2026 | Claude Code (cloud session) | `video/render.py` saved from the planning chat; chart right edge moved 1760 → 1720 px for the 160 px margin; 3 sample clips re-rendered and uploaded to Descript as `Graphics/*_v1.mp4` | "Upload the three sample clips" (handoff Step 1) | Descript project, Graphics/ |
 | 5 Nov 2026 | Agent Underlord (Descript) | Nothing: asked to remove the failed composition "Graphics sample v1" and 3 empty media items, it replied it has no delete tool (1.9 AI credits) | "Delete the composition 'Graphics sample v1' and the three failed media files …" | Descript project clean-up |
+| 5 Nov 2026 | Claude Code (cloud session) | Split-screen format: prototype filmed (p1 scan result 58, p3 booking confirmation) and encoded as 960 × 1080 left-half panels (`scripts/panel.sh`), layout mock (`scripts/mock_split.py`), centre-crop rule added to the Layla prompts; panels uploaded to Descript `Prototype/` | "Let's use 16:9, sometimes split the screen with the app or Layla on one side and us speaking on the other" | Left half of the split screen |
 
 ## Layla scene prompts (full text in `layla-prompts.md`)
 

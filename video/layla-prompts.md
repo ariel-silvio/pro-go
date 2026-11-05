@@ -3,6 +3,10 @@
 For a human to run in Veo, Runway or Kling. Claude Code does not generate the clips.
 Every prompt is logged in `ai-log.md` for the course AI disclosure.
 
+**Split-screen framing (decided 5 Nov):** the video is 16:9 and these clips mostly play in the **left half (960 × 1080)**, beside the speaker. Generate at 16:9, but keep the subject and the action in the **centre third** of the frame, so a centre crop still works. The same clip can then also run full screen.
+
+Add to every prompt: `subject centred in the frame, main action in the middle third, empty calm space at the sides`.
+
 **Rules for every clip:** no faces; hands, phone, hair from behind, interiors only; warm Dubai daylight; muted ivory and gold tones; 5 to 8 seconds; 16:9 (1920 × 1080); calm, slow camera, no fast cuts; no real logos or brand names; no readable text on screens (prototype footage replaces screen content in the edit).
 
 Negative prompt to add where the tool supports it:

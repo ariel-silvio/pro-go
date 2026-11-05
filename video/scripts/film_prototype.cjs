@@ -12,10 +12,11 @@ const shots = [
   { name: 'p3_booking_confirmation', route: '#/customer/slot', state: seed },
   { name: 'p4_rescan', route: '#/customer/after', state: seed },
 ];
+const only = (process.env.ONLY || '').split(',').filter(Boolean);
 (async () => {
   fs.mkdirSync(out, { recursive: true });
   const browser = await chromium.launch();
-  for (const s of shots) {
+  for (const s of shots.filter((x) => !only.length || only.includes(x.name))) {
     const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2 });
     await ctx.addInitScript(([k, v]) => localStorage.setItem(k, v), [KEY, JSON.stringify(s.state)]);
     const page = await ctx.newPage();
