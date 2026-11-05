@@ -1,0 +1,30 @@
+/* Team D Brand Kit v2.1 (claude.ai/artifact/6ceiBuZuAa5FN2s9BNm43U), light theme.
+   L'Oréal-inspired, not L'Oréal's official identity. Keep values in sync with the kit's tokens.json. */
+:root {
+  /* colour */
+  --ink: #111111;          /* all reading text, headlines, header bands */
+  --paper: #ffffff;        /* card and page background */
+  --ivory: #f7f3ec;        /* panel background behind cards, page ground */
+  --muted: #5f5a54;        /* secondary text; 4.5:1 on paper and ivory */
+  --hairline: #e3ddd3;     /* borders and rules, never shadows */
+  --gold: #b08d57;         /* thin rules, badges, fills only; ink text on it, never white */
+  --gold-text: #8a6a3b;    /* gold when it must be text; 4.5:1 on paper and ivory */
+  --h1: #1f2a44;           /* H1 navy */
+  --h2: var(--gold);       /* H2 gold */
+  --h3: #9e2b3a;           /* H3 rouge (PRO•GO's horizon is H2) */
+  --neutral-series: #9a948c;
+  --positive: #2e6b45;     /* on/above target; always with a word or arrow */
+  --negative: #b3261e;     /* below target; always with a word or arrow */
+  --source-note: #f4ead8;  /* holds sources / assumptions next to a card */
+  --warn: #8a5a00;         /* not in kit: amber for "LOW confidence" chips (prototype addition) */
+
+  /* radius */
+  --radius-0: 0px;         /* everything: cards, tiles, buttons */
+  --radius-pill: 9999px;   /* only avatars (kit: team photo frames) and milestone circles */
+
+  /* spacing */
+  --space-2: 8px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-12: 48px;
+}
