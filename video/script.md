@@ -9,7 +9,7 @@ Draft 5 Nov 2026, reviewed against M2 and M3. Brackets `[ ]` are blanks to fill 
 
 **Visits:** two home visits in twelve weeks, eight weeks apart, as in the prototype. Week 2 = visit 1 (chapter 3), week 10 = visit 2 (chapter 5). Weeks 0, 1, 4 and 12 happen at home without a visit: phone scan, booking, a quiet week, phone re-scan. Layla's on-screen line says "Visit 1 of 2" and "Visit 2 of 2" so viewers can count.
 
-**Assumption for chapters 2–4:** `[PARTNER]` is the operator for salon work outside the salon: a company that already runs home beauty visits in Dubai (booking, routing, insurance, payment) and knows the home-service permit process. The professional always comes from the partner salon; the permit sits with the salon and its named staff (FACTS.md, to verify with Dubai Municipality). That is the one piece L'Oréal can't build fast. If the team picks a different kind of partner on Friday, chapters 2–4 change; the rest holds.
+**Partner (working assumption, team to confirm Fri 6 Nov):** ServiceMarket, the operator for salon work outside the salon: a company that already runs home beauty visits in Dubai (booking, routing, insurance, payment) and knows the home-service permit process. The professional always comes from the partner salon; the permit sits with the salon and its named staff (FACTS.md, to verify with Dubai Municipality). That is the one piece L'Oréal can't build fast. If the team picks a different kind of partner on Friday, chapters 2–4 change; the rest holds.
 
 **Music:** one cue for the whole film. Sparse piano over a low string pad, warm, not corporate. It lifts once, at the week-12 re-scan, and drops out completely under the ask. *Descript stock library.*
 
@@ -17,8 +17,8 @@ Draft 5 Nov 2026, reviewed against M2 and M3. Brackets `[ ]` are blanks to fill 
 |---|---|---|---|---|
 | Cold open | 0:00–0:15 | Layla, the first scan, 58 | — | — |
 | 1 | 0:15–1:30 | Week 0 · The gap | Amjad (C. Innovation) | 176 |
-| 2 | 1:30–2:45 | Week 1 · Who, and why them | Ariel (C. Technology & AI) | 171 + blanks |
-| 3 | 2:45–4:00 | Week 2 · How we work together | Qhakazile (C. Operations) | 172 |
+| 2 | 1:30–2:45 | Week 1 · Who, and why them | Ariel (C. Technology & AI) | 177 |
+| 3 | 2:45–4:00 | Week 2 · How we work together | Qhakazile (C. Operations) | 177 |
 | 4 | 4:00–5:15 | Week 4 · Why everyone wins | Rebecca (C. Marketing & Creative) | 164 |
 | 5 | 5:15–6:30 | Week 10 · The pilot | Saja (C. Customer Experience) | 175 |
 | 6 | 6:30–7:50 | Week 12 · The rules, and our ask | Ignacio (C. Financial) | 183 |
@@ -81,24 +81,23 @@ Each speaker: about 170 words, read calmly. **Time yourself: 65 to 75 seconds.**
 
 **ARIEL DE SILVIO · Chief Technology & AI Officer** · lower third: *Ariel De Silvio* / *CHIEF TECHNOLOGY & AI OFFICER*
 
-> Week one. Layla books her first visit. She thinks she's talking to her salon, and she is. But behind that message sits [PARTNER].
+> Week one. Layla books her first visit. She thinks she's talking to her salon, and she is. But behind that message sits ServiceMarket.
 >
-> [PARTNER] already runs home beauty visits in Dubai. [One sentence of proof: how many visits, how many professionals, since when. From the team's research.] Think of them as the operator for salon work outside the salon. They know how to get a salon's staff licensed for home visits, and they already run the booking, the insurance and the payments.
+> ServiceMarket has run home services in Dubai since 2013, and since 2023 it belongs to e&. It says it works with more than 200 vetted partner companies, salon at home included. Think of them as the operator for salon work outside the salon. They already run booking and payment. In our pilot they would add the insurance and each salon's permit paperwork.
 >
-> We looked at others. [Option B] [one reason it fails]. [Option C] [one reason it fails].
+> We looked at the two big beauty apps. Urban Company and Justlife send their own staff to your door. That would replace the salon.
 >
-> [PARTNER]'s model already works behind other brands. The salon stays in front.
+> ServiceMarket works the other way. It already sells other companies' services. The salon stays in front.
 >
-> That mattered more than anything on their spec sheet. If Layla ever feels that an app replaced her colourist, PRO•GO is finished. Her colourist is the reason she says yes in the first place.
+> If Layla ever feels that an app replaced her colourist, PRO•GO is finished. Her colourist is the reason she says yes in the first place.
 >
 > So our test for a partner was simple. **[LENS]** Do they make the salon stronger, or do they take its place?
 >
-> [PARTNER] makes it stronger. That's why them.
+> ServiceMarket makes it stronger. That's why them.
 
-*Length: 171 words before the blanks. Keep the proof sentence to about 12 words and each option to one short clause; if the part runs over 75 s, cut "That mattered more than anything on their spec sheet."*
-*Check once the partner is chosen: "[PARTNER]'s model already works behind other brands" must be true of the real company (white-label or B2B work). If not, say instead: "[PARTNER] is happy to work under the salon's name." only if they have said so publicly; otherwise drop the line.*
+*Facts to verify before recording (sources in the list at the end): founded 2013; owned by e& since 2023 (ServiceMarket's own FAQ); 200+ partner companies and salon at home (company profile, ServiceMarket's claim, so "it says"). Urban Company and Justlife "send their own staff": check both sites once more.*
 
-*Editor: on "behind that message sits [PARTNER]", the partner's name can appear in the lower left in Jost spaced caps, if the team approves using the real name.*
+*Editor: on "behind that message sits ServiceMarket", the partner's name can appear in the lower left in Jost spaced caps, if the team approves using the real name.*
 
 ---
 
@@ -113,15 +112,15 @@ Each speaker: about 170 words, read calmly. **Time yourself: 65 to 75 seconds.**
 
 > Week two. Dana arrives. The same colourist Layla has trusted for years, now in her living room.
 >
-> Three partners make that hour happen. The salon brings Dana and the relationship. L'Oréal brings the products, the measurement and the plan. [PARTNER] brings everything around the visit: booking, route, insurance, payment, and the permit paperwork for each salon.
+> Three partners make that hour happen. The salon brings Dana and the relationship. L'Oréal brings the products, the measurement and the plan. ServiceMarket brings everything around the visit: booking, route, insurance, payment, and the permit paperwork for each salon.
 >
-> The model is a paid pilot, not an acquisition. We pay [PARTNER] per visit, for ninety days. In return, no colour work for another hair brand in our two communities during the test.
+> The model is a paid pilot, not an acquisition. We pay ServiceMarket per visit, for ninety days. In return, we are the only colour subscription on their platform in our two communities during the test.
 >
-> The data stays where it's created. Hair results stay with L'Oréal and the salon, with Layla's consent. Booking data stays with [PARTNER].
+> The data stays where it's created. Hair results stay with L'Oréal and the salon, with Layla's consent. Booking data stays with ServiceMarket.
 >
-> And the money has to work. Layla pays one subscription: our target is about AED 900 to 1,200 for twelve weeks, with two visits, the scans and her products. Our fee to [PARTNER] has to fit inside that.
+> And the money has to work. Layla pays one subscription: our target is about AED 900 to 1,200 for twelve weeks, with two visits, the scans and her products. Our fee to ServiceMarket has to fit inside that.
 >
-> If it works, BOLD, our venture fund, looks at a longer deal. **[LENS]** But only after the numbers give us the right to ask.
+> If it works, we sign a longer deal and grow with them across the UAE. **[LENS]** But only after the numbers give us the right to ask.
 
 *Team to agree: per-visit payment and the exclusivity clause are Team D proposals, not facts. Subscription price AED 900–1,200 per 12-week plan = 2 visits × M3's target of AED 450–600 (frame 3 / D15, LOW); same as the prototype's plan totals (Essential 900, Signature 1,200 in price variant v1). Margin is still checked per visit (M2 KPI), against break-even about AED 420–500. The partner's fee must come out of the existing €3m lines (manual-MVP tools, legal and permits, visit delivery): Ignacio to check.*
 
@@ -131,7 +130,7 @@ Each speaker: about 170 words, read calmly. **Time yourself: 65 to 75 seconds.**
 
 **CARD** (3 s): Week 4 · Why everyone wins
 
-**LEFT.** The service diagram, the five steps of M3's "How it works", built one by one: Her salon invites her and runs a free scan → Same colourist booked on WhatsApp → Home visit: scan, colour, treatment → Re-scan: she sees the result → Next visit booked before she leaves. A thin line under step 2 and 3 reads *run by [PARTNER]*. As S4 names each party, a tag lights up: *Salon earns* · *[PARTNER] grows* · *L'Oréal learns*.
+**LEFT.** The service diagram, the five steps of M3's "How it works", built one by one: Her salon invites her and runs a free scan → Same colourist booked on WhatsApp → Home visit: scan, colour, treatment → Re-scan: she sees the result → Next visit booked before she leaves. A thin line under step 2 and 3 reads *run by ServiceMarket*. As S4 names each party, a tag lights up: *Salon earns* · *ServiceMarket grows* · *L'Oréal learns*.
 **ON SCREEN, left:** *Week 4. Nothing to report.*
 
 **REBECCA FERNANDES · Chief Marketing & Creative Officer** · lower third: *Rebecca Fernandes* / *CHIEF MARKETING & CREATIVE OFFICER*
@@ -142,7 +141,7 @@ Each speaker: about 170 words, read calmly. **Time yourself: 65 to 75 seconds.**
 >
 > The salon keeps a client who could have drifted to a box from the pharmacy. It earns on a visit it couldn't have made alone. Our target is ten percent more income for partner salons by 2030. And the professional stays theirs. We don't hire her. We never will.
 >
-> [PARTNER] gets something it can't buy. The name of L'Oréal behind it, and a door to salons it could never sign one by one.
+> ServiceMarket gets something it can't buy. The name of L'Oréal behind it, and a door to salons it could never sign one by one.
 >
 > And L'Oréal learns. For the first time, we see what our products do to real hair, in real homes, over twelve weeks. Not in a lab. Not in a survey. That is worth more than the margin on any single visit.
 >
@@ -167,7 +166,7 @@ Each speaker: about 170 words, read calmly. **Time yourself: 65 to 75 seconds.**
 >
 > One unit owns it: the PRO•GO venture unit, inside Professional Products. One leader, not a committee, with the salons and the budget. Your Innovation Board reviews it every quarter.
 >
-> Every week we watch three numbers. How many book a second PRO•GO visit within ninety days. Whether each visit makes money after we pay the salon and [PARTNER]. And whether the hair score actually moves.
+> Every week we watch three numbers. How many book a second PRO•GO visit within ninety days. Whether each visit makes money after we pay the salon and ServiceMarket. And whether the hair score actually moves.
 >
 > Layla went from fifty-eight to sixty-six by week ten. She's an example, so that number is illustrative. **[LENS]** The real numbers come from the pilot. That's the whole reason to run it.
 
@@ -193,7 +192,7 @@ Each speaker: about 170 words, read calmly. **Time yourself: 65 to 75 seconds.**
 >
 > We go ahead if at least forty percent book a second visit within ninety days, and every visit makes money. Then the next seven million euros are released at the Q4 2027 review, and we add salons.
 >
-> We change course if people come back but the money doesn't work. New price, new services, or a new deal with [PARTNER].
+> We change course if people come back but the money doesn't work. New price, new services, or a new deal with ServiceMarket.
 >
 > We fall back if salons won't send their colourists out. Then we test a salon subscription instead. Cheaper, safer.
 >
@@ -201,7 +200,7 @@ Each speaker: about 170 words, read calmly. **Time yourself: 65 to 75 seconds.**
 >
 > *(Music drops out.)*
 >
-> **[LENS, from here to the end]** So this is our ask. Not a big bet. Ninety days in Dubai, inside the three million euros already planned. It buys proof, not volume. [PARTNER] at the door, the salon in the room, and your support.
+> **[LENS, from here to the end]** So this is our ask. Not a big bet. Ninety days in Dubai, inside the three million euros already planned. It buys proof, not volume. ServiceMarket at the door, the salon in the room, and your support.
 >
 > Give us twelve weeks. Layla already did.
 
@@ -212,9 +211,9 @@ Each speaker: about 170 words, read calmly. **Time yourself: 65 to 75 seconds.**
 ## CLOSE · 7:50–8:00 · full screen
 
 **CLOSING CARD** (ink, one line, Bodoni, white):
-> Our ask: 90 days in Dubai, with [PARTNER] and our partner salons.
+> Our ask: 90 days in Dubai, with ServiceMarket and our partner salons.
 
-Hold 5 s. Silence. Then the end credits, if the course needs them (team names, "Student project for IE Business School. Not affiliated with L'Oréal or [PARTNER]. Fictional characters, simulated data. AI use disclosed.").
+Hold 5 s. Silence. Then the end credits, if the course needs them (team names, "Student project for IE Business School. Not affiliated with L'Oréal or ServiceMarket. Fictional characters, simulated data. AI use disclosed.").
 
 ---
 
@@ -222,7 +221,7 @@ Hold 5 s. Silence. Then the end credits, if the course needs them (team names, "
 
 | Blank | Who decides | By |
 |---|---|---|
-| `[PARTNER]`, its proof line, options B and C | Team | Fri 6 Nov |
+| Confirm ServiceMarket as partner; verify its facts and that it lists salons as providers | Team | Fri 6 Nov |
 | ~~Speaker order~~ set by role (see table); cities optional | Ariel | now |
 | Pilot owner = PRO•GO venture unit, one leader (M2 operating model) | — | done |
 | Pilot communities Downtown and Business Bay (D14, proposed) | Team | Fri 6 Nov |
@@ -239,4 +238,6 @@ Hold 5 s. Silence. Then the end credits, if the course needs them (team names, "
 - Home-visit permit tied to named staff: BusinessDubai, Gulf News. Not verified with Dubai Municipality.
 - Subscription target AED 900–1,200 per 12-week plan (2 visits, scans, colour-care kit) = 2 × M3's per-visit target AED 450–600; break-even about AED 420–500 per visit: M3 frame 3, D15 (Team D model, LOW); prototype plan totals.
 - PRO•GO venture unit inside Professional Products; Innovation Board reviews quarterly; BOLD handles partnerships; app built in 2028: M2 dashboard (operating model, funding path).
+- ServiceMarket: founded in Dubai 2013 (Crunchbase, MENAbytes); acquired by e& in 2023 (ServiceMarket FAQ); 200+ partners, 45+ services (company profiles, its own claim); salon at home listed on servicemarket.com.
+- Urban Company and Justlife send their own professionals: their Dubai salon-at-home pages (urbancompany.com, justlife.com). M2 dashboard: "at-home platforms compete on price, not expertise".
 - Layla, 34, and her scores 58, 66, 74: invented. Always shown with "Illustrative".
