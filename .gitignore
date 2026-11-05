@@ -3,3 +3,5 @@ dist
 *.local
 .env*
 *.tsbuildinfo
+video/fonts/
+video/out/
