@@ -39,3 +39,9 @@ Defaults picked where the handoff was ambiguous or not possible in this environm
 | P1-7 | Extra AI-note rules for strength below 65 and shine below 60, beside the handoff's moisture rule. | Makes the note react to the scan; all wording avoids "repairs/treats". |
 | P1-8 | Without a patch test the visit checklist warns "No patch test, no colour". | Puts the safety rule in front of the customer; demo still continues. |
 | P1-9 | Fictional names checked on 5 Nov 2026 with a web search: no Dubai business called "Salon Aurora", "Studio Marjan" or "Atelier Noor" found. Near misses: "Aurora by Tolou" (Bukadra), "Marjan Ladies Salon" (Al Muraqqabat). | Handoff §3 / §17. Names kept; Ariel to confirm. |
+
+## Video work: plan price as a subscription (5 Nov 2026)
+
+| # | Decision | Why |
+|---|---|---|
+| V-1 | The plan screen (S4) shows the **90-day plan price** as the headline ("AED 900 per 90-day plan", "Subscription, renews every 90 days"), with the per-visit amount in the small print. Before, "per visit" was the headline. | M1 ("care subscriptions"), M2 (active care subscribers) and M3 D7 ("a measured plan, not single bookings"). Per-visit numbers stay as internal unit economics (M2 KPI: margin per visit). Side-panel test note updated to "AED 900 to 1,200 for a 90-day plan". Prices and variants unchanged. |

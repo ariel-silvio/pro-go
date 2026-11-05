@@ -50,15 +50,14 @@ export default function S4Plan() {
                   <li key={i} className="t-card-body flex gap-2"><Check size={14} className="mt-0.5 shrink-0 text-gold-text" aria-hidden />{i}</li>
                 ))}
               </ul>
-              <div className="mt-4 flex items-end justify-between border-t border-hairline pt-3">
-                <div>
-                  <p className="t-card-title">{aed(p.priceAED)} <span className="font-normal text-muted">per visit</span></p>
-                  {CONFIG.SHOW_EUR && <p className="t-source text-muted">about {eur(p.priceAED)}</p>}
-                </div>
-                <div className="text-right">
-                  <p className="t-card-title">{aed(p.priceAED * p.visits)}</p>
-                  <p className="t-source text-muted">90-day total, {p.visits} visits</p>
-                </div>
+              <div className="mt-4 border-t border-hairline pt-3">
+                <p className="t-card-title">
+                  {aed(p.priceAED * p.visits)} <span className="font-normal text-muted">per 90-day plan</span>
+                </p>
+                {CONFIG.SHOW_EUR && <p className="t-source text-muted">about {eur(p.priceAED * p.visits)}</p>}
+                <p className="t-source mt-1 text-muted">
+                  Subscription, renews every 90 days. Includes {p.visits} home visits <span className="whitespace-nowrap">(about {aed(p.priceAED)} each)</span>.
+                </p>
               </div>
               <p className="t-source mt-2 text-right text-muted"><span className="sr-only">Price variant </span>{variant.id}</p>
             </label>
