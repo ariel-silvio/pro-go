@@ -121,7 +121,7 @@ Each speaker: about 170 words, read calmly. **Time yourself: 65 to 75 seconds.**
 >
 > And the money has to work. Layla pays about AED 450 to 600 a visit. The fee to [PARTNER] has to fit inside that, or we lose money on every visit.
 >
-> If it works, we talk about a longer contract. **[LENS]** But only after the numbers give us the right to ask.
+> If it works, BOLD, our venture fund, looks at a longer deal. **[LENS]** But only after the numbers give us the right to ask.
 
 *Team to agree: per-visit payment and the exclusivity clause are Team D proposals, not facts. AED 450–600 per visit and break-even about AED 420–500 are M3 frame 3 / D15 (LOW). The partner's fee must come out of the existing €3m lines (manual-MVP tools, legal and permits, visit delivery): Ignacio to check.*
 

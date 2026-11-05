@@ -1,7 +1,7 @@
 # Consistency check: M2 dashboard → M3 board → M4 video
 
-Checked 5 Nov 2026 against `handoff-miro-board-m3.md` (which quotes the M2 dashboard). The dashboard itself
-(rebeccaf8.github.io) could not be opened from this session, so M2 figures are as the M3 handoff states them.
+Checked 5 Nov 2026 against `handoff-miro-board-m3.md` and, directly, the M2 dashboard
+(https://rebeccaf8.github.io/Loreal-Innovation-Portfolio-2035/).
 
 ## Fixed in the video script (`script.md`)
 
@@ -24,8 +24,31 @@ Checked 5 Nov 2026 against `handoff-miro-board-m3.md` (which quotes the M2 dashb
 | B | Frame 2 "How it works", step 2: "Same colourist booked on WhatsApp" | M4 puts the operator partner behind the booking | Keep the card. On the M4 board, flag it as an evolution: "From M4, [PARTNER] runs booking, routing, insurance and payment behind the salon's WhatsApp" |
 | C | Decision log | No M4 entry yet | Add D21: "M4 partner = the operator for salon work outside the salon. Working proposal: ServiceMarket (to verify). Urban Company and Justlife rejected: their own staff would replace the salon" |
 | D | €3m itemisation | The partner's per-visit fee is not a line | It fits inside lines 5 (legal, permits, insurance), 10 (manual-MVP tools, payments) and 11 (visit delivery). Ignacio to check the fee leaves margin above break-even |
-| E | Frame 2 note: "In the pilot the AI is borrowed" (Skin Genius) | Skin Genius is a **skin** selfie app; the plan measures **hair** | Team to decide which scan the pilot uses. Option: Kérastase K-Scan (L'Oréal's own hair and scalp camera, salon-based). Brand claims only, not independently validated |
+| E | Frame 2 note and €3m line 10: the pilot "borrows **Skin Genius**" | The M2 dashboard (How PRO•GO works, step 2) says the phone scan of scalp, hair or skin is **built on Beauty Genius**. Skin Genius is a skin-only selfie app | Change M3 to **Beauty Genius**, as in M2. The video's phone scan already matches M2 |
 | F | Open item 2: home-service permit | Now also defines the partner's role (permit paperwork for each salon) | Verify with Dubai Municipality before recording ch. 1–3 |
 
-## Still to check directly on the dashboard
-Allow `rebeccaf8.github.io` in the environment's network settings and re-run this check: 300 / 40 % / margin per visit / €3m + €7m / 25,000 in 2030 / +10 % salon income / revenue per subscriber, if stated.
+## Checked directly on the M2 dashboard
+
+| Item | Dashboard | Script |
+|---|---|---|
+| Active care subscribers | 300 (2027), 25k (2030), 1m (2035). Defined as customers with an active **product subscription linked to a certified professional** | 300 in 2027 ✓ |
+| Repeat-visit rate | 40 % in 2027: share who book a second treatment within 90 days | ✓ (ch. 5 and 6) |
+| Margin per visit | Positive by Q4 2027 | ✓ |
+| Funding | €10m: €3m now, €7m held until the Q4 2027 gate | ✓ (said as "review") |
+| Kill rule | Misses its KPIs at two reviews in a row → stops, money moves to the next-ranked bet | ✓ "two missed reviews in a row" |
+| Fallback | Salon subscription test is a separate H2 initiative (€3m), gate: retention above 60 % | ✓ ch. 6 |
+| Pilot design | Dubai, 2 communities, 3 services, 3–5 partner salons, manual MVP from Q2, 90-day test, WhatsApp booking, partner salon confirms | ✓ |
+| Operating model | PRO•GO venture unit inside Professional Products; L'Oréal's venture fund (BOLD) handles early partnerships | ✓ ch. 5; ch. 3 now says "BOLD, our venture fund, looks at a longer deal" |
+| Salon income | +10 % per partner salon by 2030 | ✓ ch. 4 |
+| New-to-salon | ≥ 30 % of PRO•GO clients (2028 gate) | Not in the script (it's a 2028 target) |
+| Problem statement | "At-home platforms compete on price, not expertise" | Supports rejecting Urban Company and Justlife in ch. 2 |
+| Team roles | Same six names and roles | ✓ lower thirds |
+| Price, visits per year, € per subscriber | Not stated on the dashboard | M3 frame 3 is the only source (see A) |
+
+## Conflicts between M2 and the brand kit / M3 (team to decide)
+
+| # | Conflict | Proposal |
+|---|---|---|
+| G | The dashboard says **gate** everywhere ("Q4 2027 gate", "gate review"); the brand kit and M3 say **review**, never gate | The video says "Q4 2027 review", which the CEO will still recognise. Either update the dashboard wording, or accept "gate review" in both |
+| H | The dashboard's M1 scenario still says "nobody 'goes to the salon' anymore" (M3 open item 7) | Clashes with the salon-partner rule that the M4 video leans on. Reword in M1/M2, e.g. "the salon also comes to them" |
+| I | M2 already has a partnership initiative: **branded residence and hotel partners** (H2, €2m, 2 letters of intent in 2027) | Not a conflict, but the M4 board should say why the operator is the missing piece and the developers are a channel already funded in M2 |
