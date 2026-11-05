@@ -1,6 +1,6 @@
 # Layla scene prompts (M4 video, "12 weeks with Layla")
 
-For a human to run in Veo, Runway or Kling. Claude Code does not generate the clips.
+Generated with Gemini Omni Flash via `scripts/veo_generate.py` (Veo preview models were shut down in the Gemini API on 22 Oct 2026). Can also be run by hand in Gemini, Runway or Kling.
 Every prompt is logged in `ai-log.md` for the course AI disclosure.
 
 **Split-screen framing (decided 5 Nov):** the video is 16:9 and these clips mostly play in the **left half (960 × 1080)**, beside the speaker. Generate at 16:9, but keep the subject and the action in the **centre third** of the frame, so a centre crop still works. The same clip can then also run full screen.
