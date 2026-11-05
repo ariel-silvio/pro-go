@@ -11,6 +11,7 @@ export function SidePanel({ screen }: { screen?: ScreenMeta }) {
           <p className="mt-4 text-sm leading-relaxed">{screen.seeing}</p>
           <p className="t-label mt-6 text-muted">Assumption it tests</p>
           <p className="mt-1 text-sm leading-relaxed">{screen.tests}</p>
+          {screen.note && <p className="t-card-body mt-4 border-t border-hairline pt-3 text-muted">{screen.note}</p>}
         </>
       ) : (
         <p className="mt-2 text-sm">Pick a screen.</p>

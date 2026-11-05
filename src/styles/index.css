@@ -53,3 +53,7 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 :focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+
+@keyframes scan-move { from { transform: translateY(0); } to { transform: translateY(78px); } }
+.scan-line { animation: scan-move 0.75s ease-in-out infinite alternate; }
+@media (prefers-reduced-motion: reduce) { .scan-line { animation: none; } }
