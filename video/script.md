@@ -16,9 +16,9 @@ Draft 5 Nov 2026, reviewed against M2 and M3. Brackets `[ ]` are blanks to fill 
 | # | Time | Left / full screen | Speaker | Words |
 |---|---|---|---|---|
 | Cold open | 0:00–0:15 | Layla, the first scan, 58 | — | — |
-| 1 | 0:15–1:30 | Week 0 · The gap | Amjad (C. Innovation) | 175 |
+| 1 | 0:15–1:30 | Week 0 · The gap | Amjad (C. Innovation) | 176 |
 | 2 | 1:30–2:45 | Week 1 · Who, and why them | Ariel (C. Technology & AI) | 171 + blanks |
-| 3 | 2:45–4:00 | Week 2 · How we work together | Qhakazile (C. Operations) | 173 |
+| 3 | 2:45–4:00 | Week 2 · How we work together | Qhakazile (C. Operations) | 172 |
 | 4 | 4:00–5:15 | Week 4 · Why everyone wins | Rebecca (C. Marketing & Creative) | 164 |
 | 5 | 5:15–6:30 | Week 10 · The pilot | Saja (C. Customer Experience) | 175 |
 | 6 | 6:30–7:50 | Week 12 · The rules, and our ask | Ignacio (C. Financial) | 183 |
@@ -60,7 +60,7 @@ Each speaker: about 170 words, read calmly. **Time yourself: 65 to 75 seconds.**
 >
 > She's thirty-four, she lives in Dubai, and every eight weeks she colours her hair. Sometimes at the salon, sometimes with a box from the pharmacy. Both work. Neither tells her what's happening to her hair in between.
 >
-> That's what PRO•GO changes. A twelve-week plan. We measure her hair. A professional from her own salon comes to her home, twice. Twelve weeks later, we measure again. If it didn't work, she sees it. So do we.
+> That's what PRO•GO changes. A twelve-week care subscription. We measure her hair. A professional from her own salon comes to her home, twice. Twelve weeks later, we measure again. If it didn't work, she sees it. So do we.
 >
 > L'Oréal can do most of this already. The science, the products, the salons that already trust us.
 >
@@ -115,15 +115,15 @@ Each speaker: about 170 words, read calmly. **Time yourself: 65 to 75 seconds.**
 >
 > Three partners make that hour happen. The salon brings Dana and the relationship. L'Oréal brings the products, the measurement and the plan. [PARTNER] brings everything around the visit: booking, route, insurance, payment, and the permit paperwork for each salon.
 >
-> The model is a paid pilot, not an acquisition. We pay [PARTNER] per visit, for ninety days. We would ask one thing in return: in our two pilot communities, no colour service with another hair brand while the test runs.
+> The model is a paid pilot, not an acquisition. We pay [PARTNER] per visit, for ninety days. In return, no colour work for another hair brand in our two communities during the test.
 >
 > The data stays where it's created. Hair results stay with L'Oréal and the salon, with Layla's consent. Booking data stays with [PARTNER].
 >
-> And the money has to work. Our target price is AED 450 to 600 a visit. The fee to [PARTNER] has to fit inside that, or we lose money on every visit.
+> And the money has to work. Layla pays one subscription: our target is about AED 900 to 1,200 for twelve weeks, with two visits, the scans and her products. Our fee to [PARTNER] has to fit inside that.
 >
 > If it works, BOLD, our venture fund, looks at a longer deal. **[LENS]** But only after the numbers give us the right to ask.
 
-*Team to agree: per-visit payment and the exclusivity clause are Team D proposals, not facts. AED 450–600 per visit and break-even about AED 420–500 are M3 frame 3 / D15 (LOW). The partner's fee must come out of the existing €3m lines (manual-MVP tools, legal and permits, visit delivery): Ignacio to check.*
+*Team to agree: per-visit payment and the exclusivity clause are Team D proposals, not facts. Subscription price AED 900–1,200 per 12-week plan = 2 visits × M3's target of AED 450–600 (frame 3 / D15, LOW); same as the prototype's plan totals (Essential 900, Signature 1,200 in price variant v1). Margin is still checked per visit (M2 KPI), against break-even about AED 420–500. The partner's fee must come out of the existing €3m lines (manual-MVP tools, legal and permits, visit delivery): Ignacio to check.*
 
 ---
 
@@ -237,6 +237,6 @@ Hold 5 s. Silence. Then the end credits, if the course needs them (team names, "
 - EUR 10m staged, EUR 3m now, EUR 7m after the Q4 2027 review; review criteria = repeat bookings and positive margin per visit: M2 dashboard.
 - 300 subscribers in 2027, 40 % repeat-visit rate in 2027, salon income +10 % by 2030: M2 dashboard, Team D proposal.
 - Home-visit permit tied to named staff: BusinessDubai, Gulf News. Not verified with Dubai Municipality.
-- Target price AED 450–600 per visit, break-even about AED 420–500: M3 frame 3, D15 (Team D model, LOW).
+- Subscription target AED 900–1,200 per 12-week plan (2 visits, scans, colour-care kit) = 2 × M3's per-visit target AED 450–600; break-even about AED 420–500 per visit: M3 frame 3, D15 (Team D model, LOW); prototype plan totals.
 - PRO•GO venture unit inside Professional Products; Innovation Board reviews quarterly; BOLD handles partnerships; app built in 2028: M2 dashboard (operating model, funding path).
 - Layla, 34, and her scores 58, 66, 74: invented. Always shown with "Illustrative".
