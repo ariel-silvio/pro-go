@@ -28,7 +28,7 @@ def speaker_panel(n, name, role, first):
     for i, ln in enumerate(R.wrap(d, f"“{first}”", f, 720)[:7]):
         d.text((80, 440 + i * 46), ln, font=f, fill=(231, 225, 216))
     d.text((80, 760), "Recording to come · about 70 s · looking screen-left", font=R.font(R.SANS, 24), fill=(150, 144, 136))
-    R.spaced(d, (560, 170), "ANIMATIC V6", R.font(R.SANS_M, 18), (150, 144, 136), 4)
+    R.spaced(d, (560, 170), "ANIMATIC V7", R.font(R.SANS_M, 18), (150, 144, 136), 4)
     return img
 
 def layla_line(text):
@@ -137,7 +137,7 @@ seq.append(full("out/edits/cold_open_picture.mp4", "cold_open", 15.0))
 lefts = {1: [norm_left(L.format(1), "layla"), norm_left(L.format("1b"), "layla"), norm_left(L.format("1c"), "layla"),
              norm_left("out/p1_scan_result_58.mp4", "panel")],
          2: [norm_left(L.format(2), "layla"), norm_left(L.format("2c"), "layla"), norm_left("out/p3_booking_confirmation.mp4", "panel")],
-         3: [norm_left(L.format(3), "layla"), norm_left(L.format("3c"), "layla"), norm_left(L.format("3d"), "layla")],
+         3: [norm_left(L.format(3), "layla"), norm_left(L.format("3c"), "layla"), norm_left(L.format("3g"), "layla")],
          4: [norm_left(L.format("4b"), "layla"), norm_left(L.format("4c"), "layla"), norm_left("out/m4/service_diagram.png", "still", 10)],
          5: [norm_left(L.format(4), "layla"), norm_left(L.format("5b"), "layla"), norm_left(L.format("5c"), "layla"),
              norm_left("out/p4_rescan_66.mp4", "panel")],

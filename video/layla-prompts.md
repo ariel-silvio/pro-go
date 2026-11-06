@@ -58,7 +58,8 @@ Continuity line added to every prompt: *"Layla: long, glossy, warm-brown hair wi
 | 2c | Week 1 | A phone lies on a light wooden side table; its screen lights up softly with a new message; a cup and a small plant beside it. Shallow focus, warm evening light. |
 | 3b | Week 2 | Seen from inside the apartment: the front door opens; only a professional's hand and a small ivory case with a thin gold line come into frame. No faces. |
 | 3c | Week 2 | Gloved hands mix hair colour in a small black bowl with a tint brush, on a white table by a window. Close-up, slow and careful. |
-| 3d | Week 2 | From behind: gloved hands divide her hair into neat sections with a tail comb and clip them. Calm living room, soft daylight. |
+| 3d | Week 2 | ~~From behind: gloved hands divide her hair into neat sections with a tail comb and clip them.~~ Replaced by 3g: hair clips appeared and moved on their own. |
+| 3g | Week 2 | Seen from behind at shoulder height: a professional colourist's hands in thin black gloves slowly comb through one section of her long hair with a fine black comb, from the roots to the ends, in one smooth continuous movement, then gently lift the section to look at the colour. No hair clips, no other tools, nothing appears or disappears. Calm living room, soft daylight, slow and careful, steady camera. (two takes, 3e and 3f, joined before their artefacts) |
 | 4b | Week 4 | Her hands open a plain ivory parcel on a hallway console: a small colour-care kit inside, thin gold line, no text. |
 | 4c | Week 4 | From behind in a bright bathroom: she smooths a hair mask through her lengths with both hands. Steam-soft light, slow. |
 | 5b | Week 10 | From behind: she walks slowly down a bright corridor towards a window; her glossy hair moves as she walks. |
