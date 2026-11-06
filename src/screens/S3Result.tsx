@@ -10,7 +10,7 @@ export default function S3Result() {
         <Label>Your scan result</Label>
         <Headline>Hair Health Index</Headline>
       </div>
-      <div className="flex items-end gap-3">
+      <div data-tour="index" className="flex items-end gap-3">
         <span className="t-display">{firstScan.index}</span>
         <span className="pb-2 text-sm text-muted">/ 100</span>
         <span className="ml-auto pb-2"><Chip kind="est">Illustrative</Chip></span>

@@ -31,7 +31,7 @@ export default function S2Scan() {
         <Headline>{analysing ? 'Analysing…' : `Step ${step + 1} of 3: ${current.title}`}</Headline>
       </div>
       <Chip>Simulated scan</Chip>
-      {analysing ? <Analysing /> : <current.Art />}
+      <div data-tour="scan">{analysing ? <Analysing /> : <current.Art />}</div>
       <p className="text-sm leading-relaxed" aria-live="polite">
         {analysing ? 'Reading the three captures.' : current.text}
       </p>

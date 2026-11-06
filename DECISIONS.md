@@ -45,4 +45,54 @@ Defaults picked where the handoff was ambiguous or not possible in this environm
 | # | Decision | Why |
 |---|---|---|
 | V-1 | The plan screen (S4) shows the **90-day plan price** as the headline ("AED 900 per 90-day plan", "Subscription, renews every 90 days"), with the per-visit amount in the small print. Before, "per visit" was the headline. | M1 ("care subscriptions"), M2 (active care subscribers) and M3 D7 ("a measured plan, not single bookings"). Per-visit numbers stay as internal unit economics (M2 KPI: margin per visit). Side-panel test note updated to "AED 900 to 1,200 for a 90-day plan". Prices and variants unchanged. |
+
+## Phase 2 — Colourist, salon and CEO views (5 Nov 2026)
+
+**Built:** persona switcher (Customer, Colourist, Salon, CEO) under the banner; Colourist view (Dana's three visits, last scan, local notes, 5-step visit checklist, Maya's patch-test and "did not improve" flags from the customer demo); Salon view (alerts, 12 fictional clients with consent, simulated invite, colourist roster with home-service permit checkbox that blocks assignment, salon share slider, income-uplift target, cannibalisation monitor); CEO scoreboard (six KPIs with targets and "Team D proposal" tags, optional simulated values under a SIMULATED watermark, margin per visit calculator, "Where the first EUR 3m goes" table).
+**Skipped:** nothing from §5 Phase 2. Guided tour, auto-play, PWA, QR and S9 stay in Phase 3.
+**Check:** 30 automated checks pass at 390 and 1280 px (alert after Flat, consent rule, permit block, checklist, calculator defaults 375 / +125 / 25%, price 370 turns negative, simulated toggle off by default, EUR 3m total 3,000, Reset clears all Phase 2 state); customer flow still passes; Lighthouse mobile Performance 98–99, Accessibility 100 on all three new views.
+
+| # | Decision | Why |
+|---|---|---|
+| P2-1 | "Q4 2027 **review**" and "2028 review" in the UI, not "gate". | Brand kit and M3 board say review, never gate (see `video/consistency-m2-m3-m4.md`, item G). Handoff wording was "gate". |
+| P2-2 | Salon share (35%, editable) and the calculator's "pay to partner salon" (AED 230) are **separate inputs and do not match**: 35% of AED 500 is AED 175, not 230. | Both defaults come from the handoff. Kept both and did not link them, so neither changes silently. **Team to decide** whether AED 230 = salon share + colourist time, or the share should be about 46%. |
+| P2-3 | Calculator margin = price − (salon pay + travel + products). Visits per day changes only "margin per colourist day". | The handoff lists visits per day as an input but gives no formula that uses it per visit. |
+| P2-4 | All three colourists (Dana, Rana, Lina) sit in Salon Aurora's roster; Lina's permit starts unchecked. | The roster is the salon owner's view; an unchecked colourist shows the permit risk from the first click. |
+| P2-5 | Simulated KPI values (212 subscribers, 43% repeat, AED +125, 58%, 4%, +3%) are invented, hidden by default and watermarked. AED +125 matches the calculator defaults. | Handoff: "Do not show invented values by default." |
+| P2-6 | Appendix B line "minimum-income guarantee" shown as "minimum-income floor". | Gate 5 bans "guarantee" in user-facing text; same meaning. |
+| P2-7 | Appendix B "Manual-MVP tools (WhatsApp, …)" shown as "chat booking". | No real brand names in the UI (handoff §12). |
+| P2-8 | Customer tab returns to the last customer screen, not S1. | Keeps the 3-minute click path smooth when switching back and forth. |
+
+## Phase 3 — Demo and sharing (5 Nov 2026)
+
+**Built:** guided tour (menu and side panel: 10 steps following the §16 click path, gold highlight on the element each step is about, Back / Next / Close); 3-minute auto-play for screen recording (`?demo=1`, or "Play 3-minute demo" in the menu), with pause and replay; S9 account and plan summary; QR code (`public/qr.png`, `docs/qr.png`, also on the desktop side panel); add-to-home-screen manifest and "PG" monogram icons; Reset in the side panel too; version stamp (commit and build time) in the menu.
+**Skipped:** service worker (P3-1).
+**Check:** 22 automated checks pass (tour order, highlights, state set by the tour, S9, QR loads, auto-play walks all 10 steps in about 180 s and drops the price to AED 360); Phase 1 and 2 suites still pass; QR decoded back to the URL; Lighthouse mobile Performance 97–99, Accessibility 100.
+
+| # | Decision | Why |
+|---|---|---|
+| P3-1 | Install to home screen with a **manifest and icons only, no service worker** (no `vite-plugin-pwa`). | A service worker caches the app, so phones keep an old version after each deploy. We already hit stale versions on 5 Nov; with the board on 7 Nov, fresh content matters more than offline use. iOS "Add to Home Screen" and Chrome install both work without one. |
+| P3-2 | Tour and auto-play start from a clean demo with price variant **v1** (AED 450/600 per visit, AED 900/1,200 per plan). | The recording and live demo always show the same numbers. Visitors who browse on their own still get a random variant. |
+| P3-3 | Auto-play timings: S1 10 s, S2 8 s, S3 17 s, S4 25 s, S5 15 s, S6 15 s, S7 20 s, S8 20 s, Salon 25 s, CEO 25 s = 180 s. On the CEO step the price drops from AED 500 to 360 after 6 s, crossing break-even at AED 375. | Handoff §16 timings; S2 and S3 share its 25 s. |
+| P3-4 | Version stamp in the menu (`Version <commit> · <build time UTC>`). | Lets anyone check which version their phone is showing. |
+| P3-5 | Deploy workflow uses GitHub's recommended Pages concurrency: one deploy at a time, never cancel a deploy that is publishing. | Three Phase 2 deploys hung on GitHub's side; cancelling mid-publish is a known way to leave Pages stuck. |
+| P3-6 | S9 copy: renewal 13 Jul 2027 (90 days after 14 Apr), "cancel any time before". | Illustrative; no payment exists. |
+
+## Phase 4 — Board and video assets (5 Nov 2026)
+
+**Built:** `docs/screens/` (S1, S3, S4, S7 at 1170 × 2532), `docs/miro-product-image.png` (2400 × 1600, 3:2: S3 and S7 in phone frames on ivory, title, three lines, QR and disclaimer, no logos), `docs/demo-script.md` (3-minute click path with what to say, recording tips, forum message draft), `scripts/capture-board.cjs` to regenerate all images.
+**Skipped:** nothing from §15.
+**Check:** image sizes verified (1170 × 2532 and 2400 × 1600); brand fonts checked as loaded in the composite; images reviewed by eye.
+
+| # | Decision | Why |
+|---|---|---|
+| P4-1 | Board screenshots hide the dashed demo-only control (Improved / Flat / Worse) on S7. | It is a presenter control, not part of the customer's screen. The live prototype keeps it. |
+| P4-2 | Screenshots use a fixed demo state: price variant v1, Essential plan, Wed 14 Apr, patch test done, Improved. | Same numbers as the auto-play and the video. |
+| P4-3 | The composite carries its own disclaimer and the "Prototype, simulated data" banner shows on both phones. The per-screen PNGs show the banner but not the footer (it is below the fold). | The footer disclaimer is at the bottom of each screen; on the board the composite's disclaimer covers it. Add the disclaimer next to any single screenshot used alone. |
+| P4-4 | Composite label reads "Team D · Product prototype", not "L'Oréal Groupe · Team D". | No L'Oréal marks in prototype images (handoff §8, §12). |
+
+## Video work, continued (5–6 Nov 2026)
+
+| # | Decision | Why |
+|---|---|---|
 | V-2 | **Open bug, not fixed:** S7 shows the re-scan dated "After · 9 Jun" and the button "Book my next visit · Wed 9 Jun", the same day. The next visit should be about 8 weeks after the second one. For the video, the button is hidden in the recording (`video/scripts/film_prototype.cjs`), not in the app. | Found while filming p4. Fix the next-visit date in `S7After.tsx` / `mock.ts` when the prototype is next touched. |

@@ -35,12 +35,24 @@ export const customerScreens: ScreenMeta[] = [
   { id: 'S8', path: '/customer/adjust', title: 'Plan adjustment',
     seeing: 'What happens when the result does not improve: the salon adjusts the treatment and the next scan is free.',
     tests: 'Customers stay when a result is flat, if the salon owns the fix.' },
+  { id: 'S9', path: '/customer/account', title: 'Account and plan summary',
+    seeing: 'Her active plan, next visit, colour-care kit and renewal date in one place.',
+    tests: 'A plan that renews every 90 days feels clear and easy to keep.' },
 ];
 
 export const otherScreens: ScreenMeta[] = [
-  { id: 'Colourist', path: '/colourist', title: 'Colourist view', seeing: 'Coming in Phase 2.', tests: '—' },
-  { id: 'Salon', path: '/salon', title: 'Salon view', seeing: 'Coming in Phase 2.', tests: '—' },
-  { id: 'CEO', path: '/ceo', title: 'CEO scoreboard', seeing: 'Coming in Phase 2.', tests: '—' },
+  { id: 'Colourist', path: '/colourist', title: "Dana's day",
+    seeing: "The colourist's view: today's home visits with first names only, the last scan, local notes and a step-by-step visit checklist.",
+    tests: 'A salon colourist can run home visits with a simple checklist, inside the manual MVP.',
+    note: "Maya's card follows the customer demo: plan, patch test and a flag if her result did not improve." },
+  { id: 'Salon', path: '/salon', title: 'Partner salon dashboard',
+    seeing: 'The salon owner invites consenting clients, checks which colourists hold a home-service permit, sets its revenue share and watches cannibalisation.',
+    tests: 'Salons see PRO•GO as extra income, not as a rival for their chairs.',
+    note: 'Untick a permit to see a colourist blocked from home visits: this is the Dubai permit risk. Set S7 to Flat or Worse to see the alert.' },
+  { id: 'CEO', path: '/ceo', title: 'CEO scoreboard',
+    seeing: 'The six board KPIs with their targets, and a calculator for margin per visit, the riskiest number.',
+    tests: 'A visit at about AED 500 leaves a positive margin per visit after paying the salon, travel and products.',
+    note: 'Targets only by default. "Show simulated demo data" fills the tiles with invented values under a SIMULATED watermark.' },
 ];
 
 export const allScreens = [...customerScreens, ...otherScreens];

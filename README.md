@@ -16,13 +16,28 @@ npm run build      # writes dist/
 
 Deploy: `.github/workflows/deploy.yml` typechecks, builds and runs the claims check on every push and PR; pushes to `main` deploy `dist/` to GitHub Pages (Settings → Pages → Source: GitHub Actions).
 
+## Demo, tour and QR
+
+- **Guided tour:** menu (top right) → Guided tour, or the button beside the phone on a laptop. 10 steps, Back/Next.
+- **3-minute auto-play for screen recording:** open https://ariel-silvio.github.io/pro-go/?demo=1 (or menu → Play 3-minute demo). It resets the demo, uses price variant v1 and walks the click path in about 180 s. Pause and replay in the bar at the bottom.
+- **QR code:** `docs/qr.png` (600 px, opens https://ariel-silvio.github.io/pro-go/). Regenerate with `npm run qr`.
+- **Install on a phone:** Safari → Share → Add to Home Screen; Chrome → Install app. No offline mode (see P3-1).
+- **Which version am I seeing?** Menu → the last line shows the commit and build time.
+
+## Board and video assets
+
+- `docs/screens/` — S1, S3, S4, S7 at 1170 × 2532.
+- `docs/miro-product-image.png` — 2400 × 1600 (3:2) for the Miro "Product or service name" box.
+- `docs/demo-script.md` — 3-minute click path, what to say, recording tips, forum message.
+- Regenerate after a change: `npm run build`, `npx vite preview --port 4174`, then `node scripts/capture-board.cjs`.
+
 ## Reset the demo
 
 Menu (top right) → **Reset demo**. Clears `localStorage` and returns to S1.
 
 ## Routes
 
-`#/customer/invite` (S1), `#/customer/scan` (S2), `#/customer/result` (S3), `#/customer/plan` (S4), `#/customer/slot` (S5), `#/customer/visit` (S6), `#/customer/after` (S7), `#/customer/adjust` (S8, only after Flat or Worse), `#/colourist`, `#/salon`, `#/ceo`.
+`#/customer/invite` (S1), `#/customer/scan` (S2), `#/customer/result` (S3), `#/customer/plan` (S4), `#/customer/slot` (S5), `#/customer/visit` (S6), `#/customer/after` (S7), `#/customer/adjust` (S8, only after Flat or Worse), `#/customer/account` (S9), `#/colourist` (Dana's day), `#/salon` (partner salon dashboard), `#/ceo` (scoreboard and margin calculator). The tabs under the banner switch persona.
 
 ## Connect the feedback form
 
@@ -37,7 +52,7 @@ Menu (top right) → **Reset demo**. Clears `localStorage` and returns to S1.
 | Feedback form URL, exchange rate, pilot communities | `src/config.ts` |
 | Colours, radius, spacing (Team D Brand Kit v2.1) | `src/styles/tokens.css` |
 | Screen titles and side-panel text | `src/screens/registry.ts` |
-| Mock data, prices, slots, scan scores | `src/data/mock.ts` |
+| Mock data, prices, slots, scan scores, clients, KPIs, calculator defaults | `src/data/mock.ts` |
 
 ## Third-party licences
 
@@ -50,5 +65,7 @@ Menu (top right) → **Reset demo**. Clears `localStorage` and returns to S1.
 | vite, @vitejs/plugin-react | MIT |
 | tailwindcss, @tailwindcss/vite | MIT |
 | typescript | Apache-2.0 |
+| qrcode (dev, build-time QR) | MIT |
+| @types/node, @types/qrcode (dev) | MIT |
 
 See also `DECISIONS.md`, `AI_DISCLOSURE.md`, `FACTS.md`.

@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useReducer, type Dispatch, type ReactNode } from 'react';
 import { CONFIG } from '../config';
-import { priceVariants, type PlanId, type Scenario, type VariantId } from '../data/mock';
+import { calcDefaults, colourists, priceVariants, type PlanId, type Scenario, type VariantId } from '../data/mock';
 
 export interface Alert { id: string; customer: string; scenario: Scenario; text: string; }
 
@@ -15,6 +15,14 @@ export interface DemoState {
   nextBooked: boolean;
   renewed: boolean;
   alerts: Alert[];
+  // Phase 2
+  notes: Record<string, string>;
+  stepsDone: Record<string, number>;
+  invited: string[];
+  permits: Record<string, boolean>;
+  salonShare: number;
+  showSim: boolean;
+  calc: typeof calcDefaults;
 }
 
 export type Action =
@@ -23,9 +31,19 @@ export type Action =
   | { type: 'reserve' }
   | { type: 'chooseSlot'; slotId: string }
   | { type: 'toggleCheck'; id: string }
+  | { type: 'setCheck'; id: string; value: boolean }
   | { type: 'setScenario'; scenario: Scenario }
   | { type: 'bookNext' }
-  | { type: 'renew' };
+  | { type: 'renew' }
+  | { type: 'setNote'; id: string; text: string }
+  | { type: 'stepDone'; id: string; step: number }
+  | { type: 'invite'; id: string }
+  | { type: 'togglePermit'; id: string }
+  | { type: 'setShare'; value: number }
+  | { type: 'toggleSim' }
+  | { type: 'setCalc'; key: keyof typeof calcDefaults; value: number }
+  | { type: 'resetCalc' }
+  | { type: 'demoReset' };
 
 function randomVariant(): VariantId {
   return priceVariants[Math.floor(Math.random() * priceVariants.length)].id;
@@ -35,6 +53,9 @@ export function initialState(): DemoState {
   return {
     variantId: randomVariant(), plan: 'essential', scanDone: false, reserved: false, slotId: null,
     checklist: {}, scenario: 'improved', nextBooked: false, renewed: false, alerts: [],
+    notes: {}, stepsDone: {}, invited: [],
+    permits: Object.fromEntries(colourists.map((c) => [c.id, c.permitDefault])),
+    salonShare: CONFIG.SALON_SHARE_DEFAULT, showSim: false, calc: { ...calcDefaults },
   };
 }
 
@@ -50,10 +71,21 @@ function reducer(state: DemoState, a: Action): DemoState {
     case 'choosePlan': return { ...state, plan: a.plan };
     case 'reserve': return { ...state, reserved: true };
     case 'chooseSlot': return { ...state, slotId: a.slotId };
+    case 'setCheck': return { ...state, checklist: { ...state.checklist, [a.id]: a.value } };
     case 'toggleCheck': return { ...state, checklist: { ...state.checklist, [a.id]: !state.checklist[a.id] } };
     case 'setScenario': return { ...state, scenario: a.scenario, alerts: withAlert(state, a.scenario) };
     case 'bookNext': return { ...state, nextBooked: true };
     case 'renew': return { ...state, renewed: true };
+    case 'setNote': return { ...state, notes: { ...state.notes, [a.id]: a.text } };
+    case 'stepDone': return { ...state, stepsDone: { ...state.stepsDone, [a.id]: a.step } };
+    case 'invite': return state.invited.includes(a.id) ? state : { ...state, invited: [...state.invited, a.id] };
+    case 'togglePermit': return { ...state, permits: { ...state.permits, [a.id]: !state.permits[a.id] } };
+    case 'setShare': return { ...state, salonShare: a.value };
+    case 'toggleSim': return { ...state, showSim: !state.showSim };
+    case 'setCalc': return { ...state, calc: { ...state.calc, [a.key]: a.value } };
+    case 'resetCalc': return { ...state, calc: { ...calcDefaults } };
+    // Clean state for the guided tour and recorded demo: always price variant v1 (AED 450/600).
+    case 'demoReset': return { ...initialState(), variantId: 'v1' };
   }
 }
 
