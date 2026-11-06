@@ -11,6 +11,7 @@ Production files for Team D's 8-minute M4 video. The human editor does the final
 - `scripts/lower_thirds.py`: the six lower thirds (team, roles, order) as transparent PNGs; `--mov KEY` adds a 4 s ProRes 4444 overlay with fades.
 - `render.py out/m4 --m4`: six chapter cards, the service diagram (10 s) and the closing card.
 - `scripts/animatic.py out/animatic`: the full 8:00 animatic (silent, speaker placeholders), about 5 min to render.
+- `teleprompter.html`: phrase-by-phrase teleprompter for all six parts (rebuild with `python3 scripts/teleprompter.py` after script changes). Live: https://claude.ai/artifact/SFYSJxxpZEWFomLuNfsCnD
 - `12-weeks-with-Layla-script.pdf`: branded script. Rebuild: `python3 scripts/script_pdf.py out/pdf/script.html && node scripts/print_pdf.cjs out/pdf/script.html 12-weeks-with-Layla-script.pdf` (stills in `out/pdf/`).
 - `scripts/make_fonts.py`: builds `fonts/*.ttf` from @fontsource (Bodoni Moda 500, Jost 400/500, SIL OFL 1.1). The Latin subset has no "→" glyph: draw arrows as shapes.
 
