@@ -38,6 +38,7 @@ The individual 2-page report is out of scope: no AI is used there.
 | 5 Nov 2026 | Claude Code (cloud session) | Animatic v2 with the extra clips (left side changes every 5–10 s); Descript composition "Animatic v2" | same | Review |
 | 6 Nov 2026 | Claude Code (cloud session) | Teleprompter page (`video/teleprompter.html`, built by `scripts/teleprompter.py` from `script.md`): phrase-by-phrase prompting on a fixed reading line, all six parts, [LENS] cues, pace and 65–75 s timer; published as a private claude.ai artifact | "Can you make a small teleprompter, with my part, that positions the text in a way that my eyes are not moving so much?" | Recording aid for the speakers |
 | 6 Nov 2026 | Claude Code (cloud session) | Ch. 2 rewritten: e& ownership and "it says" removed, facts stated plainly (sources kept in the script notes); teleprompter and PDF rebuilt | "I don't like much the part of they belong to e& ... and also 'they say they ...', it sounds I am not sure" | Ariel's part |
+| 6 Nov 2026 | Claude Code (cloud session) | Ariel's take (IMG_2831.MOV, iPhone HEVC HDR with Apple spatial audio) converted to 1080p30 H.264 with the stereo AAC track and loudness at −16 LUFS (`scripts/fix_iphone.sh`); uploaded to Descript `Speakers/M4_S2_Ariel_take1.mp4` | "iPhone saves the video in .mov and Descript does not accept it" + Drive link | Chapter 2 speaker clip |
 
 ## Layla scene prompts (full text in `layla-prompts.md`)
 

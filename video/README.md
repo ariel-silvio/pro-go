@@ -12,6 +12,7 @@ Production files for Team D's 8-minute M4 video. The human editor does the final
 - `render.py out/m4 --m4`: six chapter cards, the service diagram (10 s) and the closing card.
 - `scripts/animatic.py out/animatic`: the full 8:00 animatic (silent, speaker placeholders), about 5 min to render.
 - `teleprompter.html`: phrase-by-phrase teleprompter for all six parts (rebuild with `python3 scripts/teleprompter.py` after script changes). Live: https://claude.ai/artifact/SFYSJxxpZEWFomLuNfsCnD
+- `scripts/fix_iphone.sh IN.MOV OUT.mp4`: makes an iPhone recording Descript-ready (H.264 1080p30, stereo audio instead of Apple spatial audio, −16 LUFS).
 - `12-weeks-with-Layla-script.pdf`: branded script. Rebuild: `python3 scripts/script_pdf.py out/pdf/script.html && node scripts/print_pdf.cjs out/pdf/script.html 12-weeks-with-Layla-script.pdf` (stills in `out/pdf/`).
 - `scripts/make_fonts.py`: builds `fonts/*.ttf` from @fontsource (Bodoni Moda 500, Jost 400/500, SIL OFL 1.1). The Latin subset has no "→" glyph: draw arrows as shapes.
 
