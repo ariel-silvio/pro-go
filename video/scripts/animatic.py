@@ -28,7 +28,7 @@ def speaker_panel(n, name, role, first):
     for i, ln in enumerate(R.wrap(d, f"“{first}”", f, 720)[:7]):
         d.text((80, 440 + i * 46), ln, font=f, fill=(231, 225, 216))
     d.text((80, 760), "Recording to come · about 70 s · looking screen-left", font=R.font(R.SANS, 24), fill=(150, 144, 136))
-    R.spaced(d, (560, 170), "ANIMATIC V2", R.font(R.SANS_M, 18), (150, 144, 136), 4)
+    R.spaced(d, (560, 170), "ANIMATIC V3", R.font(R.SANS_M, 18), (150, 144, 136), 4)
     return img
 
 def layla_line(text):
@@ -75,10 +75,16 @@ def left_track(name, parts):
     ff("-f", "concat", "-safe", "0", "-i", lst, "-c", "copy", out)
     return out
 
-def split(name, left, dur, panel_png, lt_png=None, line_png=None):
+def split(name, left, dur, panel_png, lt_png=None, line_png=None, take=None):
+    """take = (speaker clip, crop x): the speaker's recording fills the right half, cropped around the face."""
     out = os.path.join(TMP, f"{name}.mp4")
-    inputs = ["-stream_loop", "-1", "-i", left, "-loop", "1", "-i", panel_png]
-    fc = f"[0:v]trim=duration={dur},setpts=PTS-STARTPTS[l];[1:v]trim=duration={dur},setpts=PTS-STARTPTS,format=yuv420p[r];[l][r]hstack=inputs=2[v0]"
+    if take:
+        inputs = ["-stream_loop", "-1", "-i", left, "-i", take[0]]
+        right = f"[1:v]fps=30,crop=960:1080:{take[1]}:0,trim=duration={dur},setpts=PTS-STARTPTS,format=yuv420p[r]"
+    else:
+        inputs = ["-stream_loop", "-1", "-i", left, "-loop", "1", "-i", panel_png]
+        right = f"[1:v]trim=duration={dur},setpts=PTS-STARTPTS,format=yuv420p[r]"
+    fc = f"[0:v]trim=duration={dur},setpts=PTS-STARTPTS[l];{right};[l][r]hstack=inputs=2[v0]"
     k, last = 2, "v0"
     for p, (a, b) in ((lt_png, (1, 5)), (line_png, (0.5, 6.5))):
         if p:
@@ -117,6 +123,10 @@ SPK = [("AMJAD SAAD BENSALAMAH", "Amjad Saad Bensalamah", "Chief Innovation Offi
        ("IGNACIO MONTERO ALCANTARA", "Ignacio Montero Alcantara", "Chief Financial Officer", "S6_Ignacio")]
 LINES = ["Week 0.", "Wednesday, 18:00. Dana, from my salon.", "Visit 1 of 2. My colourist. My living room.",
          "Week 4. Nothing to report.", "Week 10. Visit 2 of 2.", "Week 12. 74. She renewed."]
+# Recorded takes: chapter -> (trimmed clip, crop x of the 960 px window around the face)
+TAKES = {2: ("out/speakers/M4_S2_Ariel_take1_edit.mp4", 650)}   # trimmed 12.6-88.9 s, 6% faster, pitch kept
+def length(p): return float(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", p], capture_output=True, text=True).stdout)
+voice = []   # (index in seq, clip) for the soundtrack
 CARDS = ["chapter_week0", "chapter_week1", "chapter_week2", "chapter_week4", "chapter_week10", "chapter_week12"]
 
 seq = []
@@ -151,13 +161,24 @@ for i, (key, name, role, lt) in enumerate(SPK, start=1):
         seq.append(split("ch6a", left, 20, panel, LT.format(lt), line))
         seq.append(full("out/03_score_counter_v2.mp4", "score"))
         seq.append(split("ch6b", left, 51, panel))
+    elif i in TAKES:
+        voice.append((len(seq), TAKES[i][0]))
+        seq.append(split(f"ch{i}", left, round(length(TAKES[i][0]), 3), panel, LT.format(lt), line, TAKES[i]))
     else:
         seq.append(split(f"ch{i}", left, 72, panel, LT.format(lt), line))
 seq.append(full(M4.format("closing_card"), "closing"))
 seq.append(still(png(credits(), "credits.png"), "credits", 5))
 
 lst = os.path.join(TMP, "all.txt"); open(lst, "w").write("".join(f"file '{os.path.abspath(p)}'\n" for p in seq))
-final = os.path.join(OUT, "animatic_v2.mp4"); part = final.replace(".mp4", ".part.mp4")
-ff("-f", "concat", "-safe", "0", "-i", lst, "-f", "lavfi", "-i", "anullsrc=r=48000:cl=stereo",
-   "-map", "0:v", "-map", "1:a", "-c:v", "copy", "-c:a", "aac", "-shortest", "-movflags", "+faststart", part)
+final = os.path.join(OUT, "animatic_v3.mp4"); part = final.replace(".mp4", ".part.mp4")
+starts, t = [], 0.0
+for p in seq: starts.append(t); t += length(p)
+ins = ["-f", "concat", "-safe", "0", "-i", lst, "-f", "lavfi", "-i", f"anullsrc=r=48000:cl=stereo:d={t:.3f}"]
+fc, mix = [], ["[1:a]"]
+for k, (idx, clip) in enumerate(voice):
+    ins += ["-i", clip]; ms = int(starts[idx] * 1000)
+    fc.append(f"[{k+2}:a]aresample=48000,adelay={ms}|{ms}[a{k}]"); mix.append(f"[a{k}]")
+fc.append("".join(mix) + f"amix=inputs={len(mix)}:normalize=0:duration=first[aout]")
+ff(*ins, "-filter_complex", ";".join(fc), "-map", "0:v", "-map", "[aout]", "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", part)
+print("chapter starts:", [round(x, 1) for x in starts])
 os.replace(part, final); print("wrote", final)
