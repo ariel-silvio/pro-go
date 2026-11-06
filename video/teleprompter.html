@@ -46,6 +46,14 @@ button,select,input{font:inherit;color:inherit}
 .cue{position:absolute;top:calc(var(--line) - var(--size)*1.6);font-size:13px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold-hi);
   opacity:0;transition:opacity .25s}
 .cue.on{opacity:1}
+.mini{position:fixed;z-index:4;bottom:calc(14px + env(safe-area-inset-bottom,0px));right:max(20px,env(safe-area-inset-right,0px));
+  font-variant-numeric:tabular-nums;font-size:20px;color:var(--dim);letter-spacing:.04em;opacity:0;transition:opacity .4s,color .3s;pointer-events:none}
+.mini b{color:var(--text);font-weight:500}
+.mini.over b{color:var(--warn)}
+.side-right .mini{right:auto;left:max(20px,env(safe-area-inset-left,0px))}
+.prog{position:fixed;left:0;bottom:0;height:3px;width:0;background:var(--gold);opacity:0;transition:width .3s linear,opacity .4s;z-index:4}
+.hide-ui .mini,.hide-ui .prog{opacity:1}
+.count[hidden]{display:none}
 .count{position:fixed;inset:0;display:grid;place-items:center;font-family:var(--display);font-size:min(30vw,220px);color:var(--gold);pointer-events:none}
 
 .bar{position:fixed;inset:auto 0 0;z-index:5;display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;
@@ -78,6 +86,8 @@ select{background:var(--ink2);border:1px solid #3a3631;padding:8px 10px;min-heig
   </div>
 </div>
 <div class="count" id="count" hidden></div>
+<div class="mini" id="mini" aria-live="off"><b id="miniNow">0:00</b> / <span id="miniTot">1:13</span></div>
+<div class="prog" id="prog"></div>
 
 <header class="top">
   <div class="who"><span id="chap">Chapter 2 · Week 1</span><b id="name">Ariel De Silvio</b></div>
@@ -166,7 +176,7 @@ function load(k) {
 }
 function estimate() {
   const tot = ph.words * 60 / S.wpm;
-  $('est').textContent = `of about ${fmt(tot)} at ${S.wpm} wpm`;
+  $('est').textContent = `of about ${fmt(tot)} at ${S.wpm} wpm`; $('miniTot').textContent = fmt(tot);
   const ok = tot >= 62 && tot <= 78; $('fit').className = 'chip ' + (ok ? 'ok' : 'bad'); $('fit').textContent = ok ? 'in range' : (tot < 62 ? 'too short: slow down' : 'too long: speed up');
 }
 function render() {
@@ -174,14 +184,16 @@ function render() {
   els.forEach((el, n) => { el.classList.toggle('cur', n === i); el.classList.toggle('near', n === i - 1 || n === i + 1); });
   const el = els[i]; if (el) $('track').style.transform = `translateY(${-el.offsetTop}px)`;
   const nx = ph[i + 1]; $('cue').classList.toggle('on', !!(nx && nx.lensStart && !ph[i].lens));
-  $('now').textContent = fmt(elapsed);
+  $('now').textContent = fmt(elapsed); $('miniNow').textContent = fmt(elapsed);
+  $('prog').style.width = (ph.length > 1 ? (i / (ph.length - 1)) * 100 : 0) + '%';
 }
 function tick() {
   if (!playing) return;
   const d = dur(ph[i], S.wpm) * 1000;
   timer = setTimeout(() => { if (i < ph.length - 1) { i++; render(); tick(); } else { stop(); $('play').textContent = 'Start'; } }, d);
 }
-function clock() { if (!playing) return; elapsed = (performance.now() - t0) / 1000; $('now').textContent = fmt(elapsed); requestAnimationFrame(clock); }
+function clock() { if (!playing) return; elapsed = (performance.now() - t0) / 1000; $('now').textContent = fmt(elapsed); $('miniNow').textContent = fmt(elapsed);
+  $('mini').classList.toggle('over', elapsed > 78); requestAnimationFrame(clock); }
 async function play() {
   if (playing) return stop();
   if (i === 0 && elapsed === 0) { for (const n of [3, 2, 1]) { $('count').hidden = false; $('count').textContent = n; await new Promise((r) => setTimeout(r, 700)); } $('count').hidden = true; }
@@ -195,7 +207,7 @@ function restart() { stop(); i = 0; elapsed = 0; render(); $('play').textContent
 function apply() {
   const r = document.documentElement.style; r.setProperty('--size', S.size + 'px'); r.setProperty('--line', S.line + '%');
   $('wpm').value = S.wpm; $('wpmv').textContent = S.wpm; $('size').value = S.size; $('sizev').textContent = S.size; $('line').value = S.line; $('linev').textContent = S.line;
-  $('rail').className = 'rail ' + S.side; $('side').value = S.side;
+  $('rail').className = 'rail ' + S.side; $('side').value = S.side; document.body.classList.toggle('side-right', S.side === 'right');
   $('stage').classList.toggle('mirror', S.mirror); $('mirror').setAttribute('aria-pressed', S.mirror);
   Object.entries(S).forEach(([k, v]) => store.set(k, v)); estimate(); requestAnimationFrame(render);
 }
