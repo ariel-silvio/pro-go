@@ -104,6 +104,65 @@ def score(t):
     if out > 0: img = Image.blend(img, Image.new("RGB", (W, H), IVORY), out)
     return img
 
+
+# ---------- service diagram (M3 "How it works", ServiceMarket behind booking and visit) ----------
+STEPS = ["Her salon invites her and runs a free scan", "Same colourist booked on WhatsApp",
+         "Home visit: scan, colour, treatment", "Re-scan: she sees the result", "Next visit booked before she leaves"]
+def wrap(d, text, fnt, width):
+    lines, cur = [], ""
+    for w in text.split():
+        t = (cur + " " + w).strip()
+        if d.textlength(t, font=fnt) <= width: cur = t
+        else: lines.append(cur); cur = w
+    return lines + [cur]
+def diagram(t, partner="SERVICEMARKET"):
+    img = Image.new("RGB", (W, H), IVORY); d = ImageDraw.Draw(img)
+    d.rectangle([0, 0, W, 10], fill=M4)
+    spaced(d, (160, 200), "HOW PRO•GO WORKS", font(SANS_M, 26), GOLD_TXT, 7)
+    d.text((160, 245), "One plan, two home visits, one result she can see", font=font(SERIF, 56), fill=INK)
+    bw, gap, y0, y1 = 280, 50, 400, 660
+    fnum, ftxt = font(SERIF, 54), font(SANS, 29)
+    for i, txt in enumerate(STEPS):
+        a = ease((t - 0.4 - i * 0.8) / 0.6)
+        if a <= 0: continue
+        x = 160 + i * (bw + gap); dy = (1 - a) * 16
+        d.rectangle([x, y0 + dy, x + bw, y1 + dy], fill=mix(IVORY, PAPER, a), outline=mix(IVORY, HAIR, a), width=2)
+        d.text((x + 26, y0 + 22 + dy), str(i + 1), font=fnum, fill=mix(IVORY, GOLD, a))
+        for j, line in enumerate(wrap(d, txt, ftxt, bw - 52)):
+            d.text((x + 26, y0 + 110 + j * 40 + dy), line, font=ftxt, fill=mix(IVORY, INK, a))
+        if i < 4 and ease((t - 0.9 - i * 0.8) / 0.5) > 0:   # arrow to next box, drawn as a shape
+            aa = ease((t - 0.9 - i * 0.8) / 0.5); ax = x + bw + 8; ay = (y0 + y1) // 2
+            d.line([ax, ay, ax + (gap - 22) * aa, ay], fill=GOLD, width=3)
+            if aa > .95: d.polygon([(ax + gap - 16, ay), (ax + gap - 28, ay - 8), (ax + gap - 28, ay + 8)], fill=GOLD)
+    a = ease((t - 4.6) / 0.6)                               # partner line under steps 2 and 3
+    if a > 0:
+        x0 = 160 + (bw + gap); x1 = x0 + 2 * bw + gap
+        d.rectangle([x0, y1 + 30, x0 + (x1 - x0) * a, y1 + 33], fill=M4)
+        spaced(d, (x0, y1 + 48), f"RUN BY {partner}", font(SANS_M, 22), mix(IVORY, M4, a), 5)
+    a = ease((t - 5.6) / 0.6)                               # who wins
+    if a > 0:
+        spaced(d, (160, 820), "SALON EARNS   ·   " + partner + " GROWS   ·   L'ORÉAL LEARNS", font(SANS_M, 26), mix(IVORY, GOLD_TXT, a), 6)
+    a = ease((t - 6.4) / 0.6)
+    if a > 0:
+        d.text((160, 876), "Her colourist always comes from her own partner salon. Pilot: WhatsApp and salon records; the app comes in 2028.",
+               font=font(SANS, 26), fill=mix(IVORY, MUTED, a))
+    return img
+
+# ---------- closing card (ink, one sentence in Bodoni) ----------
+def closing(t, lines=("Our ask: 90 days in Dubai,", "with ServiceMarket and our partner salons.")):
+    img = Image.new("RGB", (W, H), INK); d = ImageDraw.Draw(img)
+    a = ease((t - 0.3) / 1.0)
+    for i, ln in enumerate(lines):
+        fade_text(img, (W / 2, 430 + i * 104), ln, font(SERIF, 76), WHITE, INK, a, "mm", 14)
+    rw = 180 * ease((t - 1.2) / 0.8)
+    d.rectangle([W / 2 - rw / 2, 640, W / 2 + rw / 2, 642], fill=GOLD)  # below line 2 descenders
+    out = clamp((t - 4.4) / 0.6)
+    if out > 0: img = Image.blend(img, Image.new("RGB", (W, H), INK), out)
+    return img
+
+CARDS = [("0", "Week 0", "The gap"), ("1", "Week 1", "Who, and why them"), ("2", "Week 2", "How we work together"),
+         ("3", "Week 4", "Why everyone wins"), ("4", "Week 10", "The pilot"), ("5", "Week 12", "The rules, and our ask")]
+
 SCENES = [("01_opening_slate", slate, 4.0), ("02_chapter_week0", chapter, 3.0), ("03_score_counter", score, 6.0)]
 
 def render(outdir, name, fn, dur):
@@ -120,6 +179,15 @@ def render(outdir, name, fn, dur):
 
 if __name__ == "__main__":
     out = sys.argv[1]; os.makedirs(out, exist_ok=True)
+    if "--m4" in sys.argv:   # chapter cards, diagram and closing card for the M4 video
+        for n, wk, title in CARDS:
+            fn = (lambda wk, n, title: lambda t: chapter(t, wk, str(int(n) + 1), title))(wk, n, title)
+            render(out, f"chapter_{wk.lower().replace(' ', '')}", fn, 3.0); print("done", wk)
+        render(out, "service_diagram", diagram, 10.0); print("done diagram")
+        render(out, "closing_card", closing, 5.0); print("done closing")
+        diagram(9.0).save(os.path.join(out, "service_diagram.png")); closing(3.0).save(os.path.join(out, "closing_card.png"))
+        chapter(2.0, "Week 10", "5", "The pilot").save(os.path.join(out, "chapter_week10.png"))
+        sys.exit()
     if "--stills" in sys.argv:
         slate(2.5).save(os.path.join(out, "s1.png")); chapter(2.0).save(os.path.join(out, "s2.png"))
         score(5.0).save(os.path.join(out, "s3.png"))

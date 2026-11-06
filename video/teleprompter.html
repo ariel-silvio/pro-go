@@ -1,0 +1,269 @@
+<title>Layla Teleprompter</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,500&family=Jost:wght@400;500&display=swap">
+<style>
+/* Layout: one dark stage; a fixed reading line; one phrase lit at a time in a narrow column on the lens side. */
+:root{
+  --stage:#111111; --ink2:#1c1a17; --text:#F7F3EC; --dim:#8a837a; --gold:#B08D57; --gold-hi:#d6b47c; --ok:#5fb08a; --warn:#d8a24a;
+  --display:'Bodoni Moda',Didot,'Times New Roman',serif; --body:'Jost','Futura','Avenir Next','Segoe UI',sans-serif;
+  --size:56px; --line:28%;
+  color-scheme:dark;
+}
+html,body{height:100%}
+body{background:var(--stage);color:var(--text);font-family:var(--body);overflow:hidden;-webkit-font-smoothing:antialiased}
+button,select,input{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--gold-hi);outline-offset:2px}
+
+.top{position:fixed;inset:0 0 auto;z-index:5;display:flex;align-items:center;gap:12px 20px;flex-wrap:wrap;
+  padding-block:calc(10px + env(safe-area-inset-top,0px)) 10px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+  background:linear-gradient(var(--stage) 70%,transparent);transition:opacity .4s}
+.who{display:flex;flex-direction:column;min-width:0}
+.who b{font-family:var(--display);font-weight:500;font-size:20px;line-height:1.1}
+.who span{font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+.clock{margin-left:auto;display:flex;gap:10px;align-items:baseline;font-variant-numeric:tabular-nums}
+.clock .now{font-size:28px;font-weight:500}
+.clock .est{font-size:12px;color:var(--dim)}
+.chip{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;padding:3px 8px;border:1px solid currentColor}
+.chip.ok{color:var(--ok)} .chip.bad{color:var(--warn)}
+
+.stage{position:fixed;inset:0;overflow:hidden;cursor:pointer;
+  padding-left:max(24px,env(safe-area-inset-left,0px));padding-right:max(24px,env(safe-area-inset-right,0px))}
+.stage.mirror .rail{transform:scaleX(-1)}
+.rail{position:absolute;inset:0;display:flex;padding-inline:inherit}
+.rail.left{justify-content:flex-start} .rail.center{justify-content:center} .rail.right{justify-content:flex-end}
+.col{position:relative;width:min(calc(var(--size)*11),100%);height:100%}
+.mark{position:absolute;left:-14px;top:var(--line);width:3px;height:calc(var(--size)*1.25);transform:translateY(-50%);background:var(--gold)}
+.rail.right .mark{left:auto;right:-14px}
+.track{position:absolute;inset:0 0 auto 0;top:var(--line);transition:transform .32s cubic-bezier(.2,.7,.2,1)}
+.ph{font-size:var(--size);line-height:1.25;font-weight:400;letter-spacing:.005em;opacity:0;transition:opacity .25s,color .25s;
+  height:calc(var(--size)*1.25);white-space:nowrap;transform:translateY(-50%)}
+.ph.near{opacity:.22} .ph.cur{opacity:1;font-weight:500}
+.ph.lens{color:var(--gold-hi)}
+.ph.lens.cur{text-decoration:underline;text-decoration-color:var(--gold);text-underline-offset:.18em;text-decoration-thickness:2px}
+.ph.gap{height:calc(var(--size)*.6)}
+.cue{position:absolute;top:calc(var(--line) - var(--size)*1.6);font-size:13px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold-hi);
+  opacity:0;transition:opacity .25s}
+.cue.on{opacity:1}
+.mini{position:fixed;z-index:4;bottom:calc(14px + env(safe-area-inset-bottom,0px));right:max(20px,env(safe-area-inset-right,0px));
+  font-variant-numeric:tabular-nums;font-size:20px;color:var(--dim);letter-spacing:.04em;opacity:0;transition:opacity .4s,color .3s;pointer-events:none}
+.mini b{color:var(--text);font-weight:500}
+.mini.over b{color:var(--warn)}
+.side-right .mini{right:auto;left:max(20px,env(safe-area-inset-left,0px))}
+.prog{position:fixed;left:0;bottom:0;height:3px;width:0;background:var(--gold);opacity:0;transition:width .3s linear,opacity .4s;z-index:4}
+.hide-ui .mini,.hide-ui .prog{opacity:1}
+.count[hidden]{display:none}
+.editor{position:fixed;inset:0;z-index:20;background:rgba(17,17,17,.94);display:flex;align-items:center;justify-content:center;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:16px}
+.editor[hidden]{display:none}
+.ed{width:min(760px,100%);display:flex;flex-direction:column;gap:12px;max-height:100%}
+.ed h2{margin:0;font-family:var(--display);font-weight:500;font-size:24px}
+.ed p{margin:0;font-size:13px;color:var(--dim);line-height:1.5}
+.ed textarea{width:100%;min-height:48vh;resize:vertical;background:var(--ink2);color:var(--text);border:1px solid #3a3631;padding:14px;
+  font:16px/1.6 var(--body)}
+.ed .row{display:flex;gap:10px;flex-wrap:wrap}
+.edited{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-hi);border:1px solid var(--gold);padding:2px 7px;margin-left:8px;vertical-align:2px}
+.count{position:fixed;inset:0;display:grid;place-items:center;font-family:var(--display);font-size:min(30vw,220px);color:var(--gold);pointer-events:none}
+
+.bar{position:fixed;inset:auto 0 0;z-index:5;display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;
+  padding-block:12px calc(14px + env(safe-area-inset-bottom,0px));
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+  background:linear-gradient(transparent,var(--stage) 30%);transition:opacity .4s}
+.hide-ui .bar,.hide-ui .top{opacity:0;pointer-events:none}
+.grp{display:flex;align-items:center;gap:8px;min-width:0}
+.btn{border:1px solid #3a3631;background:var(--ink2);padding:8px 12px;cursor:pointer;min-height:40px}
+.btn.primary{background:var(--gold);border-color:var(--gold);color:#111;font-weight:500;min-width:92px}
+.btn:hover{border-color:var(--gold)}
+label{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);display:flex;align-items:center;gap:8px}
+label output{color:var(--text);font-variant-numeric:tabular-nums;min-width:3ch;letter-spacing:0}
+input[type=range]{accent-color:var(--gold);width:110px}
+select{background:var(--ink2);border:1px solid #3a3631;padding:8px 10px;min-height:40px}
+.help{flex-basis:100%;font-size:12px;color:var(--dim);line-height:1.5}
+.help kbd{font-family:var(--body);border:1px solid #3a3631;padding:0 5px;color:var(--text)}
+@media (max-height:520px){.help{display:none}.bar{gap:6px 10px;padding-block:6px calc(8px + env(safe-area-inset-bottom,0px))}.btn,select{min-height:34px;padding:5px 9px}.top{padding-block:calc(6px + env(safe-area-inset-top,0px)) 6px}}
+@media (max-width:640px){input[type=range]{width:84px}.clock .now{font-size:22px}}
+@media (prefers-reduced-motion:reduce){.track,.ph,.cue{transition:none}}
+</style>
+
+<div class="stage" id="stage" aria-live="polite">
+  <div class="rail left" id="rail">
+    <div class="col">
+      <div class="mark"></div>
+      <div class="cue" id="cue">Lens next →</div>
+      <div class="track" id="track"></div>
+    </div>
+  </div>
+</div>
+<div class="count" id="count" hidden></div>
+<div class="editor" id="editor" hidden role="dialog" aria-modal="true" aria-labelledby="edTitle">
+  <div class="ed">
+    <h2 id="edTitle">Edit your text</h2>
+    <p>Change words to fit how you speak. Leave an empty line between paragraphs. Put <b>[LENS]</b> before a sentence you say into the lens, or <b>[LENS to end]</b> to stay on the lens until the end.
+       Your changes stay only while this tab is open; reopen the page and the script text comes back.</p>
+    <textarea id="edText" aria-label="Your part"></textarea>
+    <div class="row"><button class="btn primary" id="edApply">Use this text</button><button class="btn" id="edReset">Back to the script text</button><button class="btn" id="edCancel">Cancel</button></div>
+  </div>
+</div>
+<div class="mini" id="mini" aria-live="off"><b id="miniNow">0:00</b> / <span id="miniTot">1:13</span></div>
+<div class="prog" id="prog"></div>
+
+<header class="top">
+  <div class="who"><span id="chap">Chapter 2 · Week 1</span><b><span id="name">Ariel De Silvio</span><span class="edited" id="editedChip" hidden>edited</span></b></div>
+  <div class="clock"><span class="now" id="now">0:00</span><span class="est" id="est">of about 1:10</span><span class="chip" id="fit">in range</span></div>
+</header>
+
+<nav class="bar" aria-label="Teleprompter controls">
+  <div class="grp">
+    <select id="who" aria-label="Speaker"></select>
+    <button class="btn primary" id="play">Start</button>
+    <button class="btn" id="back" aria-label="Previous phrase">←</button>
+    <button class="btn" id="fwd" aria-label="Next phrase">→</button>
+    <button class="btn" id="restart">Restart</button>
+  </div>
+  <div class="grp">
+    <label for="wpm">Pace <output id="wpmv">145</output></label><input type="range" id="wpm" min="100" max="180" step="5" value="145">
+    <label for="size">Size <output id="sizev">56</output></label><input type="range" id="size" min="32" max="96" step="2" value="56">
+    <label for="line">Height <output id="linev">28</output></label><input type="range" id="line" min="10" max="70" step="1" value="28">
+  </div>
+  <div class="grp">
+    <select id="side" aria-label="Text side"><option value="left">Text on left edge</option><option value="center">Text centred</option><option value="right">Text on right edge</option></select>
+    <button class="btn" id="mirror" aria-pressed="false">Mirror</button>
+    <button class="btn" id="full">Full screen</button>
+    <button class="btn" id="edit">Edit text</button>
+  </div>
+  <p class="help">Put this screen on <b>your right</b> of the phone lens, at lens height, and choose the text side nearest the lens. Read the lit phrase; it changes in place, so your eyes stay put. Gold phrases go to the lens.
+    <kbd>Space</kbd> start/pause · <kbd>←</kbd><kbd>→</kbd> phrase · <kbd>↑</kbd><kbd>↓</kbd> pace · <kbd>R</kbd> restart · <kbd>M</kbd> mirror · <kbd>F</kbd> full screen · tap the text to pause. <b>Edit text</b> changes your words for this session only.</p>
+</nav>
+
+<script>
+const PARTS = [{"name": "Amjad Saad Bensalamah", "role": "Chief Innovation Officer", "week": "Week 0", "paras": ["Layla is made up. Everything about her is real.", "She's thirty-four, she lives in Dubai, and every eight weeks she colours her hair. Sometimes at the salon, sometimes with a box from the pharmacy. Both work. Neither tells her what's happening to her hair in between.", "That's what PRO•GO changes. A twelve-week care subscription. We measure her hair. A professional from her own salon comes to her home, twice. Twelve weeks later, we measure again. If it didn't work, she sees it. So do we.", "L'Oréal can do most of this already. The science, the products, the salons that already trust us.", "What we can't do is the hard part in the middle. Getting a licensed professional into a private home in Dubai, on time, insured, with the right permit. A home visit there needs its own permit, tied to the person who walks through the door. We've never run that. And Layla's living room is not the place to learn.", "So we won't build it. **[LENS]** We'll bring in someone who already does it, every day."]}, {"name": "Ariel De Silvio", "role": "Chief Technology & AI Officer", "week": "Week 1", "paras": ["Week one. Layla books her first visit. She thinks she's talking to her salon, and she is. But behind that message sits ServiceMarket.", "ServiceMarket has run home services in Dubai since 2013. More than 200 vetted partner companies work through it, salon at home included. Think of them as the operator for salon work outside the salon. They already handle booking and payment. In our pilot, they would add the insurance and each salon's permit paperwork.", "We looked at the two big beauty apps. Urban Company and Justlife send their own staff to your door. That would replace the salon.", "ServiceMarket works the other way. It already sells other companies' services. The salon stays in front.", "If Layla ever feels that an app replaced her colourist, PRO•GO is finished. Her colourist is the reason she says yes in the first place.", "So our test for a partner was simple. **[LENS]** Do they make the salon stronger, or do they take its place?", "ServiceMarket makes it stronger. That's why them."]}, {"name": "Qhakazile Mathebula", "role": "Chief Operations Officer", "week": "Week 2", "paras": ["Week two. Dana arrives. The same colourist Layla has trusted for years, now in her living room.", "Three partners make that hour happen. The salon brings Dana and the relationship. L'Oréal brings the products, the measurement and the plan. ServiceMarket brings everything around the visit: booking, route, insurance, payment, and the permit paperwork for each salon.", "The model is a paid pilot, not an acquisition. We pay ServiceMarket per visit, for ninety days. In return, we are the only colour subscription on their platform in our two communities during the test.", "The data stays where it's created. Hair results stay with L'Oréal and the salon, with Layla's consent. Booking data stays with ServiceMarket.", "And the money has to work. Layla pays one subscription: our target is about AED 900 to 1,200 for twelve weeks, with two visits, the scans and her products. Our fee to ServiceMarket has to fit inside that.", "If it works, we sign a longer deal and grow with them across the UAE. **[LENS]** But only after the numbers give us the right to ask."]}, {"name": "Rebecca Fernandes", "role": "Chief Marketing & Creative Officer", "week": "Week 4", "paras": ["Week four. Nothing happens in week four. Layla uses her kit, the colour holds, and she doesn't think about us once.", "That's exactly what we want. Because look at who's winning while she isn't looking.", "The salon keeps a client who could have drifted to a box from the pharmacy. It earns on a visit it couldn't have made alone. Our target is ten percent more income for partner salons by 2030. And the professional stays theirs. We don't hire her. We never will.", "ServiceMarket gets something it can't buy. The name of L'Oréal behind it, and a door to salons it could never sign one by one.", "And L'Oréal learns. For the first time, we see what our products do to real hair, in real homes, over twelve weeks. Not in a lab. Not in a survey. That is worth more than the margin on any single visit.", "**[LENS]** Three partners, three different reasons to want this to work. That's why it holds together."]}, {"name": "Saja AlOwayshiq", "role": "Chief Customer Experience Officer", "week": "Week 10", "paras": ["Week ten. Dana's second visit, eight weeks after the first, and a second scan. This is where a pilot either teaches you something or just spends your money.", "Here is ours. Dubai. Two communities, Downtown and Business Bay. Three to five partner salons. Ninety days, from the second quarter of 2027.", "No new app at the start. We match each client to a professional by hand, on purpose. The app comes in 2028, after the test proves people want this.", "One unit owns it: the PRO•GO venture unit, inside Professional Products. One leader, not a committee, with the salons and the budget. Your Innovation Board reviews it every quarter.", "Every week we watch three numbers. How many book a second PRO•GO visit within ninety days. Whether each visit makes money after we pay the salon and ServiceMarket. And whether the hair score actually moves.", "Layla went from fifty-eight to sixty-six by week ten. She's an example, so that number is illustrative. **[LENS]** The real numbers come from the pilot. That's the whole reason to run it."]}, {"name": "Ignacio Montero Alcantara", "role": "Chief Financial Officer", "week": "Week 12", "paras": ["Week twelve. No visit this time. Layla scans again on her phone. Seventy-four. And she renews.", "One Layla proves nothing. Three hundred would. That's our target for 2027.", "So we write the rules now, before we fall in love with the idea.", "We go ahead if at least forty percent book a second visit within ninety days, and every visit makes money. Then the next seven million euros are released at the Q4 2027 review, and we add salons.", "We change course if people come back but the money doesn't work. New price, new services, or a new deal with ServiceMarket.", "We fall back if salons won't send their colourists out. Then we test a salon subscription instead. Cheaper, safer.", "And we stop after two missed reviews in a row. Stopping early is cheaper than being right too late.", "**[LENS, from here to the end]** So this is our ask. Not a big bet. Ninety days in Dubai, inside the three million euros already planned. It buys proof, not volume. ServiceMarket at the door, the salon in the room, and your support.", "Give us twelve weeks. Layla already did."]}];
+const $ = (id) => document.getElementById(id);
+const sess = { get(k) { try { return sessionStorage.getItem('tp-edit-' + k); } catch { return null; } },
+               set(k, v) { try { v === null ? sessionStorage.removeItem('tp-edit-' + k) : sessionStorage.setItem('tp-edit-' + k, v); } catch {} } };
+const toPlain = (paras) => paras.join('\n\n').replace(/\*\*\[LENS, from here to the end\]\*\*/g, '[LENS to end]').replace(/\*\*\[LENS\]\*\*/g, '[LENS]');
+const fromPlain = (txt) => txt.split(/\n\s*\n/).map((p) => p.replace(/\s+/g, ' ').trim()).filter(Boolean)
+  .map((p) => p.replace(/\[LENS to end\]/gi, '**[LENS, from here to the end]**').replace(/\[LENS\]/gi, '**[LENS]**'));
+const store = { get(k, d) { try { const v = localStorage.getItem('tp-' + k); return v === null ? d : JSON.parse(v); } catch { return d; } },
+                set(k, v) { try { localStorage.setItem('tp-' + k, JSON.stringify(v)); } catch {} } };
+
+// ---- phrases: about 22 characters, broken at punctuation, never ending on a small word; [LENS] flags kept ----
+const SMALL = new Set('a an the to of in on at for with and or but if as by from into than that this these those its it is are was be been has have will would can our their her his she he we you they your my not no so'.split(' '));
+function phrasesOf(part) {
+  const out = []; let lensRest = false;
+  part.paras.forEach((p) => {
+    let lensSentence = false, startLens = false, cur = [];
+    const toks = p.replace(/\*\*\[LENS, from here to the end\]\*\*/g, ' ⟦LENSALL⟧ ').replace(/\*\*\[LENS\]\*\*/g, ' ⟦LENS⟧ ').split(/\s+/).filter(Boolean);
+    const isEnd = (w) => /[.!?…]["”’)]*$/.test(w), isSoft = (w) => /[,;:]["”’)]*$/.test(w);
+    const flush = (endSent) => { if (!cur.length) return;
+      out.push({ text: cur.join(' '), words: cur.length, endSent, endPara: false, lens: lensSentence || lensRest, lensStart: startLens });
+      cur = []; startLens = false; };
+    toks.forEach((w, i) => {
+      if (w === '⟦LENS⟧') { flush(false); lensSentence = true; startLens = true; return; }
+      if (w === '⟦LENSALL⟧') { flush(false); lensRest = true; startLens = true; return; }
+      cur.push(w);
+      if (isEnd(w)) { flush(true); lensSentence = false; return; }
+      const rest = toks.slice(i + 1); const toEnd = rest.findIndex(isEnd) + 1;   // words left in this sentence
+      const chars = cur.join(' ').length, bare = w.toLowerCase().replace(/[^a-z&]/g, '');
+      if (toEnd > 0 && toEnd <= 1 && chars + rest[0].length < 34) return;      // no one-word leftovers
+      if (isSoft(w) && cur.length >= 2) return flush(false);
+      if (chars >= 22 && cur.length >= 2 && !SMALL.has(bare)) flush(false);
+      else if (chars >= 34) flush(false);
+    });
+    flush(true);
+    if (out.length) out[out.length - 1].endPara = true;
+  });
+  // time: the part's words at the chosen pace, spread by weight (words + pauses at sentence and paragraph ends)
+  const weights = out.map((x) => x.words + (x.endSent ? 0.7 : 0.15) + (x.endPara ? 0.9 : 0));
+  const sumW = weights.reduce((a, b) => a + b, 0), words = out.reduce((a, x) => a + x.words, 0);
+  out.forEach((x, n) => { x.share = weights[n] / sumW; }); out.words = words;
+  return out;
+}
+const dur = (ph, wpm, list = window.__ph) => ph.share * (list.words * 60 / wpm);
+const fmt = (s) => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, '0')}`;
+
+// ---- state ----
+const IDS = ['amjad', 'ariel', 'qhakazile', 'rebecca', 'saja', 'ignacio'];
+let who = IDS.indexOf((location.hash || '').slice(1)); if (who < 0) who = store.get('who', 1);
+let ph = [], i = 0, playing = false, timer = null, t0 = 0, elapsed = 0, wake = null;
+const S = { wpm: store.get('wpm', 145), size: store.get('size', 56), line: store.get('line', 28), side: store.get('side', 'left'), mirror: store.get('mirror', false) };
+
+PARTS.forEach((p, k) => { const o = document.createElement('option'); o.value = k; o.textContent = `${k + 1} · ${p.name}`; $('who').append(o); });
+
+function load(k) {
+  who = k; store.set('who', k); $('who').value = k;
+  const p = PARTS[k]; $('name').textContent = p.name; $('chap').textContent = `Chapter ${k + 1} · ${p.week} · ${p.role}`;
+  if (location.hash.slice(1) !== IDS[k]) history.replaceState(null, '', '#' + IDS[k]);
+  const ed = sess.get(IDS[k]); const use = ed ? { ...p, paras: fromPlain(ed) } : p;
+  $('editedChip').hidden = !ed;
+  ph = phrasesOf(use); window.__ph = ph; const tr = $('track'); tr.innerHTML = '';
+  ph.forEach((x, n) => { const d = document.createElement('div'); d.className = 'ph' + (x.lens ? ' lens' : ''); d.textContent = x.text; d.dataset.n = n; tr.append(d);
+    if (x.endPara && n < ph.length - 1) { const g = document.createElement('div'); g.className = 'ph gap'; tr.append(g); } });
+  stop(); i = 0; elapsed = 0; render(); estimate();
+}
+function estimate() {
+  const tot = ph.words * 60 / S.wpm;
+  $('est').textContent = `of about ${fmt(tot)} at ${S.wpm} wpm`; $('miniTot').textContent = fmt(tot);
+  const ok = tot >= 62 && tot <= 78; $('fit').className = 'chip ' + (ok ? 'ok' : 'bad'); $('fit').textContent = ok ? 'in range' : (tot < 62 ? 'too short: slow down' : 'too long: speed up');
+}
+function render() {
+  const els = [...$('track').querySelectorAll('.ph:not(.gap)')];
+  els.forEach((el, n) => { el.classList.toggle('cur', n === i); el.classList.toggle('near', n === i - 1 || n === i + 1); });
+  const el = els[i]; if (el) $('track').style.transform = `translateY(${-el.offsetTop}px)`;
+  const nx = ph[i + 1]; $('cue').classList.toggle('on', !!(nx && nx.lensStart && !ph[i].lens));
+  $('now').textContent = fmt(elapsed); $('miniNow').textContent = fmt(elapsed);
+  $('prog').style.width = (ph.length > 1 ? (i / (ph.length - 1)) * 100 : 0) + '%';
+}
+function tick() {
+  if (!playing) return;
+  const d = dur(ph[i], S.wpm) * 1000;
+  timer = setTimeout(() => { if (i < ph.length - 1) { i++; render(); tick(); } else { stop(); $('play').textContent = 'Start'; } }, d);
+}
+function clock() { if (!playing) return; elapsed = (performance.now() - t0) / 1000; $('now').textContent = fmt(elapsed); $('miniNow').textContent = fmt(elapsed);
+  $('mini').classList.toggle('over', elapsed > 78); requestAnimationFrame(clock); }
+async function play() {
+  if (playing) return stop();
+  if (i === 0 && elapsed === 0) { for (const n of [3, 2, 1]) { $('count').hidden = false; $('count').textContent = n; await new Promise((r) => setTimeout(r, 700)); } $('count').hidden = true; }
+  playing = true; $('play').textContent = 'Pause'; document.body.classList.add('hide-ui'); t0 = performance.now() - elapsed * 1000; clock(); tick();
+  try { wake = await navigator.wakeLock?.request('screen'); } catch {}
+}
+function stop() { playing = false; clearTimeout(timer); $('play').textContent = i === 0 && elapsed === 0 ? 'Start' : 'Resume'; document.body.classList.remove('hide-ui'); try { wake?.release(); } catch {} wake = null; }
+function step(d) { i = Math.max(0, Math.min(ph.length - 1, i + d)); render(); if (playing) { clearTimeout(timer); tick(); } }
+function restart() { stop(); i = 0; elapsed = 0; render(); $('play').textContent = 'Start'; }
+
+function apply() {
+  const r = document.documentElement.style; r.setProperty('--size', S.size + 'px'); r.setProperty('--line', S.line + '%');
+  $('wpm').value = S.wpm; $('wpmv').textContent = S.wpm; $('size').value = S.size; $('sizev').textContent = S.size; $('line').value = S.line; $('linev').textContent = S.line;
+  $('rail').className = 'rail ' + S.side; $('side').value = S.side; document.body.classList.toggle('side-right', S.side === 'right');
+  $('stage').classList.toggle('mirror', S.mirror); $('mirror').setAttribute('aria-pressed', S.mirror);
+  Object.entries(S).forEach(([k, v]) => store.set(k, v)); estimate(); requestAnimationFrame(render);
+}
+$('who').onchange = (e) => load(+e.target.value);
+function openEditor() { stop(); const ed = sess.get(IDS[who]); $('edText').value = ed ?? toPlain(PARTS[who].paras); $('editor').hidden = false; $('edText').focus(); }
+$('edit').onclick = openEditor;
+$('edCancel').onclick = () => { $('editor').hidden = true; };
+$('edApply').onclick = () => { const v = $('edText').value.trim(); sess.set(IDS[who], v && v !== toPlain(PARTS[who].paras) ? v : null); $('editor').hidden = true; load(who); };
+$('edReset').onclick = () => { sess.set(IDS[who], null); $('editor').hidden = true; load(who); };
+$('play').onclick = play; $('back').onclick = () => step(-1); $('fwd').onclick = () => step(1); $('restart').onclick = restart;
+$('wpm').oninput = (e) => { S.wpm = +e.target.value; apply(); };
+$('size').oninput = (e) => { S.size = +e.target.value; apply(); };
+$('line').oninput = (e) => { S.line = +e.target.value; apply(); };
+$('side').onchange = (e) => { S.side = e.target.value; apply(); };
+$('mirror').onclick = () => { S.mirror = !S.mirror; apply(); };
+$('full').onclick = () => { (document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen?.())?.catch?.(() => {}); };
+$('stage').onclick = () => (playing ? stop() : play());
+document.addEventListener('keydown', (e) => {
+  if (e.target.matches('select,input,textarea') || !$('editor').hidden) { if (e.key === 'Escape') $('editor').hidden = true; return; }
+  const k = e.key;
+  if (k === ' ') { e.preventDefault(); play(); }
+  else if (k === 'ArrowRight') step(1); else if (k === 'ArrowLeft') step(-1);
+  else if (k === 'ArrowUp') { e.preventDefault(); S.wpm = Math.min(180, S.wpm + 5); apply(); }
+  else if (k === 'ArrowDown') { e.preventDefault(); S.wpm = Math.max(100, S.wpm - 5); apply(); }
+  else if (k === 'r' || k === 'R') restart(); else if (k === 'm' || k === 'M') { S.mirror = !S.mirror; apply(); }
+  else if (k === 'f' || k === 'F') $('full').click();
+});
+addEventListener('hashchange', () => { const k = IDS.indexOf(location.hash.slice(1)); if (k >= 0 && k !== who) load(k); });
+addEventListener('resize', () => requestAnimationFrame(render));
+load(who); apply();
+document.fonts?.ready.then(() => render());
+</script>

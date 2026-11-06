@@ -90,3 +90,9 @@ Defaults picked where the handoff was ambiguous or not possible in this environm
 | P4-2 | Screenshots use a fixed demo state: price variant v1, Essential plan, Wed 14 Apr, patch test done, Improved. | Same numbers as the auto-play and the video. |
 | P4-3 | The composite carries its own disclaimer and the "Prototype, simulated data" banner shows on both phones. The per-screen PNGs show the banner but not the footer (it is below the fold). | The footer disclaimer is at the bottom of each screen; on the board the composite's disclaimer covers it. Add the disclaimer next to any single screenshot used alone. |
 | P4-4 | Composite label reads "Team D · Product prototype", not "L'Oréal Groupe · Team D". | No L'Oréal marks in prototype images (handoff §8, §12). |
+
+## Video work, continued (5–6 Nov 2026)
+
+| # | Decision | Why |
+|---|---|---|
+| V-2 | **Open bug, not fixed:** S7 shows the re-scan dated "After · 9 Jun" and the button "Book my next visit · Wed 9 Jun", the same day. The next visit should be about 8 weeks after the second one. For the video, the button is hidden in the recording (`video/scripts/film_prototype.cjs`), not in the app. | Found while filming p4. Fix the next-visit date in `S7After.tsx` / `mock.ts` when the prototype is next touched. |
