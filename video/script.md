@@ -39,20 +39,18 @@ Each speaker: about 170 words, read calmly. **Time yourself: 65 to 75 seconds.**
 
 ---
 
-## COLD OPEN · 0:00–0:15 · full screen
+## COLD OPEN · 0:00–0:15 · morning, leaving, horizon, title
 
-**PICTURE.** Black. Then a slow fade up: morning in a Dubai apartment, sheer curtains, the city soft behind glass. A woman's hand lifts a phone to the lengths of her hair. We never see her face. A thin light sweeps across the screen.
-*Cut to the app (p1): the number lands. 58.*
-
-**ON SCREEN** (Bodoni, white, one line at a time, centred low):
+**PICTURE.** Right two-thirds: early morning in her Dubai apartment. Seen from behind, she stops at the hallway mirror and lifts a strand of her coloured hair, thoughtful (clip 0a, from 1.6 s: before that her face shows in the reflection). She picks up her bag and leaves; the door closes (0b). The camera rises from the window to the Dubai horizon and open sky (0c). Soft dissolves between the shots.
+**LEFT THIRD.** Black panel, white Bodoni, one line at a time:
 > Layla. 34. Dubai.
-> She colours her hair every eight weeks.
+> Every eight weeks, she colours her hair.
 > No one has ever measured what it does to it.
-> Today her salon sends her a free hair scan.
 
-**SOUND.** No music yet. Room tone: the air conditioning, a far-off city through glass. A soft, generic phone tap as she starts the scan, then a faint rising shimmer while it runs. **One piano note as 58 lands**, left to ring. On the opening slate, the piano motif begins: three notes, slow.
+**TITLE.** At 11 s the black panel slides away (the same eased move as chapter 2) and the horizon fills the screen; on the sky, in ink with a light ivory veil: *L'ORÉAL GROUPE · TEAM D* / **12 weeks with Layla** / *PRO•GO · A proposal to the CEO*.
+**SOUND.** Music from the first frame: a deep piano chord and string swell (the hook), building under the three lines; the crescendo lands as the title appears and holds over it, then falls away during chapter 1's week card (Lyria, `music/open_dram2_brief.txt`).
 
-*Cut to the opening slate (4 s): "12 weeks with Layla".*
+*Built by `scripts/cold_open.py`. The scan and the 58 now open chapter 1.*
 
 ---
 
@@ -61,7 +59,7 @@ Each speaker: about 170 words, read calmly. **Time yourself: 65 to 75 seconds.**
 **CARD** (3 s): Week 0 · The gap
 
 **LEFT.** Layla clip 1 continues, then the app panel: her score, 58, and the four bars.
-**ON SCREEN, left, once:** *Week 0.*
+**ON SCREEN, left, once:** *Week 0. Her salon sends a free hair scan.*
 **SOUND.** Week tick on the card. Piano motif alone, sparse, a long gap between phrases. Room tone stays under the Layla shots. Let the music thin out on "If it didn't work, she sees it" so the line lands in near-silence.
 
 **AMJAD SAAD BENSALAMAH · Chief Innovation Officer** · lower third: *Amjad Saad Bensalamah* / *CHIEF INNOVATION OFFICER*

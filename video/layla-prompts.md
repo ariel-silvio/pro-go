@@ -65,3 +65,13 @@ Continuity line added to every prompt: *"Layla: long, glossy, warm-brown hair wi
 | 5c | Week 10 | Close-up: gloved hands rinse her hair over a portable basin; water and light, calm. From behind and above, no face. |
 | 6b | Week 12 | Close-up: her finger taps once on a phone screen; the screen is plain ivory with a thin gold line, no text. |
 | 6c | Week 12 | Wide, from behind: she stands on a balcony at golden hour, the Dubai skyline soft in the distance, her hair moving in the breeze. Slow, final shot. |
+
+---
+
+## Cold open v2 (6 Nov 2026): morning, mirror, leaving, horizon
+
+| ID | Prompt |
+|---|---|
+| 0a | Medium shot from behind and slightly to one side, at shoulder height: early morning in her bright Dubai apartment hallway, dressed for work in an ivory silk blouse and a camel blazer. She stops in front of a tall mirror, lifts a strand of her coloured hair between her fingers, looks at it and pauses, thoughtful. The camera stays behind her; the mirror reflection is soft and out of focus and cropped at her shoulders, so her face is never visible. Warm low morning sun. |
+| 0b | From inside the apartment, behind her at waist height: she picks up her bag and phone from a pale console table, walks to the front door and out into a bright corridor; the door slowly closes behind her. Static camera, calm. |
+| 0c | Slow upward tilt and gentle push from a sunlit apartment window towards the hazy morning Dubai skyline and the horizon, golden light, calm, no people, no text. The shot ends on wide open sky above the city. |

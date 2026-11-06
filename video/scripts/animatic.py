@@ -28,7 +28,7 @@ def speaker_panel(n, name, role, first):
     for i, ln in enumerate(R.wrap(d, f"“{first}”", f, 720)[:7]):
         d.text((80, 440 + i * 46), ln, font=f, fill=(231, 225, 216))
     d.text((80, 760), "Recording to come · about 70 s · looking screen-left", font=R.font(R.SANS, 24), fill=(150, 144, 136))
-    R.spaced(d, (560, 170), "ANIMATIC V5", R.font(R.SANS_M, 18), (150, 144, 136), 4)
+    R.spaced(d, (560, 170), "ANIMATIC V6", R.font(R.SANS_M, 18), (150, 144, 136), 4)
     return img
 
 def layla_line(text):
@@ -121,7 +121,7 @@ SPK = [("AMJAD SAAD BENSALAMAH", "Amjad Saad Bensalamah", "Chief Innovation Offi
        ("REBECCA FERNANDES", "Rebecca Fernandes", "Chief Marketing & Creative Officer", "S4_Rebecca"),
        ("SAJA ALOWAYSHIQ", "Saja AlOwayshiq", "Chief Customer Experience Officer", "S5_Saja"),
        ("IGNACIO MONTERO ALCANTARA", "Ignacio Montero Alcantara", "Chief Financial Officer", "S6_Ignacio")]
-LINES = ["Week 0.", "Wednesday, 18:00. Dana, from my salon.", "Visit 1 of 2. My colourist. My living room.",
+LINES = ["Week 0. Her salon sends a free hair scan.", "Wednesday, 18:00. Dana, from my salon.", "Visit 1 of 2. My colourist. My living room.",
          "Week 4. Nothing to report.", "Week 10. Visit 2 of 2.", "Week 12. 74. She renewed."]
 # Recorded takes: chapter -> (trimmed clip, crop x of the 960 px window around the face)
 TAKES = {2: ("out/speakers/M4_S2_Ariel_take1_edit.mp4", 650)}   # trimmed 12.6-88.9 s, 6% faster, pitch kept
@@ -131,16 +131,8 @@ voice = []   # (index in seq, clip) for the soundtrack
 CARDS = ["chapter_week0", "chapter_week1", "chapter_week2", "chapter_week4", "chapter_week10", "chapter_week12"]
 
 seq = []
-# cold open 0:00-0:15: Layla 1 slowed to 7.3 s with four lines, p1 panel 3.7 s, slate 4 s
-lines = ["Layla. 34. Dubai.", "She colours her hair every eight weeks.", "No one has ever measured what it does to it.", "Today her salon sends her a free hair scan."]
-cold = os.path.join(TMP, "cold.mp4"); ins = ["-i", L.format(1)]; fc = "[0:v]setpts=PTS/0.6,fps=30[v0]"; last = "v0"
-for i, t in enumerate(lines):
-    ins += ["-loop", "1", "-i", png(centred_line(t), f"cold{i}.png")]
-    a, b = 0.3 + i * 1.75, 0.3 + (i + 1) * 1.75
-    fc += f";[{last}][{i+1}:v]overlay=0:0:enable='between(t,{a:.2f},{b:.2f})'[c{i}]"; last = f"c{i}"
-ff(*ins, "-filter_complex", fc, "-map", f"[{last}]", "-t", "7.3", "-an", *ENC, cold); seq.append(cold)
-seq.append(full("out/p1_scan_result_58.mp4", "cold_p1", 3.7, "pad=1920:1080:480:0:color=0xF7F3EC,fps=30"))
-seq.append(full("out/01_opening_slate.mp4", "slate"))
+# cold open 0:00-0:15: built by scripts/cold_open.py (mirror, leaving, horizon; text on a black third; title on the sky)
+seq.append(full("out/edits/cold_open_picture.mp4", "cold_open", 15.0))
 
 lefts = {1: [norm_left(L.format(1), "layla"), norm_left(L.format("1b"), "layla"), norm_left(L.format("1c"), "layla"),
              norm_left("out/p1_scan_result_58.mp4", "panel")],
@@ -174,7 +166,7 @@ seq.append(full(M4.format("closing_card"), "closing"))
 seq.append(still(png(credits(), "credits.png"), "credits", 5))
 
 lst = os.path.join(TMP, "all.txt"); open(lst, "w").write("".join(f"file '{os.path.abspath(p)}'\n" for p in seq))
-final = os.path.join(OUT, "animatic_v5.mp4"); part = final.replace(".mp4", ".part.mp4")
+final = os.path.join(OUT, "animatic_v6.mp4"); part = final.replace(".mp4", ".part.mp4")
 starts, t = [], 0.0
 for p in seq: starts.append(t); t += length(p)
 ins = ["-f", "concat", "-safe", "0", "-i", lst, "-f", "lavfi", "-i", f"anullsrc=r=48000:cl=stereo:d={t:.3f}"]
