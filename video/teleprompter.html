@@ -54,6 +54,16 @@ button,select,input{font:inherit;color:inherit}
 .prog{position:fixed;left:0;bottom:0;height:3px;width:0;background:var(--gold);opacity:0;transition:width .3s linear,opacity .4s;z-index:4}
 .hide-ui .mini,.hide-ui .prog{opacity:1}
 .count[hidden]{display:none}
+.editor{position:fixed;inset:0;z-index:20;background:rgba(17,17,17,.94);display:flex;align-items:center;justify-content:center;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:16px}
+.editor[hidden]{display:none}
+.ed{width:min(760px,100%);display:flex;flex-direction:column;gap:12px;max-height:100%}
+.ed h2{margin:0;font-family:var(--display);font-weight:500;font-size:24px}
+.ed p{margin:0;font-size:13px;color:var(--dim);line-height:1.5}
+.ed textarea{width:100%;min-height:48vh;resize:vertical;background:var(--ink2);color:var(--text);border:1px solid #3a3631;padding:14px;
+  font:16px/1.6 var(--body)}
+.ed .row{display:flex;gap:10px;flex-wrap:wrap}
+.edited{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-hi);border:1px solid var(--gold);padding:2px 7px;margin-left:8px;vertical-align:2px}
 .count{position:fixed;inset:0;display:grid;place-items:center;font-family:var(--display);font-size:min(30vw,220px);color:var(--gold);pointer-events:none}
 
 .bar{position:fixed;inset:auto 0 0;z-index:5;display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;
@@ -86,11 +96,20 @@ select{background:var(--ink2);border:1px solid #3a3631;padding:8px 10px;min-heig
   </div>
 </div>
 <div class="count" id="count" hidden></div>
+<div class="editor" id="editor" hidden role="dialog" aria-modal="true" aria-labelledby="edTitle">
+  <div class="ed">
+    <h2 id="edTitle">Edit your text</h2>
+    <p>Change words to fit how you speak. Leave an empty line between paragraphs. Put <b>[LENS]</b> before a sentence you say into the lens, or <b>[LENS to end]</b> to stay on the lens until the end.
+       Your changes stay only while this tab is open; reopen the page and the script text comes back.</p>
+    <textarea id="edText" aria-label="Your part"></textarea>
+    <div class="row"><button class="btn primary" id="edApply">Use this text</button><button class="btn" id="edReset">Back to the script text</button><button class="btn" id="edCancel">Cancel</button></div>
+  </div>
+</div>
 <div class="mini" id="mini" aria-live="off"><b id="miniNow">0:00</b> / <span id="miniTot">1:13</span></div>
 <div class="prog" id="prog"></div>
 
 <header class="top">
-  <div class="who"><span id="chap">Chapter 2 · Week 1</span><b id="name">Ariel De Silvio</b></div>
+  <div class="who"><span id="chap">Chapter 2 · Week 1</span><b><span id="name">Ariel De Silvio</span><span class="edited" id="editedChip" hidden>edited</span></b></div>
   <div class="clock"><span class="now" id="now">0:00</span><span class="est" id="est">of about 1:10</span><span class="chip" id="fit">in range</span></div>
 </header>
 
@@ -111,14 +130,20 @@ select{background:var(--ink2);border:1px solid #3a3631;padding:8px 10px;min-heig
     <select id="side" aria-label="Text side"><option value="left">Text on left edge</option><option value="center">Text centred</option><option value="right">Text on right edge</option></select>
     <button class="btn" id="mirror" aria-pressed="false">Mirror</button>
     <button class="btn" id="full">Full screen</button>
+    <button class="btn" id="edit">Edit text</button>
   </div>
   <p class="help">Put this screen on <b>your right</b> of the phone lens, at lens height, and choose the text side nearest the lens. Read the lit phrase; it changes in place, so your eyes stay put. Gold phrases go to the lens.
-    <kbd>Space</kbd> start/pause · <kbd>←</kbd><kbd>→</kbd> phrase · <kbd>↑</kbd><kbd>↓</kbd> pace · <kbd>R</kbd> restart · <kbd>M</kbd> mirror · <kbd>F</kbd> full screen · tap the text to pause.</p>
+    <kbd>Space</kbd> start/pause · <kbd>←</kbd><kbd>→</kbd> phrase · <kbd>↑</kbd><kbd>↓</kbd> pace · <kbd>R</kbd> restart · <kbd>M</kbd> mirror · <kbd>F</kbd> full screen · tap the text to pause. <b>Edit text</b> changes your words for this session only.</p>
 </nav>
 
 <script>
 const PARTS = [{"name": "Amjad Saad Bensalamah", "role": "Chief Innovation Officer", "week": "Week 0", "paras": ["Layla is made up. Everything about her is real.", "She's thirty-four, she lives in Dubai, and every eight weeks she colours her hair. Sometimes at the salon, sometimes with a box from the pharmacy. Both work. Neither tells her what's happening to her hair in between.", "That's what PRO•GO changes. A twelve-week care subscription. We measure her hair. A professional from her own salon comes to her home, twice. Twelve weeks later, we measure again. If it didn't work, she sees it. So do we.", "L'Oréal can do most of this already. The science, the products, the salons that already trust us.", "What we can't do is the hard part in the middle. Getting a licensed professional into a private home in Dubai, on time, insured, with the right permit. A home visit there needs its own permit, tied to the person who walks through the door. We've never run that. And Layla's living room is not the place to learn.", "So we won't build it. **[LENS]** We'll bring in someone who already does it, every day."]}, {"name": "Ariel De Silvio", "role": "Chief Technology & AI Officer", "week": "Week 1", "paras": ["Week one. Layla books her first visit. She thinks she's talking to her salon, and she is. But behind that message sits ServiceMarket.", "ServiceMarket has run home services in Dubai since 2013. More than 200 vetted partner companies work through it, salon at home included. Think of them as the operator for salon work outside the salon. They already handle booking and payment. In our pilot, they would add the insurance and each salon's permit paperwork.", "We looked at the two big beauty apps. Urban Company and Justlife send their own staff to your door. That would replace the salon.", "ServiceMarket works the other way. It already sells other companies' services. The salon stays in front.", "If Layla ever feels that an app replaced her colourist, PRO•GO is finished. Her colourist is the reason she says yes in the first place.", "So our test for a partner was simple. **[LENS]** Do they make the salon stronger, or do they take its place?", "ServiceMarket makes it stronger. That's why them."]}, {"name": "Qhakazile Mathebula", "role": "Chief Operations Officer", "week": "Week 2", "paras": ["Week two. Dana arrives. The same colourist Layla has trusted for years, now in her living room.", "Three partners make that hour happen. The salon brings Dana and the relationship. L'Oréal brings the products, the measurement and the plan. ServiceMarket brings everything around the visit: booking, route, insurance, payment, and the permit paperwork for each salon.", "The model is a paid pilot, not an acquisition. We pay ServiceMarket per visit, for ninety days. In return, we are the only colour subscription on their platform in our two communities during the test.", "The data stays where it's created. Hair results stay with L'Oréal and the salon, with Layla's consent. Booking data stays with ServiceMarket.", "And the money has to work. Layla pays one subscription: our target is about AED 900 to 1,200 for twelve weeks, with two visits, the scans and her products. Our fee to ServiceMarket has to fit inside that.", "If it works, we sign a longer deal and grow with them across the UAE. **[LENS]** But only after the numbers give us the right to ask."]}, {"name": "Rebecca Fernandes", "role": "Chief Marketing & Creative Officer", "week": "Week 4", "paras": ["Week four. Nothing happens in week four. Layla uses her kit, the colour holds, and she doesn't think about us once.", "That's exactly what we want. Because look at who's winning while she isn't looking.", "The salon keeps a client who could have drifted to a box from the pharmacy. It earns on a visit it couldn't have made alone. Our target is ten percent more income for partner salons by 2030. And the professional stays theirs. We don't hire her. We never will.", "ServiceMarket gets something it can't buy. The name of L'Oréal behind it, and a door to salons it could never sign one by one.", "And L'Oréal learns. For the first time, we see what our products do to real hair, in real homes, over twelve weeks. Not in a lab. Not in a survey. That is worth more than the margin on any single visit.", "**[LENS]** Three partners, three different reasons to want this to work. That's why it holds together."]}, {"name": "Saja AlOwayshiq", "role": "Chief Customer Experience Officer", "week": "Week 10", "paras": ["Week ten. Dana's second visit, eight weeks after the first, and a second scan. This is where a pilot either teaches you something or just spends your money.", "Here is ours. Dubai. Two communities, Downtown and Business Bay. Three to five partner salons. Ninety days, from the second quarter of 2027.", "No new app at the start. We match each client to a professional by hand, on purpose. The app comes in 2028, after the test proves people want this.", "One unit owns it: the PRO•GO venture unit, inside Professional Products. One leader, not a committee, with the salons and the budget. Your Innovation Board reviews it every quarter.", "Every week we watch three numbers. How many book a second PRO•GO visit within ninety days. Whether each visit makes money after we pay the salon and ServiceMarket. And whether the hair score actually moves.", "Layla went from fifty-eight to sixty-six by week ten. She's an example, so that number is illustrative. **[LENS]** The real numbers come from the pilot. That's the whole reason to run it."]}, {"name": "Ignacio Montero Alcantara", "role": "Chief Financial Officer", "week": "Week 12", "paras": ["Week twelve. No visit this time. Layla scans again on her phone. Seventy-four. And she renews.", "One Layla proves nothing. Three hundred would. That's our target for 2027.", "So we write the rules now, before we fall in love with the idea.", "We go ahead if at least forty percent book a second visit within ninety days, and every visit makes money. Then the next seven million euros are released at the Q4 2027 review, and we add salons.", "We change course if people come back but the money doesn't work. New price, new services, or a new deal with ServiceMarket.", "We fall back if salons won't send their colourists out. Then we test a salon subscription instead. Cheaper, safer.", "And we stop after two missed reviews in a row. Stopping early is cheaper than being right too late.", "**[LENS, from here to the end]** So this is our ask. Not a big bet. Ninety days in Dubai, inside the three million euros already planned. It buys proof, not volume. ServiceMarket at the door, the salon in the room, and your support.", "Give us twelve weeks. Layla already did."]}];
 const $ = (id) => document.getElementById(id);
+const sess = { get(k) { try { return sessionStorage.getItem('tp-edit-' + k); } catch { return null; } },
+               set(k, v) { try { v === null ? sessionStorage.removeItem('tp-edit-' + k) : sessionStorage.setItem('tp-edit-' + k, v); } catch {} } };
+const toPlain = (paras) => paras.join('\n\n').replace(/\*\*\[LENS, from here to the end\]\*\*/g, '[LENS to end]').replace(/\*\*\[LENS\]\*\*/g, '[LENS]');
+const fromPlain = (txt) => txt.split(/\n\s*\n/).map((p) => p.replace(/\s+/g, ' ').trim()).filter(Boolean)
+  .map((p) => p.replace(/\[LENS to end\]/gi, '**[LENS, from here to the end]**').replace(/\[LENS\]/gi, '**[LENS]**'));
 const store = { get(k, d) { try { const v = localStorage.getItem('tp-' + k); return v === null ? d : JSON.parse(v); } catch { return d; } },
                 set(k, v) { try { localStorage.setItem('tp-' + k, JSON.stringify(v)); } catch {} } };
 
@@ -169,7 +194,9 @@ function load(k) {
   who = k; store.set('who', k); $('who').value = k;
   const p = PARTS[k]; $('name').textContent = p.name; $('chap').textContent = `Chapter ${k + 1} · ${p.week} · ${p.role}`;
   if (location.hash.slice(1) !== IDS[k]) history.replaceState(null, '', '#' + IDS[k]);
-  ph = phrasesOf(p); window.__ph = ph; const tr = $('track'); tr.innerHTML = '';
+  const ed = sess.get(IDS[k]); const use = ed ? { ...p, paras: fromPlain(ed) } : p;
+  $('editedChip').hidden = !ed;
+  ph = phrasesOf(use); window.__ph = ph; const tr = $('track'); tr.innerHTML = '';
   ph.forEach((x, n) => { const d = document.createElement('div'); d.className = 'ph' + (x.lens ? ' lens' : ''); d.textContent = x.text; d.dataset.n = n; tr.append(d);
     if (x.endPara && n < ph.length - 1) { const g = document.createElement('div'); g.className = 'ph gap'; tr.append(g); } });
   stop(); i = 0; elapsed = 0; render(); estimate();
@@ -212,6 +239,11 @@ function apply() {
   Object.entries(S).forEach(([k, v]) => store.set(k, v)); estimate(); requestAnimationFrame(render);
 }
 $('who').onchange = (e) => load(+e.target.value);
+function openEditor() { stop(); const ed = sess.get(IDS[who]); $('edText').value = ed ?? toPlain(PARTS[who].paras); $('editor').hidden = false; $('edText').focus(); }
+$('edit').onclick = openEditor;
+$('edCancel').onclick = () => { $('editor').hidden = true; };
+$('edApply').onclick = () => { const v = $('edText').value.trim(); sess.set(IDS[who], v && v !== toPlain(PARTS[who].paras) ? v : null); $('editor').hidden = true; load(who); };
+$('edReset').onclick = () => { sess.set(IDS[who], null); $('editor').hidden = true; load(who); };
 $('play').onclick = play; $('back').onclick = () => step(-1); $('fwd').onclick = () => step(1); $('restart').onclick = restart;
 $('wpm').oninput = (e) => { S.wpm = +e.target.value; apply(); };
 $('size').oninput = (e) => { S.size = +e.target.value; apply(); };
@@ -221,7 +253,7 @@ $('mirror').onclick = () => { S.mirror = !S.mirror; apply(); };
 $('full').onclick = () => { (document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen?.())?.catch?.(() => {}); };
 $('stage').onclick = () => (playing ? stop() : play());
 document.addEventListener('keydown', (e) => {
-  if (e.target.matches('select,input')) return;
+  if (e.target.matches('select,input,textarea') || !$('editor').hidden) { if (e.key === 'Escape') $('editor').hidden = true; return; }
   const k = e.key;
   if (k === ' ') { e.preventDefault(); play(); }
   else if (k === 'ArrowRight') step(1); else if (k === 'ArrowLeft') step(-1);

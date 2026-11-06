@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Record your part</title>
+<style>
+@font-face{font-family:'Bodoni Moda';font-weight:500;src:url('../../node_modules/@fontsource/bodoni-moda/files/bodoni-moda-latin-500-normal.woff2') format('woff2')}
+@font-face{font-family:'Jost';font-weight:400;src:url('../../node_modules/@fontsource/jost/files/jost-latin-400-normal.woff2') format('woff2')}
+@font-face{font-family:'Jost';font-weight:500;src:url('../../node_modules/@fontsource/jost/files/jost-latin-500-normal.woff2') format('woff2')}
+:root{--ink:#111111;--paper:#FFFFFF;--ivory:#F7F3EC;--muted:#5F5A54;--hair:#E3DDD3;--gold:#B08D57;--goldt:#8A6A3B;--m4:#1B6B63;--warn:#9E2B3A}
+@page{size:A4;margin:0}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--paper);color:var(--ink);font-family:'Jost',sans-serif;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.page{width:210mm;height:297mm;display:flex;flex-direction:column;overflow:hidden}
+.label{font-weight:500;font-size:7.6pt;letter-spacing:.22em;text-transform:uppercase;color:var(--goldt)}
+header{background:var(--ink);color:#fff;padding:9mm 14mm 7mm}
+header .label{color:var(--gold)}
+h1{font-family:'Bodoni Moda',serif;font-weight:500;font-size:31pt;line-height:1;margin:2.5mm 0 2mm}
+header p{margin:0;color:#d9d2c6;font-size:10.5pt}
+header .rule{width:30mm;height:1pt;background:var(--gold);margin-top:4mm}
+main{flex:1;padding:6mm 14mm 0;display:flex;flex-direction:column;gap:4.5mm}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:4.5mm}
+.step{border:.6pt solid var(--hair);padding:3.6mm 4mm 3.4mm;display:flex;flex-direction:column;gap:2.2mm;background:var(--paper)}
+.top{display:flex;align-items:center;justify-content:space-between}
+.num{font-family:'Bodoni Moda',serif;font-size:26pt;line-height:1;color:var(--gold)}
+.step svg{width:11mm;height:11mm;stroke:var(--ink);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.step h2{margin:0;font-family:'Bodoni Moda',serif;font-weight:500;font-size:15pt}
+.step ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:1.4mm;font-size:9.3pt;line-height:1.35}
+.step li{padding-left:3.6mm;position:relative}
+.step li::before{content:"";position:absolute;left:0;top:.62em;width:1.6mm;height:.6pt;background:var(--gold)}
+.lens{font-size:7.4pt;letter-spacing:.16em;color:var(--m4);border:.6pt solid var(--m4);padding:0 1mm}
+.qr{display:flex;gap:3mm;align-items:center;margin-top:auto}
+.qr img{width:20mm;height:20mm;display:block}
+.qr span{font-size:7.8pt;color:var(--muted);line-height:1.35;word-break:break-all}
+.phones{display:grid;grid-template-columns:1fr 1fr;gap:4.5mm}
+.phone{background:var(--ivory);padding:3.8mm 5mm;display:flex;flex-direction:column;gap:2mm;border-left:2pt solid var(--gold)}
+.phone h3{margin:0;font-family:'Bodoni Moda',serif;font-weight:500;font-size:14pt;display:flex;justify-content:space-between;align-items:baseline}
+.risk{font-family:'Jost';font-weight:500;font-size:7.4pt;letter-spacing:.16em;text-transform:uppercase;padding:.6mm 1.6mm}
+.risk.hi{color:#fff;background:var(--warn)} .risk.lo{color:#fff;background:var(--m4)}
+.path{font-size:8.2pt;color:var(--muted)}
+.set{display:grid;grid-template-columns:auto 1fr;gap:1.2mm 3mm;font-size:9.3pt;align-items:baseline}
+.set b{font-weight:500}
+.why{font-size:8.4pt;color:var(--muted);line-height:1.4;margin:0}
+.never{display:flex;gap:4mm;align-items:center;background:var(--ink);color:#fff;padding:3.5mm 5mm;font-size:9.6pt}
+.never b{color:var(--gold);font-weight:500;letter-spacing:.14em;font-size:7.8pt;text-transform:uppercase}
+footer{padding:3.5mm 14mm 6mm;display:flex;justify-content:space-between;gap:6mm;font-size:7.6pt;color:var(--muted);border-top:.6pt solid var(--hair);margin-top:4mm}
+footer a{color:var(--goldt);text-decoration:none}
+</style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <div class="label">L'ORÉAL GROUPE &nbsp;·&nbsp; TEAM D &nbsp;·&nbsp; M4 VIDEO</div>
+    <h1>Record your part</h1>
+    <p>12 weeks with Layla &nbsp;·&nbsp; about 70 seconds each &nbsp;·&nbsp; one take you are happy with</p>
+    <div class="rule"></div>
+  </header>
+
+  <main>
+    <section class="steps">
+      <div class="step">
+        <div class="top"><span class="num">1</span>
+          <svg viewBox="0 0 48 48"><rect x="5" y="14" width="38" height="20" rx="3"/><circle cx="36" cy="24" r="3"/><path d="M11 20v8"/></svg></div>
+        <h2>Set up</h2>
+        <ul><li>Rear camera, <b>landscape</b></li><li>Phone at <b>eye height</b>, about 1 m away</li><li>Sit in the <b>centre</b> of the frame</li><li>Plain dark top, no logos</li></ul>
+      </div>
+      <div class="step">
+        <div class="top"><span class="num">2</span>
+          <svg viewBox="0 0 48 48"><rect x="8" y="8" width="22" height="30"/><path d="M19 8v30M8 23h22"/><path d="M36 16c3 2 3 14 0 16M41 12c5 4 5 20 0 24"/></svg></div>
+        <h2>Light &amp; sound</h2>
+        <ul><li><b>Face a window</b>, ceiling lights off</li><li>Quiet room; laptop and fans <b>away</b> from the phone</li><li>Wired or clip-on mic if you have one</li></ul>
+      </div>
+      <div class="step">
+        <div class="top"><span class="num">3</span>
+          <svg viewBox="0 0 48 48"><path d="M4 24c6-9 14-13 20-13s14 4 20 13c-6 9-14 13-20 13S10 33 4 24z"/><circle cx="24" cy="24" r="5"/><path d="M33 40h10M39 36l4 4-4 4"/></svg></div>
+        <h2>Look</h2>
+        <ul><li>Look a little to <b>your right</b>: a post-it 25 cm right of the lens</li><li>Turn to the lens only on your <span class="lens">LENS</span> line</li></ul>
+      </div>
+      <div class="step">
+        <div class="top"><span class="num">4</span>
+          <svg viewBox="0 0 48 48"><rect x="6" y="9" width="36" height="24" rx="2"/><path d="M14 18h20M14 24h12M18 39h12M24 33v6"/></svg></div>
+        <h2>Read</h2>
+        <ul><li>Open the <b>teleprompter</b> on a laptop or tablet, right of the lens</li><li>Pick your name, press <b>Start</b></li><li><b>Edit text</b> if a word does not fit you</li></ul>
+        <div class="qr"><img src="qr_teleprompter.png" alt="QR code to the teleprompter"><span>ariel-silvio.github.io/<br>pro-go/teleprompter.html</span></div>
+      </div>
+      <div class="step">
+        <div class="top"><span class="num">5</span>
+          <svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="17"/><circle cx="24" cy="24" r="7" fill="#9E2B3A" stroke="none"/></svg></div>
+        <h2>Record</h2>
+        <ul><li>Send a <b>10-second test</b> to the group first</li><li>Wait <b>3 seconds</b> before you speak and after you stop</li><li>Aim for <b>65–75 s</b>; calm pace</li></ul>
+      </div>
+      <div class="step">
+        <div class="top"><span class="num">6</span>
+          <svg viewBox="0 0 48 48"><path d="M24 30V8M15 17l9-9 9 9"/><path d="M8 28v10h32V28"/></svg></div>
+        <h2>Send</h2>
+        <ul><li>Upload the <b>original file</b> to Descript › <b>Speakers</b></li><li>or a Google Drive link set to <b>Anyone with the link</b></li><li>Name it <b>M4_S2_Ariel_take1</b></li></ul>
+      </div>
+    </section>
+
+    <section class="phones">
+      <div class="phone">
+        <h3>iPhone <span class="risk hi">Change these</span></h3>
+        <div class="path">Settings › Camera</div>
+        <div class="set"><b>Formats</b><span>Most Compatible</span><b>Record Video</b><span>1080p at 30 fps · HDR Video off</span><b>Record Sound</b><span>Spatial Audio off (stereo)</span></div>
+        <p class="why">Spatial audio is why Descript refused an iPhone file. HDR can look washed out.</p>
+      </div>
+      <div class="phone">
+        <h3>Android <span class="risk lo">Lower risk</span></h3>
+        <div class="path">Camera › Settings (Samsung: Advanced recording options)</div>
+        <div class="set"><b>Video size</b><span>FHD 1080p, 30 fps</span><b>High efficiency video</b><span>off</span><b>HDR10+ video</b><span>off</span></div>
+        <p class="why">No spatial-audio problem on Android. Most phones are fine on default settings.</p>
+      </div>
+    </section>
+
+    <div class="never"><b>Never</b><span>send the video by WhatsApp or email: both shrink it. Stuck with a file? Share the Drive link with Ariel and we fix it.</span></div>
+  </main>
+
+  <footer>
+    <span>Teleprompter: <a href="https://ariel-silvio.github.io/pro-go/teleprompter.html">ariel-silvio.github.io/pro-go/teleprompter.html</a></span>
+    <span>Descript project: <a href="https://web.descript.com/78aea752-d5b8-476a-9b27-9ca7ecdb292a">web.descript.com/78aea752-d5b8…</a></span>
+  </footer>
+</div>
+</body>
+</html>

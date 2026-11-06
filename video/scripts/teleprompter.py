@@ -18,4 +18,13 @@ for k in range(0, len(chunks), 3):
 html = open(os.path.join(HERE, "teleprompter_template.html"), encoding="utf-8").read()
 html = html.replace("__PARTS__", json.dumps(parts, ensure_ascii=False))
 open(os.path.join(ROOT, "teleprompter.html"), "w", encoding="utf-8").write(html)
-print("wrote teleprompter.html with", len(parts), "parts")
+# standalone copy for GitHub Pages (the prototype site serves public/ as-is): full document skeleton
+page = ('<!doctype html>\n<html lang="en">\n<head>\n<meta charset="utf-8">\n'
+        '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n'
+        '<meta name="robots" content="noindex">\n'
+        '<style>*,*::before,*::after{box-sizing:border-box}body{margin:0}[hidden]{display:none!important}</style>\n')
+head, body = html.split("<style>", 1)
+page += head + "<style>" + body.split("</style>", 1)[0] + "</style>\n</head>\n<body>\n" + body.split("</style>", 1)[1] + "\n</body>\n</html>\n"
+pub = os.path.join(os.path.dirname(ROOT), "public", "teleprompter.html")
+open(pub, "w", encoding="utf-8").write(page)
+print("wrote teleprompter.html and public/teleprompter.html with", len(parts), "parts")
