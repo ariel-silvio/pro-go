@@ -28,7 +28,7 @@ def speaker_panel(n, name, role, first):
     for i, ln in enumerate(R.wrap(d, f"“{first}”", f, 720)[:7]):
         d.text((80, 440 + i * 46), ln, font=f, fill=(231, 225, 216))
     d.text((80, 760), "Recording to come · about 70 s · looking screen-left", font=R.font(R.SANS, 24), fill=(150, 144, 136))
-    R.spaced(d, (560, 170), "ANIMATIC V4", R.font(R.SANS_M, 18), (150, 144, 136), 4)
+    R.spaced(d, (560, 170), "ANIMATIC V5", R.font(R.SANS_M, 18), (150, 144, 136), 4)
     return img
 
 def layla_line(text):
@@ -174,7 +174,7 @@ seq.append(full(M4.format("closing_card"), "closing"))
 seq.append(still(png(credits(), "credits.png"), "credits", 5))
 
 lst = os.path.join(TMP, "all.txt"); open(lst, "w").write("".join(f"file '{os.path.abspath(p)}'\n" for p in seq))
-final = os.path.join(OUT, "animatic_v4.mp4"); part = final.replace(".mp4", ".part.mp4")
+final = os.path.join(OUT, "animatic_v5.mp4"); part = final.replace(".mp4", ".part.mp4")
 starts, t = [], 0.0
 for p in seq: starts.append(t); t += length(p)
 ins = ["-f", "concat", "-safe", "0", "-i", lst, "-f", "lavfi", "-i", f"anullsrc=r=48000:cl=stereo:d={t:.3f}"]

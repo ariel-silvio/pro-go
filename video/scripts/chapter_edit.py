@@ -102,33 +102,71 @@ PLAN = [  # (start, end, kind, source)
     (c[15], c[17], "ariel", None),
     (c[17], T, "split", c_test),
 ]
-parts = []
-for n, (a, b, kind, src) in enumerate(PLAN):
-    d = round(b - a, 3); out = os.path.join(TMP, f"s{n:02d}.mp4"); parts.append(out)
+XF = 0.6                      # transition length (s)
+FPS = 30
+def fr(t): return round(t * FPS) / FPS          # snap times to whole frames
+PLAN = [(fr(a), fr(b), k, src) for a, b, k, src in PLAN]
+SHIFT = 960 - CROPX                             # in the split, take pixel x appears at x + SHIFT
+
+def vis(n, t0, dur, out):
+    """Render segment n's look for take time [t0, t0+dur] (picture only)."""
+    a, b, kind, src = PLAN[n]; rel = t0 - a
     if kind == "ariel":
-        ff("-ss", f"{a:.3f}", "-t", f"{d:.3f}", "-i", TAKE, "-vf", "fps=30,scale=1920:1080", *ENC, out)
-    elif kind == "layla":
+        ff("-ss", f"{t0:.3f}", "-t", f"{dur:.3f}", "-i", TAKE, "-vf", "fps=30,scale=1920:1080", *ENC, out); return
+    if kind == "layla":
         clip, text = src
-        ins = ["-stream_loop", "-1", "-i", clip]; vf = "[0:v]fps=30,scale=1920:1080[v0]"; last = "v0"
+        ins = ["-stream_loop", "-1", "-ss", f"{rel:.3f}", "-i", clip]; vf = "[0:v]fps=30,scale=1920:1080,setpts=PTS-STARTPTS[v0]"; last = "v0"
         if text:
             p = os.path.join(TMP, f"line{n}.png"); line_overlay(text).save(p); ins += ["-loop", "1", "-i", p]
-            vf += f";[v0][1:v]overlay=0:0:enable='between(t,0.3,{d - 0.2:.2f})'[v1]"; last = "v1"
-        ff(*ins, "-filter_complex", vf, "-map", f"[{last}]", "-t", f"{d:.3f}", *ENC, out)
+            vf += f";[v0][1:v]overlay=0:0:enable='between(t,{0.3 - rel:.2f},{(b - a) - 0.2 - rel:.2f})'[v1]"; last = "v1"
+        ff(*ins, "-filter_complex", vf, "-map", f"[{last}]", "-t", f"{dur:.3f}", *ENC, out); return
+    right = ["-ss", f"{t0:.3f}", "-t", f"{dur:.3f}", "-i", TAKE]
+    if callable(src):
+        p = os.path.join(TMP, f"card{n}.png")
+        if not os.path.exists(p): src().save(p)
+        left = ["-loop", "1", "-t", f"{dur:.3f}", "-i", p]; lf = "[0:v]fps=30[l]"
     else:
-        right = ["-ss", f"{a:.3f}", "-t", f"{d:.3f}", "-i", TAKE]
-        if callable(src):
-            p = os.path.join(TMP, f"card{n}.png"); src().save(p)
-            left = ["-loop", "1", "-t", f"{d:.3f}", "-i", p]; lf = "[0:v]fps=30,fade=in:st=0:d=0.35:color=0xF7F3EC[l]"
-        else:
-            left = ["-stream_loop", "-1", "-i", src]; lf = "[0:v]fps=30,scale=960:1080[l]"
-        fc = f"{lf};[1:v]fps=30,crop=960:1080:{CROPX}:0[r];[l][r]hstack=inputs=2[v]"
-        ins, last = left + right, "v"
-        if n == 1:   # first time we see Ariel: lower third
-            ins += ["-loop", "1", "-i", "out/lower_thirds/LT_S2_Ariel.png"]
-            fc += f";[v][2:v]overlay=0:0:enable='between(t,0.3,{min(d, 4.3) - 0.1:.2f})'[v2]"; last = "v2"
-        ff(*ins, "-filter_complex", fc, "-map", f"[{last}]", "-t", f"{d:.3f}", *ENC, out)
+        left = ["-stream_loop", "-1", "-ss", f"{rel:.3f}", "-i", src]; lf = "[0:v]fps=30,scale=960:1080,setpts=PTS-STARTPTS[l]"
+    fc = f"{lf};[1:v]fps=30,crop=960:1080:{CROPX}:0[r];[l][r]hstack=inputs=2[v]"; ins, last = left + right, "v"
+    if n == 1:   # first time we see Ariel: lower third
+        ins += ["-loop", "1", "-i", "out/lower_thirds/LT_S2_Ariel.png"]
+        fc += f";[v][2:v]overlay=0:0:enable='between(t,{0.3 - rel:.2f},{4.2 - rel:.2f})'[v2]"; last = "v2"
+    ff(*ins, "-filter_complex", fc, "-map", f"[{last}]", "-t", f"{dur:.3f}", *ENC, out)
+
+def card_png(n):
+    p = os.path.join(TMP, f"card{n}.png")
+    if not os.path.exists(p): PLAN[n][3]().save(p)
+    return p
+
+def push(split_n, to_full, c, out):
+    """Fluid move between a split (card + Ariel's half) and Ariel full screen: the card slides out (or in) on the left
+    while the take glides between its split position (x+SHIFT) and full frame (x)."""
+    P = f"(st(0,clip(t/{XF},0,1));ld(0)*ld(0)*(3-2*ld(0)))"          # smoothstep 0..1
+    prog = P if to_full else f"(1-{P})"
+    fc = (f"color=c=0xF7F3EC:s=1920x1080:r=30:d={XF}[bg];"
+          f"[0:v]fps=30,setpts=PTS-STARTPTS[take];[1:v]fps=30,format=rgba[card];"
+          f"[bg][take]overlay=x='{SHIFT}*(1-{prog})':y=0:eval=frame[m];"
+          f"[m][card]overlay=x='-960*{prog}':y=0:eval=frame,format=yuv420p[v]")
+    ff("-ss", f"{c:.3f}", "-t", f"{XF:.3f}", "-i", TAKE, "-loop", "1", "-t", f"{XF:.3f}", "-i", card_png(split_n),
+       "-filter_complex", fc, "-map", "[v]", "-t", f"{XF:.3f}", *ENC, out)
+
+def dissolve(n_from, n_to, c, out):
+    A, B = out + ".a.mp4", out + ".b.mp4"; vis(n_from, c, XF, A); vis(n_to, c, XF, B)
+    ff("-i", A, "-i", B, "-filter_complex", f"[0:v][1:v]xfade=transition=fade:duration={XF - 1 / FPS:.3f}:offset=0[v]", "-map", "[v]", "-t", f"{XF:.3f}", *ENC, out)
+
+parts = []
+for n, (a, b, kind, src) in enumerate(PLAN):
+    if n > 0:                                   # transition at the cut, then the rest of the segment
+        prev = PLAN[n - 1][2]; tr = os.path.join(TMP, f"t{n:02d}.mp4")
+        if prev == "split" and kind == "ariel" and callable(PLAN[n - 1][3]): push(n - 1, True, a, tr); how = "move"
+        elif prev == "ariel" and kind == "split" and callable(src): push(n, False, a, tr); how = "move"
+        else: dissolve(n - 1, n, a, tr); how = "dissolve"
+        parts.append(tr); t0 = a + XF
+    else:
+        t0, how = a, "start"
+    core = os.path.join(TMP, f"s{n:02d}.mp4"); vis(n, t0, round(b - t0, 3), core); parts.append(core)
     what = src.__name__ if callable(src) else (src if isinstance(src, str) else (src[0] if src else "take"))
-    print(f"{n:2d} {a:6.2f}-{b:6.2f} {kind:6s} {what}")
+    print(f"{n:2d} {a:6.2f}-{b:6.2f} {kind:6s} {what:32s} in: {how}")
 lst = os.path.join(TMP, "list.txt"); open(lst, "w").write("".join(f"file '{os.path.abspath(p)}'\n" for p in parts))
 final = os.path.join(OUT, "ch2_edit.mp4"); ff("-f", "concat", "-safe", "0", "-i", lst, "-c", "copy", final)
 print("wrote", final, round(length(final), 2), "s (take", round(T, 2), "s)")
