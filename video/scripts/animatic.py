@@ -28,7 +28,7 @@ def speaker_panel(n, name, role, first):
     for i, ln in enumerate(R.wrap(d, f"“{first}”", f, 720)[:7]):
         d.text((80, 440 + i * 46), ln, font=f, fill=(231, 225, 216))
     d.text((80, 760), "Recording to come · about 70 s · looking screen-left", font=R.font(R.SANS, 24), fill=(150, 144, 136))
-    R.spaced(d, (560, 170), "ANIMATIC V3", R.font(R.SANS_M, 18), (150, 144, 136), 4)
+    R.spaced(d, (560, 170), "ANIMATIC V4", R.font(R.SANS_M, 18), (150, 144, 136), 4)
     return img
 
 def layla_line(text):
@@ -126,6 +126,7 @@ LINES = ["Week 0.", "Wednesday, 18:00. Dana, from my salon.", "Visit 1 of 2. My 
 # Recorded takes: chapter -> (trimmed clip, crop x of the 960 px window around the face)
 TAKES = {2: ("out/speakers/M4_S2_Ariel_take1_edit.mp4", 650)}   # trimmed 12.6-88.9 s, 6% faster, pitch kept
 def length(p): return float(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", p], capture_output=True, text=True).stdout)
+EDITS = {2: "out/edits/ch2_edit.mp4"}   # synced chapter edits (scripts/chapter_edit.py), picture only
 voice = []   # (index in seq, clip) for the soundtrack
 CARDS = ["chapter_week0", "chapter_week1", "chapter_week2", "chapter_week4", "chapter_week10", "chapter_week12"]
 
@@ -161,6 +162,9 @@ for i, (key, name, role, lt) in enumerate(SPK, start=1):
         seq.append(split("ch6a", left, 20, panel, LT.format(lt), line))
         seq.append(full("out/03_score_counter_v2.mp4", "score"))
         seq.append(split("ch6b", left, 51, panel))
+    elif i in EDITS and os.path.exists(EDITS[i]):
+        voice.append((len(seq), TAKES[i][0]))
+        seq.append(full(EDITS[i], f"ch{i}_edit", round(length(TAKES[i][0]), 3)))
     elif i in TAKES:
         voice.append((len(seq), TAKES[i][0]))
         seq.append(split(f"ch{i}", left, round(length(TAKES[i][0]), 3), panel, LT.format(lt), line, TAKES[i]))
@@ -170,7 +174,7 @@ seq.append(full(M4.format("closing_card"), "closing"))
 seq.append(still(png(credits(), "credits.png"), "credits", 5))
 
 lst = os.path.join(TMP, "all.txt"); open(lst, "w").write("".join(f"file '{os.path.abspath(p)}'\n" for p in seq))
-final = os.path.join(OUT, "animatic_v3.mp4"); part = final.replace(".mp4", ".part.mp4")
+final = os.path.join(OUT, "animatic_v4.mp4"); part = final.replace(".mp4", ".part.mp4")
 starts, t = [], 0.0
 for p in seq: starts.append(t); t += length(p)
 ins = ["-f", "concat", "-safe", "0", "-i", lst, "-f", "lavfi", "-i", f"anullsrc=r=48000:cl=stereo:d={t:.3f}"]
