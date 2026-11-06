@@ -26,7 +26,7 @@ Draft 5 Nov 2026, reviewed against M2 and M3. Brackets `[ ]` are blanks to fill 
 |---|---|---|---|---|
 | Cold open | 0:00–0:15 | Layla, the first scan, 58 | — | — |
 | 1 | 0:15–1:30 | Week 0 · The gap | Amjad (C. Innovation) | 176 |
-| 2 | 1:30–2:45 | Week 1 · Who, and why them | Ariel (C. Technology & AI) | 177 |
+| 2 | 1:30–2:45 | Week 1 · Who, and why them | Ariel (C. Technology & AI) | 168 |
 | 3 | 2:45–4:00 | Week 2 · How we work together | Qhakazile (C. Operations) | 177 |
 | 4 | 4:00–5:15 | Week 4 · Why everyone wins | Rebecca (C. Marketing & Creative) | 164 |
 | 5 | 5:15–6:30 | Week 10 · The pilot | Saja (C. Customer Experience) | 175 |
@@ -94,7 +94,7 @@ Each speaker: about 170 words, read calmly. **Time yourself: 65 to 75 seconds.**
 
 > Week one. Layla books her first visit. She thinks she's talking to her salon, and she is. But behind that message sits ServiceMarket.
 >
-> ServiceMarket has run home services in Dubai since 2013, and since 2023 it belongs to e&. It says it works with more than 200 vetted partner companies, salon at home included. Think of them as the operator for salon work outside the salon. They already run booking and payment. In our pilot they would add the insurance and each salon's permit paperwork.
+> ServiceMarket has run home services in Dubai since 2013. More than 200 vetted partner companies work through it, salon at home included. Think of them as the operator for salon work outside the salon. They already handle booking and payment. In our pilot, they would add the insurance and each salon's permit paperwork.
 >
 > We looked at the two big beauty apps. Urban Company and Justlife send their own staff to your door. That would replace the salon.
 >
@@ -106,7 +106,7 @@ Each speaker: about 170 words, read calmly. **Time yourself: 65 to 75 seconds.**
 >
 > ServiceMarket makes it stronger. That's why them.
 
-*Facts to verify before recording (sources in the list at the end): founded 2013; owned by e& since 2023 (ServiceMarket's own FAQ); 200+ partner companies and salon at home (company profile, ServiceMarket's claim, so "it says"). Urban Company and Justlife "send their own staff": check both sites once more.*
+*Facts to verify before recording (sources in the list at the end): founded 2013; 200+ partner companies and salon at home (company profiles; ServiceMarket's own figure, so check it is still current). Ownership by e& since 2023 is background only, not spoken. Urban Company and Justlife "send their own staff": check both sites once more.*
 
 *Editor: on "behind that message sits ServiceMarket", the partner's name can appear in the lower left in Jost spaced caps, if the team approves using the real name.*
 
