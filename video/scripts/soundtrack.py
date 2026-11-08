@@ -56,19 +56,38 @@ SPEECH = [(ch[i], c[i + 1] if i < 6 else CLOSE) for i in range(1, 7)]
 t = np.arange(len(music)) / SR; g = np.zeros(len(music), np.float32)
 for a, b in SPEECH:                    # -15 dB with 0.6 s ramps
     g = np.minimum(g, -15 * np.clip(np.minimum((t - a) / 0.6, (b - t) / 0.6), 0, 1))
-lift = np.clip(np.minimum((t - SCORE) / 0.8, (SCORE + 6.0 - t) / 0.8), 0, 1)   # score: up to -7 dB under his "74"
-g = g + (8 * lift) * (g < -1)
+# (no lift on the score any more: Ignacio speaks over it, the music stays under him)
+g = g + np.interp(t, [SCORE - 1.5, SCORE - 0.5, SCORE + 7.0, SCORE + 8.5], [0, -4, -4, 0])   # the build swells here: keep it under his voice
+CL = TL.get("climax")
+if CL:   # chapter 4 climax, "And L'Oréal learns": the bed falls away in her pause, the climax cue takes over, then the bed returns
+    dip = np.interp(t, [CL - 2.4, CL - 0.4, CL + 17.5, CL + 20.0], [0, -30, -30, 0])
+    g = g + dip
 music *= (10 ** (g / 20))[:, None]
+if CL:   # climax cue (Lyria): 24.5 s into the cue it is rising; its peak lands on "not in a lab, not in a survey"
+    place(music, M("climax_a"), CL - 0.1, src_from=24.5, length=19.5, fin=0.8, fout=3.5, gain_db=-10)
 i0, i1 = int((ASK - 2.0) * SR), int(ASK * SR)                              # the ask: music gone by the first word
 music[i0:i1] *= np.linspace(1, 0, i1 - i0)[:, None] ** 2; music[i1:int((CLOSE - 0.3) * SR)] = 0
 bus += music
 
 # ---- sound effects ----
-S = {n: load(f"out/sfx/{n}.wav") for n in ["week_tick", "scan_shimmer", "message_chime", "soft_click", "count_tick"]}
+S = {n: load(f"out/sfx/{n}.wav") for n in ["week_tick", "scan_shimmer", "message_chime", "soft_click", "count_tick",
+                                            "reverse_swell", "sub_hit", "winner_tone"]}
 for i in range(1, 7): place(bus, S["week_tick"], c[i] + 0.25, gain_db=-8)                 # chapter cards
 place(bus, S["scan_shimmer"], ch[1] + 19.6, gain_db=-14)  # chapter 1: scan result on the phone
 place(bus, S["message_chime"], ch[2] + 3.8, gain_db=-14)  # chapter 2: Dana's message
-for i in range(5): place(bus, S["soft_click"], TL["diagram"] + 0.4 + 0.8 * i, gain_db=-12)   # diagram boxes
+if "diagram" in TL:
+    for i in range(5): place(bus, S["soft_click"], TL["diagram"] + 0.4 + 0.8 * i, gain_db=-12)   # diagram boxes
+for k in ("winner1", "winner2"):                          # chapter 4: one soft tone as each winner is named
+    if k in TL: place(bus, S["winner_tone"], TL[k], gain_db=-17)
+if CL:
+    place(bus, S["reverse_swell"], CL - 1.6, gain_db=-12)  # into "And L'Oréal learns"
+    place(bus, S["sub_hit"], CL - 0.03, gain_db=-7)
+if "weeks" in TL:                                         # the 0 -> 12 week counter: one tick per number
+    prev = 0
+    for f in range(23):
+        n = int(round(12 * R.ease(f / 30 / 0.75)))
+        if n != prev: place(bus, S["count_tick"], TL["weeks"] + f / 30, gain_db=-14)
+        prev = n
 place(bus, S["scan_shimmer"], ch[6] + 0.3, gain_db=-14)   # week 12 re-scan
 prev = None                                               # count ticks: one per number change, same curve as render.score
 for f in range(180):

@@ -6,6 +6,7 @@ def call(m, u, b=None):
     r = urllib.request.Request(u, data=json.dumps(b).encode() if b else None, method=m, headers={"Content-Type": "application/json"})
     try: return json.loads(urllib.request.urlopen(r, timeout=60).read())
     except urllib.error.HTTPError as e: return {"HTTP": e.code, "err": e.read().decode()[:400]}
+    except OSError as e: return {"status": "in_progress", "id": (b or {}).get("id") or u.rsplit("/", 1)[-1], "err": str(e)}   # dropped connection: poll again
 def generate(name, brief, model="lyria-3-pro-preview", tries=3):
     for attempt in range(tries):
         d = call("POST", API + "/interactions", {"model": model, "input": brief, "background": True}); t = time.time()

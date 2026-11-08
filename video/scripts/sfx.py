@@ -1,5 +1,5 @@
 """Synthesise the film's designed sound effects (original, license-free). Usage (from video/): python3 scripts/sfx.py
-Writes out/sfx/*.wav at 48 kHz: week_tick, scan_shimmer, message_chime, soft_click, count_tick."""
+Writes out/sfx/*.wav at 48 kHz: week_tick, scan_shimmer, message_chime, soft_click, count_tick, reverse_swell, sub_hit, winner_tone."""
 import os, subprocess
 import numpy as np
 SR = 48000; OUT = "out/sfx"; os.makedirs(OUT, exist_ok=True)
@@ -47,3 +47,18 @@ save("soft_click", cl)
 # count tick: very small high tick under the 58 -> 74 count
 x = t(0.05); n = len(x)
 save("count_tick", np.sin(2 * np.pi * 2600 * x) * env(n, 0.0004, 0.007))
+
+# climax (chapter 4, "And L'Oréal learns"): reverse swell into a deep, soft hit
+rng = np.random.default_rng(7)
+d = 1.6; x = t(d); n = len(x)
+noise = rng.standard_normal(n)
+k = np.exp(-np.arange(0, 0.05, 1 / SR) / 0.01); k /= k.sum()               # gentle low-pass
+sw = np.convolve(noise, k, mode="same") * (x / d) ** 3                         # rises into the hit
+sw += 0.5 * np.sin(2 * np.pi * (110 + 110 * x / d) * x) * (x / d) ** 4
+save("reverse_swell", sw / np.max(np.abs(sw)) * 0.5, 0.15)
+d = 2.4; x = t(d); n = len(x)
+hit = np.sin(2 * np.pi * 48 * x) * env(n, 0.004, 0.9) + 0.35 * np.sin(2 * np.pi * 96 * x) * env(n, 0.004, 0.35)
+hit += 0.15 * np.convolve(rng.standard_normal(n), k, mode="same") * env(n, 0.002, 0.08)
+save("sub_hit", hit / np.max(np.abs(hit)) * 0.8)
+# winner tone (chapter 4: the salon, ServiceMarket): one soft bell, warm
+save("winner_tone", bell(659.25, 1.6) * 0.6 + np.pad(bell(987.77, 1.2), (0, int(SR * 0.4))) * 0.25, 0.05)

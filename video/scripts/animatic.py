@@ -28,7 +28,7 @@ def speaker_panel(n, name, role, first):
     for i, ln in enumerate(R.wrap(d, f"“{first}”", f, 720)[:7]):
         d.text((80, 440 + i * 46), ln, font=f, fill=(231, 225, 216))
     d.text((80, 760), "Recording to come · about 70 s · looking screen-left", font=R.font(R.SANS, 24), fill=(150, 144, 136))
-    R.spaced(d, (560, 170), "ANIMATIC V8", R.font(R.SANS_M, 18), (150, 144, 136), 4)
+    R.spaced(d, (560, 170), "ANIMATIC V9", R.font(R.SANS_M, 18), (150, 144, 136), 4)
     return img
 
 def layla_line(text):
@@ -130,7 +130,7 @@ TAKES = {2: ("out/speakers/M4_S2_Ariel_take1_edit.mp4", 650),   # trimmed 12.6-8
 def length(p): return float(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", p], capture_output=True, text=True).stdout)
 EDITS = {2: "out/edits/ch2_edit.mp4", 4: "out/edits/ch4_edit.mp4", 6: "out/edits/ch6_edit.mp4"}   # synced edits, picture only
 # moments inside the edits (seconds from the chapter start) for the soundtrack: diagram, score, the ask
-MOMENTS = {4: {"diagram": 10.2}, 6: {"score": 1.5, "ask": 56.4}}
+MOMENTS = {4: {"winner1": 13.9, "winner2": 35.6, "climax": 45.2, "weeks": 53.8}, 6: {"score": 1.5, "ask": 56.4}}
 voice = []   # (index in seq, clip) for the soundtrack
 CARDS = ["chapter_week0", "chapter_week1", "chapter_week2", "chapter_week4", "chapter_week10", "chapter_week12"]
 
@@ -143,7 +143,7 @@ lefts = {1: [norm_left(L.format(1), "layla"), norm_left(L.format("1b"), "layla")
          2: [norm_left(L.format(2), "layla"), norm_left(L.format("2c"), "layla"), norm_left("out/p3_booking_confirmation.mp4", "panel")],
          3: [norm_left(L.format(3), "layla"), norm_left(L.format("3c"), "layla"), norm_left(L.format("3g"), "layla")],
          4: [norm_left(L.format("4b"), "layla"), norm_left(L.format("4c"), "layla"), norm_left("out/m4/service_diagram.png", "still", 10)],
-         5: [norm_left(L.format(4), "layla"), norm_left(L.format("5b"), "layla"), norm_left(L.format("5c"), "layla"),
+         5: [norm_left(L.format(4), "layla"), norm_left(L.format("5b"), "layla"), 
              norm_left("out/p4_rescan_66.mp4", "panel")],
          6: [norm_left(L.format(5), "layla"), norm_left(L.format("6b"), "layla"), norm_left(L.format("6c"), "layla")]}
 for i, (key, name, role, lt) in enumerate(SPK, start=1):
@@ -170,7 +170,7 @@ marks["closing"] = len(seq); seq.append(full(M4.format("closing_card"), "closing
 seq.append(still(png(credits(), "credits.png"), "credits", 5))
 
 lst = os.path.join(TMP, "all.txt"); open(lst, "w").write("".join(f"file '{os.path.abspath(p)}'\n" for p in seq))
-final = os.path.join(OUT, "animatic_v8_voice.mp4"); part = final.replace(".mp4", ".part.mp4")
+final = os.path.join(OUT, "animatic_v9_voice.mp4"); part = final.replace(".mp4", ".part.mp4")
 starts, t = [], 0.0
 for p in seq: starts.append(t); t += length(p)
 ins = ["-f", "concat", "-safe", "0", "-i", lst, "-f", "lavfi", "-i", f"anullsrc=r=48000:cl=stereo:d={t:.3f}"]
@@ -186,7 +186,6 @@ tl = {k: round(starts[v], 3) for k, v in marks.items()}; tl["end"] = round(t, 3)
 for i in range(1, 7): tl[f"ch{i}"] = round(starts[marks[f"card{i}"] + 1], 3)
 for i, m in MOMENTS.items():
     if i in EDITS and os.path.exists(EDITS[i]): tl.update({k: round(tl[f"ch{i}"] + v, 3) for k, v in m.items()})
-if "diagram" not in tl: tl["diagram"] = tl["ch4"]
 if "score" not in tl: tl["score"] = tl["ch6"] + 20
 if "ask" not in tl: tl["ask"] = tl["closing"] - 11
 json.dump(tl, open(os.path.join(OUT, "timeline.json"), "w"), indent=1); print(tl)
