@@ -74,7 +74,7 @@ S = {n: load(f"out/sfx/{n}.wav") for n in ["week_tick", "scan_shimmer", "message
                                             "reverse_swell", "sub_hit", "winner_tone"]}
 for i in range(1, 7): place(bus, S["week_tick"], c[i] + 0.25, gain_db=-8)                 # chapter cards
 place(bus, S["scan_shimmer"], ch[1] + 19.6, gain_db=-14)  # chapter 1: scan result on the phone
-place(bus, S["message_chime"], ch[2] + 3.8, gain_db=-14)  # chapter 2: Dana's message
+place(bus, S["message_chime"], ch[2] + 2.6, gain_db=-14)  # chapter 2: Dana's message (booking panel comes in at 2.4 s)
 if "diagram" in TL:
     for i in range(5): place(bus, S["soft_click"], TL["diagram"] + 0.4 + 0.8 * i, gain_db=-12)   # diagram boxes
 for k in ("winner1", "winner2"):                          # chapter 4: one soft tone as each winner is named
