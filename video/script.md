@@ -72,9 +72,9 @@ Each speaker: about 170 words, read calmly. **Time yourself: 65 to 75 seconds.**
 >
 > L'Oréal can do most of this already. The science, the products, the salons that already trust us.
 >
-> What we can't do is the hard part in the middle. Getting a licensed professional into a private home in Dubai, on time, insured, with the right permit. A home visit there needs its own permit, tied to the person who walks through the door. We've never run that. And Layla's living room is not the place to learn.
+> What we can't do is the hard part in the middle. Getting a licensed professional into a private home in Dubai, on time, insured, with the right permit. A home visit there needs its own permit, and the staff need the right approvals. We've never run that. And Layla's living room is not the place to learn.
 >
-> So we won't build it. **[LENS]** We'll bring in someone who already does it, every day.
+> We could build it, buy it, or partner. Building takes years. Buying a home-service company would put L'Oréal between the salon and its client. **[LENS]** So we partner, with someone who already does it, every day.
 
 *Editor: the line "If it didn't work, she sees it" sits over the 58. Hold on it.*
 
@@ -92,19 +92,18 @@ Each speaker: about 170 words, read calmly. **Time yourself: 65 to 75 seconds.**
 
 > Week one. Layla books her first visit. She thinks she's talking to her salon, and she is. But behind that message sits ServiceMarket.
 >
-> ServiceMarket has run home services in Dubai since 2013. More than 200 vetted partner companies work through it, salon at home included. Think of them as the operator for salon work outside the salon. They already handle booking and payment. In our pilot, they would add the insurance and each salon's permit paperwork.
+> ServiceMarket has run home services in Dubai since 2013. More than 200 vetted partner companies work through it, salon at home included. They already handle booking and payment. In our pilot, they would add the insurance and each salon's permit paperwork. That's the capability we're missing.
 >
-> We looked at the two big beauty apps. Urban Company and Justlife send their own staff to your door. That would replace the salon.
->
-> ServiceMarket works the other way. It already sells other companies' services. The salon stays in front.
+> We looked at the two big beauty apps. Urban Company and Justlife put their own brand on the professional at your door, so the customer relationship moves to the app. ServiceMarket already sells other companies' services, so the salon stays in front.
 >
 > If Layla ever feels that an app replaced her colourist, PRO•GO is finished. Her colourist is the reason she says yes in the first place.
 >
-> So our test for a partner was simple. **[LENS]** Do they make the salon stronger, or do they take its place?
+> So we chose with three criteria. Can they run home visits in Dubai today? Do they work through salons, not around them? And the one that decides it: **[LENS]** do they make the salon stronger, or take its place?
 >
-> ServiceMarket makes it stronger. That's why them.
+> ServiceMarket passes all three. That's why them.
 
-*Facts to verify before recording (sources in the list at the end): founded 2013; 200+ partner companies and salon at home (company profiles; ServiceMarket's own figure, so check it is still current). Ownership by e& since 2023 is background only, not spoken. Urban Company and Justlife "send their own staff": check both sites once more.*
+*Facts to verify before recording (sources in the list at the end): founded 2013; 200+ partner companies and salon at home (company profiles; ServiceMarket's own figure, so check it is still current). Ownership by e& since 2023 is background only, not spoken. Urban Company and Justlife: the claim is about whose brand the customer sees at the door, not who employs the professional (their professionals may be independent partners).*
+*v3, 8 Nov: Rebecca's wording for the big apps (adjusted), three partner-selection criteria and "the capability we're missing" (course framing: capability gap, partner-selection criteria). Card c_test becomes a three-tick checklist in the edit.*
 
 *Editor: on "behind that message sits ServiceMarket", the partner's name can appear in the lower left in Jost spaced caps, if the team approves using the real name.*
 
@@ -245,7 +244,7 @@ Each speaker: about 170 words, read calmly. **Time yourself: 65 to 75 seconds.**
 - Dubai pilot, 2 communities, 3–5 partner salons, 90 days, manual matching, Q2 2027: M2 dashboard.
 - EUR 10m staged, EUR 3m now, EUR 7m after the Q4 2027 review; review criteria = repeat bookings and positive margin per visit: M2 dashboard.
 - 300 subscribers in 2027, 40 % repeat-visit rate in 2027, salon income +10 % by 2030: M2 dashboard, Team D proposal.
-- Home-visit permit tied to named staff: BusinessDubai, Gulf News. Not verified with Dubai Municipality.
+- Home-visit permit tied to named staff: BusinessDubai, Gulf News. Not verified with Dubai Municipality, so the spoken line (Amjad) now says only "the staff need the right approvals" (Rebecca, 8 Nov).
 - Subscription target AED 900–1,200 per 12-week plan (2 visits, scans, colour-care kit) = 2 × M3's per-visit target AED 450–600; break-even about AED 420–500 per visit: M3 frame 3, D15 (Team D model, LOW); prototype plan totals.
 - PRO•GO venture unit inside Professional Products; Innovation Board reviews quarterly; BOLD handles partnerships; app built in 2028: M2 dashboard (operating model, funding path).
 - ServiceMarket: founded in Dubai 2013 (Crunchbase, MENAbytes); acquired by e& in 2023 (ServiceMarket FAQ); 200+ partners, 45+ services (company profiles, its own claim); salon at home listed on servicemarket.com.
