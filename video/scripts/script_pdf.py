@@ -13,13 +13,13 @@ ROOT = os.path.dirname(HERE)                       # video/
 FONTS = os.path.join(os.path.dirname(ROOT), "node_modules", "@fontsource")
 
 STILLS = {  # section keyword -> (left still, right still or None, caption)
-    "COLD OPEN": ("layla_1", "p1", "Layla, week 0 · the app lands on 58"),
+    "COLD OPEN": ("cold_a", "cold_title", "Morning: the mirror, then the title on the sky"),
     "CHAPTER 1": ("p1", None, "App panel: Hair Health Index 58"),
     "CHAPTER 2": ("layla_2", "p3", "The booking · message from her salon"),
     "CHAPTER 3": ("layla_3", None, "Visit 1 of 2 · her own colourist at home"),
-    "CHAPTER 4": ("diagram", None, "Service diagram (rendered): M3's five steps, ServiceMarket behind booking and the visit"),
+    "CHAPTER 4": ("ch4_salon", "ch4_climax", "Who wins: the salon, ServiceMarket, then the climax on \"L'Oréal learns\""),
     "CHAPTER 5": ("layla_4", None, "Visit 2 of 2 · week 10"),
-    "CHAPTER 6": ("layla_5", "score", "Week 12 · re-scan, 58 → 74, illustrative"),
+    "CHAPTER 6": ("layla_5_app", "ch6_rules", "Week 12 · the app shows 58 → 74 (illustrative), then the rules one at a time"),
     "CLOSE": ("closing", None, "Closing card (rendered)"),
 }
 
@@ -152,8 +152,8 @@ def cover():
 <div class="label">L'ORÉAL GROUPE &nbsp;·&nbsp; TEAM D</div>
 <h1>12 weeks<br>with Layla</h1>
 <div class="rule"></div>
-<div class="sub">PRO•GO &nbsp;·&nbsp; M4 open innovation &nbsp;·&nbsp; Shooting script v2</div>
-<div class="meta">8:00 video for the CEO &nbsp;·&nbsp; Partner: ServiceMarket (working assumption) &nbsp;·&nbsp; 5 November 2026</div>
+<div class="sub">PRO•GO &nbsp;·&nbsp; M4 open innovation &nbsp;·&nbsp; Shooting script v3</div>
+<div class="meta">8:00 video for the CEO &nbsp;·&nbsp; Partner: ServiceMarket (working assumption) &nbsp;·&nbsp; 8 November 2026</div>
 <div class="team">{t}</div>
 <div class="strip">{strip}</div>
 <div class="disc">Student project for IE Business School, Corporate Entrepreneurship. Not affiliated with or endorsed by L'Oréal or ServiceMarket.

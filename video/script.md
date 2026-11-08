@@ -1,4 +1,4 @@
-# 12 weeks with Layla — shooting script v2
+# 12 weeks with Layla — shooting script v3
 
 Team D · L'Oréal Groupe innovation team · M4 (open innovation) · 8:00 · due Tue 10 Nov, upload by 20:00 CET
 Draft 5 Nov 2026, reviewed against M2 and M3. Brackets `[ ]` are blanks to fill before recording. Grey notes for the editor are in *italics*.
