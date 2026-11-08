@@ -1,5 +1,6 @@
 """Score + sound effects for the 8:00 cut, mixed under the voices already in the animatic.
-Usage (from video/): python3 scripts/soundtrack.py out/animatic/animatic_v6.mp4 out/animatic/animatic_v7.mp4
+Usage (from video/): python3 scripts/soundtrack.py out/animatic/animatic_v8_voice.mp4 out/animatic/animatic_v8.mp4 [timeline.json]
+All cue times come from the timeline that animatic.py writes, so chapters can change length.
 Music: Lyria pieces in out/music (briefs in music/*_brief.txt). SFX: out/sfx (scripts/sfx.py).
 Music sits about 17 dB under speech (voice -16 LUFS, music about -33 LUFS after the duck) and comes up on cards, the diagram and the score."""
 import os, subprocess, sys
@@ -7,8 +8,10 @@ import numpy as np
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import render as R
 
-SR, DUR = 48000, 480.0
+import json
 SRC, DST = sys.argv[1], sys.argv[2]
+TL = json.load(open(sys.argv[3] if len(sys.argv) > 3 else os.path.join(os.path.dirname(SRC), "timeline.json")))   # written by animatic.py
+SR, DUR = 48000, TL["end"]
 
 def load(path, target_lufs=None):
     a = np.frombuffer(subprocess.run(["ffmpeg", "-v", "error", "-i", path, "-ac", "2", "-ar", str(SR), "-f", "f32le", "-"],
@@ -35,37 +38,45 @@ def place(buf, a, at, src_from=0.0, length=None, fin=0.0, fout=0.0, gain_db=0.0)
 # ---- score (each piece normalised to -20 LUFS before the envelope) ----
 M = lambda n: load(f"out/music/{n}.mp3", -20)
 music = np.zeros_like(bus)
+c = [None] + [TL[f"card{i}"] for i in range(1, 7)]; ch = [None] + [TL[f"ch{i}"] for i in range(1, 7)]
+SCORE, ASK, CLOSE = TL["score"], TL["ask"], TL["closing"]
+build_at = SCORE - 82.5                                                   # the build's swell peaks about 82 s in
 place(music, M("open_dram2"), 0.0,  length=17.5, fout=2.5, gain_db=2)     # cold open, dramatic, drops as chapter 1 starts
-place(music, M("bed1"),       15.0, length=152.5, fin=2.0, fout=3.0)      # weeks 0-1: sparse warm piano
-place(music, M("bed2"),       164.5, length=168.0, fin=3.0, fout=4.0)     # week 2: strings join; pulse from about week 4
-place(music, M("bed1"),       318.0, src_from=60.0, length=15.0, fin=2.5, fout=3.0)   # bridge: bed2 ends at 322 s
-place(music, M("build"),      330.5, length=110.0, fin=3.0, fout=6.0)     # weeks 10-12: strings rise, swell lands on the score (about 413-419 s)
-place(music, M("bed1"),       436.0, src_from=20.0, length=26.0, fin=4.0, fout=5.0, gain_db=-3)   # low pad under the rules
-place(music, M("close"),      469.6, length=10.4, fin=0.4, fout=3.0)      # motif returns on the closing card, silence just before
+place(music, M("bed1"),       c[1], length=c[3] - c[1] + 2.5, fin=2.0, fout=3.0)          # weeks 0-1: sparse warm piano
+bed2_len = min(157.0, build_at + 4 - (c[3] - 0.5))
+place(music, M("bed2"),       c[3] - 0.5, length=bed2_len, fin=3.0, fout=4.0)            # week 2: strings join; pulse from about week 4
+if build_at > c[3] - 0.5 + 157.0 - 4:                                                     # bridge if bed2 runs out first
+    place(music, M("bed1"), c[3] + 152.0, src_from=60.0, length=build_at - c[3] - 148.0, fin=2.5, fout=3.0)
+place(music, M("build"),      build_at, length=SCORE + 10 - build_at, fin=3.0, fout=5.0)   # weeks 10-12: strings rise, swell on the score
+place(music, M("bed1"),       SCORE + 6.0, src_from=20.0, length=ASK - SCORE - 6.0, fin=4.0, fout=4.0, gain_db=-3)   # low pad under the rules
+place(music, M("close"),      CLOSE - 0.3, length=DUR - CLOSE + 0.3, fin=0.4, fout=3.0)   # motif returns on the closing card
 
-# gain envelope: duck under speech, up on cards / diagram / score / closing
-SPEECH = [(18, 90), (93, 165), (168, 240), (253, 315), (318, 390), (393, 413), (419, 470)]
+# gain envelope: duck under speech (chapter bodies), up on cards and the closing; half duck on the score
+SPEECH = [(ch[i], c[i + 1] if i < 6 else CLOSE) for i in range(1, 7)]
 t = np.arange(len(music)) / SR; g = np.zeros(len(music), np.float32)
 for a, b in SPEECH:                    # -15 dB with 0.6 s ramps
     g = np.minimum(g, -15 * np.clip(np.minimum((t - a) / 0.6, (b - t) / 0.6), 0, 1))
+lift = np.clip(np.minimum((t - SCORE) / 0.8, (SCORE + 6.0 - t) / 0.8), 0, 1)   # score: up to -7 dB under his "74"
+g = g + (8 * lift) * (g < -1)
 music *= (10 ** (g / 20))[:, None]
-music[int(458 * SR):int(469.6 * SR)] *= np.linspace(1, 0, int(11.6 * SR))[:, None] ** 3   # the ask: let it go quiet
+i0, i1 = int((ASK - 2.0) * SR), int(ASK * SR)                              # the ask: music gone by the first word
+music[i0:i1] *= np.linspace(1, 0, i1 - i0)[:, None] ** 2; music[i1:int((CLOSE - 0.3) * SR)] = 0
 bus += music
 
 # ---- sound effects ----
 S = {n: load(f"out/sfx/{n}.wav") for n in ["week_tick", "scan_shimmer", "message_chime", "soft_click", "count_tick"]}
-for at in (15, 90, 165, 240, 315, 390): place(bus, S["week_tick"], at + 0.25, gain_db=-8)      # chapter cards
-place(bus, S["scan_shimmer"], 37.6, gain_db=-14)          # chapter 1: scan result on the phone
-place(bus, S["message_chime"], 96.8, gain_db=-14)         # chapter 2: Dana's message
-for i in range(5): place(bus, S["soft_click"], 243.4 + 0.8 * i, gain_db=-12)   # diagram boxes
-place(bus, S["scan_shimmer"], 393.3, gain_db=-14)         # week 12 re-scan
+for i in range(1, 7): place(bus, S["week_tick"], c[i] + 0.25, gain_db=-8)                 # chapter cards
+place(bus, S["scan_shimmer"], ch[1] + 19.6, gain_db=-14)  # chapter 1: scan result on the phone
+place(bus, S["message_chime"], ch[2] + 3.8, gain_db=-14)  # chapter 2: Dana's message
+for i in range(5): place(bus, S["soft_click"], TL["diagram"] + 0.4 + 0.8 * i, gain_db=-12)   # diagram boxes
+place(bus, S["scan_shimmer"], ch[6] + 0.3, gain_db=-14)   # week 12 re-scan
 prev = None                                               # count ticks: one per number change, same curve as render.score
 for f in range(180):
     wk = 12 * R.ease((f / 30 - 0.6) / 3.6); s = R.PTS[0][1]
     for (x0, y0), (x1, y1) in zip(R.PTS, R.PTS[1:]):
         if x0 <= wk <= x1: s = y0 + (y1 - y0) * (wk - x0) / (x1 - x0)
     s = 74 if wk >= 12 else round(s)
-    if prev is not None and s != prev: place(bus, S["count_tick"], 413 + f / 30, gain_db=-16)
+    if prev is not None and s != prev: place(bus, S["count_tick"], SCORE + f / 30, gain_db=-16)
     prev = s
 
 wav = DST.replace(".mp4", "_music.wav")
