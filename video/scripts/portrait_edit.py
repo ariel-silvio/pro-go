@@ -2,7 +2,7 @@
 Half-half split (960 | 960) like Ariel's chapter: left = Layla, cards, animated type; right = the speaker,
 portrait take scaled and cropped to 960x1080. Full-screen footage moments with type dissolve over the split.
 All times below are seconds in the RAW take (sentence and word timings checked against the audio envelope).
-Usage (from video/): python3 scripts/portrait_edit.py RAW_REBECCA.mp4 RAW_IGNACIO.mp4
+Usage (from video/): python3 scripts/portrait_edit.py RAW_REBECCA.mp4 RAW_IGNACIO.mp4 [IGNACIO_STUDIO_SOUND.m4a]
   -> out/speakers/M4_S4_Rebecca_edit.mp4, out/speakers/M4_S6_Ignacio_edit.mp4 (voice + portrait picture)
   -> out/edits/ch4_edit.mp4, out/edits/ch6_edit.mp4 (1920x1080 picture only, length of the trimmed take)"""
 import os, subprocess, sys
@@ -140,12 +140,17 @@ def full_seq(name, clips, dur, types):
     ff(*ins, "-filter_complex", ";".join(fc), "-map", f"[{last}]", "-t", f"{dur:.3f}", *ENC, "-an", out); return out
 
 # ---------- assembly ----------
-def prep_take(raw, a, b, out, mirror=False, denoise=False, loud=-16):
-    """Trim, mirror if needed, clean voice; picture kept portrait (1080x1920)."""
+def prep_take(raw, a, b, out, mirror=False, denoise=False, loud=-16, audio=None):
+    """Trim, mirror if needed, clean voice; picture kept portrait (1080x1920).
+    audio: optional separate voice file with the same timing as raw (e.g. Descript Studio Sound export)."""
     vf = "fps=30,scale=1080:1920" + (",hflip" if mirror else "")
-    af = "highpass=f=80" + (",afftdn=nf=-30,equalizer=f=3000:t=q:w=1.2:g=3,acompressor=threshold=-24dB:ratio=2.5:attack=15:release=200:makeup=2" if denoise else "") \
-         + f",loudnorm=I={loud}:TP=-1.5:LRA=7"
-    ff("-ss", f"{a}", "-to", f"{b}", "-i", raw, "-vf", vf, "-af", af, "-ar", "48000", "-ac", "2",
+    if audio:   # already enhanced: only a gentle leveller
+        af = "highpass=f=70,acompressor=threshold=-24dB:ratio=2:attack=15:release=200:makeup=1"
+    else:
+        af = "highpass=f=80" + (",afftdn=nf=-30,equalizer=f=3000:t=q:w=1.2:g=3,acompressor=threshold=-24dB:ratio=2.5:attack=15:release=200:makeup=2" if denoise else "")
+    af += f",loudnorm=I={loud}:TP=-1.5:LRA=7"
+    ins = ["-ss", f"{a}", "-to", f"{b}", "-i", raw] + (["-ss", f"{a}", "-to", f"{b}", "-i", audio] if audio else [])
+    ff(*ins, "-map", "0:v", "-map", f"{1 if audio else 0}:a", "-vf", vf, "-af", af, "-ar", "48000", "-ac", "2",
        *ENC, "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", out)
     return out
 
@@ -234,7 +239,8 @@ if __name__ == "__main__":
           lt_at=(1, 5), off=OFF4)
     # ===== Chapter 6 · Ignacio (raw 73.6 s, recorded mirrored, WhatsApp copy) =====
     OFF6 = 0.0
-    t6 = prep_take(raw6, OFF6, 73.5, "out/speakers/M4_S6_Ignacio_edit.mp4", mirror=True, denoise=True, loud=-15)
+    t6 = prep_take(raw6, OFF6, 73.5, "out/speakers/M4_S6_Ignacio_edit.mp4", mirror=True, loud=-15,
+                   audio=sys.argv[3] if len(sys.argv) > 3 else None)   # Descript Studio Sound (65 %) export of his voice
     build("ch6", t6, (1080, 60, 470, None),
           lefts=[(0, "out/layla/layla_5_app.mp4", "fade"), (7.6, png(c_300(), "c_300.png"), "fade"),
                  (14.5, png(c_rule(None), "rule_0.png"), "fade"), (18.0, png(c_rule(0), "rule_1.png"), "fade"),
