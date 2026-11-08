@@ -28,7 +28,7 @@ def speaker_panel(n, name, role, first):
     for i, ln in enumerate(R.wrap(d, f"“{first}”", f, 720)[:7]):
         d.text((80, 440 + i * 46), ln, font=f, fill=(231, 225, 216))
     d.text((80, 760), "Recording to come · about 70 s · looking screen-left", font=R.font(R.SANS, 24), fill=(150, 144, 136))
-    R.spaced(d, (560, 170), "ANIMATIC V5", R.font(R.SANS_M, 18), (150, 144, 136), 4)
+    R.spaced(d, (560, 170), "ANIMATIC V9", R.font(R.SANS_M, 18), (150, 144, 136), 4)
     return img
 
 def layla_line(text):
@@ -121,60 +121,56 @@ SPK = [("AMJAD SAAD BENSALAMAH", "Amjad Saad Bensalamah", "Chief Innovation Offi
        ("REBECCA FERNANDES", "Rebecca Fernandes", "Chief Marketing & Creative Officer", "S4_Rebecca"),
        ("SAJA ALOWAYSHIQ", "Saja AlOwayshiq", "Chief Customer Experience Officer", "S5_Saja"),
        ("IGNACIO MONTERO ALCANTARA", "Ignacio Montero Alcantara", "Chief Financial Officer", "S6_Ignacio")]
-LINES = ["Week 0.", "Wednesday, 18:00. Dana, from my salon.", "Visit 1 of 2. My colourist. My living room.",
+LINES = ["Week 0. Her salon sends a free hair scan.", "Wednesday, 18:00. Dana, from my salon.", "Visit 1 of 2. My colourist. My living room.",
          "Week 4. Nothing to report.", "Week 10. Visit 2 of 2.", "Week 12. 74. She renewed."]
 # Recorded takes: chapter -> (trimmed clip, crop x of the 960 px window around the face)
-TAKES = {2: ("out/speakers/M4_S2_Ariel_take1_edit.mp4", 650)}   # trimmed 12.6-88.9 s, 6% faster, pitch kept
+TAKES = {2: ("out/speakers/M4_S2_Ariel_take1_edit.mp4", 650),   # trimmed 12.6-88.9 s, 6% faster, pitch kept
+         4: ("out/speakers/M4_S4_Rebecca_edit.mp4", None),      # portrait take, edit by scripts/portrait_edit.py
+         6: ("out/speakers/M4_S6_Ignacio_edit.mp4", None)}      # portrait, mirrored back, WhatsApp copy (Drive original to come)
 def length(p): return float(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", p], capture_output=True, text=True).stdout)
-EDITS = {2: "out/edits/ch2_edit.mp4"}   # synced chapter edits (scripts/chapter_edit.py), picture only
+EDITS = {2: "out/edits/ch2_edit.mp4", 4: "out/edits/ch4_edit.mp4", 6: "out/edits/ch6_edit.mp4"}   # synced edits, picture only
+# moments inside the edits (seconds from the chapter start) for the soundtrack: diagram, score, the ask
+MOMENTS = {4: {"winner1": 13.9, "winner2": 35.6, "climax": 45.2, "weeks": 53.8}, 6: {"score": 1.5, "ask": 56.4}}
 voice = []   # (index in seq, clip) for the soundtrack
 CARDS = ["chapter_week0", "chapter_week1", "chapter_week2", "chapter_week4", "chapter_week10", "chapter_week12"]
 
-seq = []
-# cold open 0:00-0:15: Layla 1 slowed to 7.3 s with four lines, p1 panel 3.7 s, slate 4 s
-lines = ["Layla. 34. Dubai.", "She colours her hair every eight weeks.", "No one has ever measured what it does to it.", "Today her salon sends her a free hair scan."]
-cold = os.path.join(TMP, "cold.mp4"); ins = ["-i", L.format(1)]; fc = "[0:v]setpts=PTS/0.6,fps=30[v0]"; last = "v0"
-for i, t in enumerate(lines):
-    ins += ["-loop", "1", "-i", png(centred_line(t), f"cold{i}.png")]
-    a, b = 0.3 + i * 1.75, 0.3 + (i + 1) * 1.75
-    fc += f";[{last}][{i+1}:v]overlay=0:0:enable='between(t,{a:.2f},{b:.2f})'[c{i}]"; last = f"c{i}"
-ff(*ins, "-filter_complex", fc, "-map", f"[{last}]", "-t", "7.3", "-an", *ENC, cold); seq.append(cold)
-seq.append(full("out/p1_scan_result_58.mp4", "cold_p1", 3.7, "pad=1920:1080:480:0:color=0xF7F3EC,fps=30"))
-seq.append(full("out/01_opening_slate.mp4", "slate"))
+seq, marks = [], {}
+# cold open 0:00-0:15: built by scripts/cold_open.py (mirror, leaving, horizon; text on a black third; title on the sky)
+seq.append(full("out/edits/cold_open_picture.mp4", "cold_open", 15.0))
 
 lefts = {1: [norm_left(L.format(1), "layla"), norm_left(L.format("1b"), "layla"), norm_left(L.format("1c"), "layla"),
              norm_left("out/p1_scan_result_58.mp4", "panel")],
          2: [norm_left(L.format(2), "layla"), norm_left(L.format("2c"), "layla"), norm_left("out/p3_booking_confirmation.mp4", "panel")],
-         3: [norm_left(L.format(3), "layla"), norm_left(L.format("3c"), "layla"), norm_left(L.format("3d"), "layla")],
+         3: [norm_left(L.format(3), "layla"), norm_left(L.format("3c"), "layla"), norm_left(L.format("3g"), "layla")],
          4: [norm_left(L.format("4b"), "layla"), norm_left(L.format("4c"), "layla"), norm_left("out/m4/service_diagram.png", "still", 10)],
-         5: [norm_left(L.format(4), "layla"), norm_left(L.format("5b"), "layla"), norm_left(L.format("5c"), "layla"),
+         5: [norm_left(L.format(4), "layla"), norm_left(L.format("5b"), "layla"), 
              norm_left("out/p4_rescan_66.mp4", "panel")],
          6: [norm_left(L.format(5), "layla"), norm_left(L.format("6b"), "layla"), norm_left(L.format("6c"), "layla")]}
 for i, (key, name, role, lt) in enumerate(SPK, start=1):
-    seq.append(full(M4.format(CARDS[i - 1]), f"card{i}"))
+    marks[f"card{i}"] = len(seq); seq.append(full(M4.format(CARDS[i - 1]), f"card{i}"))
     panel = png(speaker_panel(i, name, role, first_line(key)), f"spk{i}.png")
     line = png(layla_line(LINES[i - 1]), f"line{i}.png")
     left = left_track(f"ch{i}", lefts[i])
-    if i == 4:      # diagram full screen, then split
+    if i in EDITS and os.path.exists(EDITS[i]):
+        voice.append((len(seq), TAKES[i][0])); marks[f"ch{i}"] = len(seq)
+        seq.append(full(EDITS[i], f"ch{i}_edit", round(length(TAKES[i][0]), 3)))
+    elif i == 4:      # diagram full screen, then split
         seq.append(full(M4.format("service_diagram"), "diagram_full"))
         seq.append(split(f"ch{i}", left, 62, panel, LT.format(lt), line))
     elif i == 6:    # split, score full screen, split, total 77 s after the card
         seq.append(split("ch6a", left, 20, panel, LT.format(lt), line))
         seq.append(full("out/03_score_counter_v2.mp4", "score"))
         seq.append(split("ch6b", left, 51, panel))
-    elif i in EDITS and os.path.exists(EDITS[i]):
-        voice.append((len(seq), TAKES[i][0]))
-        seq.append(full(EDITS[i], f"ch{i}_edit", round(length(TAKES[i][0]), 3)))
     elif i in TAKES:
         voice.append((len(seq), TAKES[i][0]))
         seq.append(split(f"ch{i}", left, round(length(TAKES[i][0]), 3), panel, LT.format(lt), line, TAKES[i]))
     else:
         seq.append(split(f"ch{i}", left, 72, panel, LT.format(lt), line))
-seq.append(full(M4.format("closing_card"), "closing"))
+marks["closing"] = len(seq); seq.append(full(M4.format("closing_card"), "closing"))
 seq.append(still(png(credits(), "credits.png"), "credits", 5))
 
 lst = os.path.join(TMP, "all.txt"); open(lst, "w").write("".join(f"file '{os.path.abspath(p)}'\n" for p in seq))
-final = os.path.join(OUT, "animatic_v5.mp4"); part = final.replace(".mp4", ".part.mp4")
+final = os.path.join(OUT, "animatic_v9_voice.mp4"); part = final.replace(".mp4", ".part.mp4")
 starts, t = [], 0.0
 for p in seq: starts.append(t); t += length(p)
 ins = ["-f", "concat", "-safe", "0", "-i", lst, "-f", "lavfi", "-i", f"anullsrc=r=48000:cl=stereo:d={t:.3f}"]
@@ -185,4 +181,12 @@ for k, (idx, clip) in enumerate(voice):
 fc.append("".join(mix) + f"amix=inputs={len(mix)}:normalize=0:duration=first[aout]")
 ff(*ins, "-filter_complex", ";".join(fc), "-map", "0:v", "-map", "[aout]", "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", part)
 print("chapter starts:", [round(x, 1) for x in starts])
+import json
+tl = {k: round(starts[v], 3) for k, v in marks.items()}; tl["end"] = round(t, 3)
+for i in range(1, 7): tl[f"ch{i}"] = round(starts[marks[f"card{i}"] + 1], 3)
+for i, m in MOMENTS.items():
+    if i in EDITS and os.path.exists(EDITS[i]): tl.update({k: round(tl[f"ch{i}"] + v, 3) for k, v in m.items()})
+if "score" not in tl: tl["score"] = tl["ch6"] + 20
+if "ask" not in tl: tl["ask"] = tl["closing"] - 11
+json.dump(tl, open(os.path.join(OUT, "timeline.json"), "w"), indent=1); print(tl)
 os.replace(part, final); print("wrote", final)

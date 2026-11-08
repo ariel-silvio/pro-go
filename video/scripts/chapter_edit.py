@@ -98,7 +98,7 @@ PLAN = [  # (start, end, kind, source)
     (c[1], c[2], "split", c_behind), (c[2], c[3], "split", c_2013), (c[3], c[5], "split", c_200),
     (c[5], c[6], "ariel", None),
     (c[6], c[8], "split", c_roles), (c[8], c[10], "split", c_bigapps), (c[10], c[13], "split", c_other_way),
-    (c[13], c[15], "layla", ("out/layla/layla_3d.mp4", None)),
+    (c[13], c[15], "layla", ("out/layla/layla_3g.mp4", None)),
     (c[15], c[17], "ariel", None),
     (c[17], T, "split", c_test),
 ]
