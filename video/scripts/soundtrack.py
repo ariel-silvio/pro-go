@@ -50,7 +50,7 @@ if build_at > c[3] - 0.5 + 157.0 - 4:                                           
 place(music, M("build"),      build_at, length=SCORE + 10 - build_at, fin=3.0, fout=5.0)   # weeks 10-12: strings rise, swell on the score
 place(music, M("bed1"),       SCORE + 6.0, src_from=20.0, length=ASK - SCORE - 6.0, fin=4.0, fout=4.0, gain_db=-3)   # low pad under the rules
 TITLE = TL.get("title", CLOSE + 3.7)
-place(music, M("close"),      TITLE - 0.6, length=DUR - TITLE + 0.6, fin=1.0, fout=3.0)   # after the piano note on the mirror, the motif returns on the closing title
+# (v17: the separate closing cue, in E-flat, is gone: the finale's own ending, in A minor, carries the mirror, title and credits)
 
 # gain envelope: duck under speech (chapter bodies), up on cards and the closing; half duck on the score
 SPEECH = [(ch[i], c[i + 1] if i < 6 else CLOSE) for i in range(1, 7)]
@@ -71,12 +71,19 @@ music *= (10 ** (g / 20))[:, None]
 if CL:   # climax cue (Lyria): 24.5 s into the cue it is rising; its peak lands on "not in a lab, not in a survey"
     place(music, M("climax_a"), CL - 0.1, src_from=24.5, length=19.5, fin=0.8, fout=3.5, gain_db=-10)
 i0, i1 = int((ASK - 2.0) * SR), int(ASK * SR)                              # the ask: the bed gives way to the finale cue
-music[i0:i1] *= np.linspace(1, 0, i1 - i0)[:, None] ** 2; music[i1:int((TITLE - 0.6) * SR)] = 0
+music[i0:i1] *= np.linspace(1, 0, i1 - i0)[:, None] ** 2; music[i1:] = 0
 GIVE, ALREADY = TL.get("give", ASK + 13.2), TL.get("already", ASK + 14.8)
-fin_ = M("finale_v16")[int(7.6 * SR):][:int((ALREADY - ASK) * SR)]          # the finale grows under the ask, peaks on "Give us 12 weeks"
+LAST = TL.get("end6", CLOSE) - 0.45                                         # his last word ends; the picture fades to black after it
+FIN = M("finale_v16")
+fin_ = FIN[int(7.6 * SR):][:int((LAST + 0.6 - ASK) * SR)]                   # the finale grows under the ask, peaks on "Give us 12 weeks"
 tt = np.arange(len(fin_)) / SR + ASK
-fg = np.interp(tt, [ASK, ASK + 1.5, GIVE - 0.4, GIVE + 0.2, ALREADY - 0.15, ALREADY], [-40, -15, -7, -5, -5, -60])
-music[int(ASK * SR):int(ASK * SR) + len(fin_)] += fin_ * (10 ** (fg / 20))[:, None]   # cut to silence on "Layla already did."
+fg = np.interp(tt, [ASK, ASK + 1.5, GIVE - 0.4, GIVE + 0.2, LAST - 0.1, LAST + 0.5], [-40, -15, -7, -5, -6, -32])
+music[int(ASK * SR):int(ASK * SR) + len(fin_)] += fin_ * (10 ** (fg / 20))[:, None]   # holds through "Layla already did.", drops on his last word
+# the same piece's ending (cue 54.3 s on) rises out of the dip: under the mirror and Layla's line, swells on the title, the last chord rings over the credits
+OUT0 = LAST + 0.3; out_ = FIN[int((54.3 - (CLOSE - OUT0)) * SR):][:int((DUR - OUT0) * SR)]
+tt = np.arange(len(out_)) / SR + OUT0
+og = np.interp(tt, [OUT0, CLOSE + 0.2, CLOSE + 0.6, TITLE + 1.0, TITLE + 2.2, DUR - 1.2, DUR], [-34, -16, -19, -17, -7, -9, -40])   # stays under her voice, swells after it
+music[int(OUT0 * SR):int(OUT0 * SR) + len(out_)] += out_ * (10 ** (og / 20))[:, None]
 bus += music
 
 # ---- sound effects ----
@@ -84,7 +91,7 @@ S = {n: load(f"out/sfx/{n}.wav") for n in ["week_tick", "scan_shimmer", "message
                                             "reverse_swell", "sub_hit", "winner_tone", "strike", "confirm", "room_tone", "piano_note"]}
 place(bus, S["room_tone"], 0.0, gain_db=-30)                                            # cold open: the room before the music
 place(bus, S["week_tick"], 0.4, gain_db=-12)                                            # one clock tick, then her voice
-place(bus, S["piano_note"], CLOSE + 0.1, gain_db=-14)                                   # one piano note on the mirror, before her last line
+place(bus, S["piano_note"], CLOSE + 0.1, gain_db=-17)                                   # one piano note (A, the piece's home note) as the mirror appears
 for k in ("visit1", "prove", "stopearly"):                                              # soft tone on the full-screen beats
     if k in TL: place(bus, S["winner_tone"], TL[k] + 0.2, gain_db=-19)
 for i in range(1, 7): place(bus, S["week_tick"], c[i] + 0.25, gain_db=-8)                 # chapter cards

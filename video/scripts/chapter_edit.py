@@ -7,14 +7,15 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from PIL import Image, ImageDraw
 import render as R
 
-TAKE, CROPX = "out/speakers/M4_S2_Ariel_take2_graded.mp4", 552   # take 2 (8 Nov, script v3): IMG_2880 trimmed 10.6-92.0 s, 8% faster, pitch kept
+TAKE, CROPX = "out/speakers/M4_S2_Ariel_take2_v17.mp4", 552   # v17: false start before "Urban Company" cut (30.62-31.02 s of the graded take)
+PUNCH0 = 30.62                                                    # the cut: Ariel's half steps in 6 % from here to the next card change   # take 2 (8 Nov, script v3): IMG_2880 trimmed 10.6-92.0 s, 8% faster, pitch kept
 OUT = "out/edits"; TMP = os.path.join(OUT, "ch2_parts"); os.makedirs(TMP, exist_ok=True)
 ENC = ["-c:v", "libx264", "-crf", "20", "-preset", "veryfast", "-pix_fmt", "yuv420p", "-r", "30", "-an"]
 def ff(*a): subprocess.run(["ffmpeg", "-y", "-loglevel", "error", *a], check=True)
 def length(p): return float(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", p], capture_output=True, text=True).stdout)
 
 # ---------- cut points: quietest 20 ms between the chosen sentences ----------
-S = json.load(open("edits/ch2_take2_sentences.json")); T = length(TAKE)
+S = json.load(open("edits/ch2_take2_v17_sentences.json")); T = length(TAKE)
 raw = subprocess.run(["ffmpeg", "-loglevel", "error", "-i", TAKE, "-vn", "-ac", "1", "-ar", "16000", "-f", "s16le", "-"], capture_output=True).stdout
 pcm = array.array("h", raw); hop = 320
 env = [math.sqrt(sum(x * x for x in pcm[i:i + hop]) / hop) for i in range(0, len(pcm) - hop, hop)]
@@ -157,7 +158,10 @@ def vis(n, t0, dur, out):
         left = ["-loop", "1", "-t", f"{dur:.3f}", "-i", p]; lf = "[0:v]fps=30[l]"
     else:
         left = ["-stream_loop", "-1", "-ss", f"{rel:.3f}", "-i", src]; lf = "[0:v]fps=30,scale=960:1080,setpts=PTS-STARTPTS[l]"
-    fc = f"{lf};[1:v]fps=30,crop=960:1080:{CROPX}:0[r];[l][r]hstack=inputs=2[v]"; ins, last = left + right, "v"
+    k = f"if(between(t+{t0:.3f},{PUNCH0},{c[12]}),1.06,1)"            # punch-in hides the jump cut
+    rf = (f"[1:v]fps=30,scale=w='trunc(1920*{k}/2)*2':h=-2:eval=frame,"
+          f"crop=960:1080:x='({CROPX}+480)*iw/1920-480':y='(ih-1080)*0.35',setsar=1[r]")
+    fc = f"{lf};{rf};[l][r]hstack=inputs=2[v]"; ins, last = left + right, "v"
     if n == 1:   # first time we see Ariel: lower third
         ins += ["-loop", "1", "-i", "out/lower_thirds/LT_S2_Ariel.png"]
         fc += f";[v][2:v]overlay=0:0:enable='between(t,{0.3 - rel:.2f},{4.2 - rel:.2f})'[v2]"; last = "v2"

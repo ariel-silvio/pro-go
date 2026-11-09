@@ -64,8 +64,8 @@ br = np.cumsum(rng.standard_normal(n)); br -= np.convolve(br, np.ones(4800) / 48
 br = np.convolve(br, np.ones(40) / 40, mode="same") * np.minimum(x / 0.8, 1) * np.clip((7.0 - x) / 2.5, 0, 1)
 save("room_tone", br, 0.2)
 
-# one piano-like note for the mirror bookend (D4, struck, slow decay, a little hammer)
-d = 4.0; n = int(SR * d); x = np.arange(n) / SR; f0 = 293.66
+# one piano-like note for the mirror bookend (A3, struck, slow decay, a little hammer)
+d = 4.0; n = int(SR * d); x = np.arange(n) / SR; f0 = 220.0   # A3: the home note of the finale (A minor)
 pn = sum(a_ * np.sin(2 * np.pi * f0 * k_ * x * (1 + 0.0004 * k_ * k_)) * np.exp(-x / (1.6 / k_ ** 0.7))
          for k_, a_ in ((1, 1.0), (2, 0.45), (3, 0.22), (4, 0.12), (5, 0.06)))
 pn = pn * np.minimum(x / 0.004, 1) + 0.05 * rng.standard_normal(n) * np.exp(-x / 0.01)

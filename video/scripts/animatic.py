@@ -46,7 +46,7 @@ def centred_line(text):
 def credits():
     img = Image.new("RGB", (1920, 1080), R.INK); d = ImageDraw.Draw(img)
     R.spaced(d, (960, 250), "L'ORÉAL GROUPE  ·  TEAM D", R.font(R.SANS_M, 24), R.GOLD, 7, True)
-    team = ["Amjad Saad Bensalamah", "Ariel De Silvio", "Qhakazile Mathebula", "Rebecca Fernandes", "Saja AlOwayshiq", "Ignacio Montero Alcantara"]
+    team = ["Amjad Bensalamah", "Ariel de Silvio", "Qhakazile Mathebula", "Rebecca Fernandes", "Saja Alowayshiq", "Nacho Alcantara"]
     for i, t in enumerate(team):
         d.text((960, 360 + i * 56), t, font=R.font(R.SERIF, 40), fill=R.WHITE, anchor="mm")
     f = R.font(R.SANS, 24)
@@ -55,29 +55,35 @@ def credits():
         d.text((960, 760 + i * 40), t, font=f, fill=(170, 164, 156), anchor="mm")
     return img
 
-def face_tile(take, t, box, size=300, k=1.9):
-    """A square crop around the speaker's face from their graded take (box: face as fractions of the frame)."""
-    fr = os.path.join(TMP, f"face_{os.path.basename(take)}.png")
-    ff("-ss", str(t), "-i", take, "-frames:v", "1", fr)
+def face_tile(take, t, face, size=300):
+    """A square, front-view portrait from the speaker's graded take. face = (centre x, centre y, face height) as fractions of
+    the frame, read off the chosen frame; every tile gets the same head size and eye line."""
+    fr = take if take.endswith(".png") else os.path.join(TMP, f"face_{os.path.basename(take)}.png")   # a ready, graded still is used as is
+    if not take.endswith(".png"): ff("-ss", str(t), "-i", take, "-frames:v", "1", fr)
     im = Image.open(fr).convert("RGB"); W, H = im.size
-    cx, cy = (box[0] + box[2]) / 2 * W, (box[1] + box[3]) / 2 * H; side = (box[3] - box[1]) * H * k
-    im = im.crop((int(cx - side / 2), int(cy - side * 0.46), int(cx + side / 2), int(cy + side * 0.54)))
+    cx, cy, fh = face[0] * W, face[1] * H, face[2] * H; side = fh * 2.3
+    im = im.crop((int(cx - side / 2), int(cy - side * 0.47), int(cx + side / 2), int(cy + side * 0.53)))
     return im.resize((size, size), Image.LANCZOS)
 
 def credits_faces():
     """Six faces, six names: the team behind the proposal."""
     img = Image.new("RGB", (1920, 1080), R.INK); d = ImageDraw.Draw(img)
     R.spaced(d, (960, 120), "L'ORÉAL GROUPE  ·  TEAM D", R.font(R.SANS_M, 24), R.GOLD, 7, True)
-    crew = [("Amjad Saad Bensalamah", "out/speakers/M4_S1_Amjad_edit.mp4", 30, (.44, .30, .56, .55)),
-            ("Ariel De Silvio", "out/speakers/M4_S2_Ariel_take2_graded.mp4", 30, (.49, .30, .63, .60)),
-            ("Qhakazile Mathebula", "out/speakers/M4_S3_Qhakazile_edit.mp4", 2, (.49, .22, .62, .45)),
-            ("Rebecca Fernandes", "out/speakers/M4_S4_Rebecca_edit.mp4", 30, (.33, .34, .46, .43), 3.4),
-            ("Saja AlOwayshiq", "out/speakers/M4_S5_Saja_edit.mp4", 30, (.63, .20, .76, .42)),
-            ("Ignacio Montero Alcantara", "out/speakers/M4_S6_Ignacio_edit.mp4", 30, (.52, .43, .70, .55), 2.7)]
-    for i, (name, take, t, box, *k) in enumerate(crew):
+    crew = [("Amjad Bensalamah", "out/speakers/M4_S1_Amjad_edit.mp4", 75.7, (.517, .47, .25)),     # front-view frames, picked by hand
+            ("Ariel de Silvio", "out/speakers/M4_S2_Ariel_take2_graded.mp4", 19.4, (.60, .395, .34)),
+            ("Qhakazile Mathebula", "out/speakers/M4_S3_Qhakazile_edit.mp4", 3.4, (.55, .38, .27)),
+            ("Rebecca Fernandes", "out/stills/credit_rebecca.png", 0, (.40, .40, .145)),   # raw 74.25 s, just after her last line (graded)
+            ("Saja Alowayshiq", "out/speakers/M4_S5_Saja_edit.mp4", 1.0, (.72, .31, .255)),
+            ("Nacho Alcantara", "out/speakers/M4_S6_Ignacio_edit.mp4", 70.7, (.555, .55, .20))]
+    for i, (name, take, t, face) in enumerate(crew):
         x, y = 960 + (i % 3 - 1) * 520, 200 + (i // 3) * 400
-        img.paste(face_tile(take, t, box, 260, *k), (x - 130, y))
+        img.paste(face_tile(take, t, face, 260), (x - 130, y))
         d.text((x, y + 290), name, font=R.font(R.SERIF, 34), fill=R.WHITE, anchor="mm")
+    import qrcode
+    qr = qrcode.QRCode(border=2, box_size=8); qr.add_data("https://ariel-silvio.github.io/pro-go/"); qr.make(fit=True)
+    q = qr.make_image(fill_color=(17, 17, 17), back_color=(247, 243, 236)).convert("RGB").resize((170, 170), Image.NEAREST)
+    img.paste(q, (1700, 812)); d.text((1785, 1000), "Try PRO•GO", font=R.font(R.SANS_M, 22), fill=R.WHITE, anchor="mm")
+    d.text((1785, 1030), "ariel-silvio.github.io/pro-go", font=R.font(R.SANS, 16), fill=(200, 194, 186), anchor="mm")
     f = R.font(R.SANS, 22)
     for i, t in enumerate(["Student project for IE Business School. Not affiliated with L'Oréal or ServiceMarket.",
                            "Fictional characters, simulated data. Layla's voice is AI-generated. AI use disclosed (Claude, Gemini Omni Flash, Lyria, Descript)."]):
@@ -90,7 +96,9 @@ def closing_title(dur=5.0):
     lay = []
     def layer(draw_fn, name):
         im = Image.new("RGBA", (1920, 1080), (0, 0, 0, 0)); draw_fn(im, ImageDraw.Draw(im)); return png(im, name)
-    lay.append((0.3, layer(lambda im, d: R.spaced(d, (160, 300), "OUR ASK", R.font(R.SANS_M, 28), R.GOLD, 8), "ct0.png")))
+    def lab(im, d):
+        R.spaced(d, (160, 296), "OUR ASK", R.font(R.SANS_M, 30), (247, 243, 236), 8); d.rectangle([160, 338, 220, 340], fill=R.GOLD)
+    lay.append((0.3, layer(lab, "ct0.png")))
     lay.append((0.5, layer(lambda im, d: d.text((152, 340), "90 days in Dubai.", font=R.font(R.SERIF, 120), fill=R.WHITE), "ct1.png")))
     for k, ln in enumerate(["with ServiceMarket and our partner salons", "inside the €3m already planned", "decision at the Q4 2027 review"]):
         lay.append((1.3 + 0.45 * k, layer(lambda im, d, ln=ln, k=k: d.text((160, 530 + k * 66), ln, font=R.font(R.SANS, 44), fill=(244, 238, 228)), f"ct{2 + k}.png")))
@@ -99,10 +107,13 @@ def closing_title(dur=5.0):
     def lock(im, d):
         d.text((160, 850), "PRO•GO", font=R.font(R.SERIF, 64), fill=R.WHITE)
         d.text((164, 930), "12 weeks of colour care, at home", font=R.font(R.SANS, 28), fill=R.GOLD)
+    def qrl(im, d):   # the QR comes in early (with the first line) so there is time to scan it; it stays on the credits
         im.paste(q, (1530, 700)); d.text((1645, 960), "Try PRO•GO", font=R.font(R.SANS_M, 28), fill=R.WHITE, anchor="mm")
+        d.text((1645, 998), "ariel-silvio.github.io/pro-go", font=R.font(R.SANS, 22), fill=(236, 230, 220), anchor="mm")
+    lay.append((1.2, layer(qrl, "ct_qr.png")))
     lay.append((2.9, layer(lock, "ct_lock.png")))
     shade = R.Image.new("RGBA", (1920, 1080)); sd = ImageDraw.Draw(shade)
-    for x in range(0, 1920, 8): sd.rectangle([x, 0, x + 8, 1080], fill=(17, 17, 17, int(170 * max(0.0, 1 - x / 1500))))
+    for x in range(0, 1920, 8): sd.rectangle([x, 0, x + 8, 1080], fill=(17, 17, 17, int(205 * max(0.0, 1 - x / 1500))))
     sh = png(shade, "ct_shade.png")
     out = os.path.join(TMP, "closing_title.mp4")
     ins = ["-ss", "1.0", "-t", f"{dur + 0.1}", "-i", L.format("0c"), "-loop", "1", "-t", f"{dur}", "-i", sh]
@@ -176,18 +187,18 @@ def first_line(who):
         if len(out) >= 34: out.append("…"); break
     return " ".join(out)
 
-SPK = [("AMJAD SAAD BENSALAMAH", "Amjad Saad Bensalamah", "Chief Innovation Officer", "S1_Amjad"),
-       ("ARIEL DE SILVIO", "Ariel De Silvio", "Chief Technology & AI Officer", "S2_Ariel"),
+SPK = [("AMJAD BENSALAMAH", "Amjad Bensalamah", "Chief Innovation Officer", "S1_Amjad"),
+       ("ARIEL DE SILVIO", "Ariel de Silvio", "Chief Technology & AI Officer", "S2_Ariel"),
        ("QHAKAZILE MATHEBULA", "Qhakazile Mathebula", "Chief Operations Officer", "S3_Qhakazile"),
        ("REBECCA FERNANDES", "Rebecca Fernandes", "Chief Marketing & Creative Officer", "S4_Rebecca"),
-       ("SAJA ALOWAYSHIQ", "Saja AlOwayshiq", "Chief Customer Experience Officer", "S5_Saja"),
-       ("IGNACIO MONTERO ALCANTARA", "Ignacio Montero Alcantara", "Chief Financial Officer", "S6_Ignacio")]
+       ("SAJA ALOWAYSHIQ", "Saja Alowayshiq", "Chief Customer Experience Officer", "S5_Saja"),
+       ("NACHO ALCANTARA", "Nacho Alcantara", "Chief Financial Officer", "S6_Ignacio")]
 LINES = ["Week 0. Her salon sends a free hair scan.", "Wednesday, 18:00. Dana, from my salon.", "Visit 1 of 2. My colourist. My living room.",
          "Week 4. Nothing to report.", "Week 10. Visit 2 of 2.", "Week 12. 74. She renewed."]
 # Recorded takes: chapter -> (trimmed clip, crop x of the 960 px window around the face)
 TAKES = {1: ("out/speakers/M4_S1_Amjad_edit.mp4", None),
          3: ("out/speakers/M4_S3_Qhakazile_edit.mp4", None),   # Drive original; three cuts, 10% faster, scarf blurred   # IMG_4934 trimmed 1.4-85.2 s, 8% faster (scripts/portrait_edit.py)
-         2: ("out/speakers/M4_S2_Ariel_take2_graded.mp4", 552),
+         2: ("out/speakers/M4_S2_Ariel_take2_v17.mp4", 552),
          5: ("out/speakers/M4_S5_Saja_edit.mp4", None),   # Drive original; slips cut, 8% faster   # take 2 (script v3): trimmed 10.6-92.0 s, 8% faster, pitch kept
          4: ("out/speakers/M4_S4_Rebecca_edit.mp4", None),      # portrait take, edit by scripts/portrait_edit.py
          6: ("out/speakers/M4_S6_Ignacio_edit.mp4", None)}      # portrait, mirrored back, WhatsApp copy (Drive original to come)
@@ -195,8 +206,8 @@ def length(p): return float(subprocess.run(["ffprobe", "-v", "error", "-show_ent
 EDITS = {1: "out/edits/ch1_edit.mp4", 2: "out/edits/ch2_edit.mp4", 3: "out/edits/ch3_edit.mp4", 5: "out/edits/ch5_edit.mp4", 4: "out/edits/ch4_edit.mp4", 6: "out/edits/ch6_edit.mp4"}   # synced edits, picture only
 # moments inside the edits (seconds from the chapter start) for the soundtrack: diagram, score, the ask
 MOMENTS = {1: {"progo": 18.15, "gap": 41.67, "strike1": 66.2, "strike2": 71.3, "partner": 73.06},
-           2: {"behind": 5.9, "criteria": 71.0},
-           3: {"visit1": 2.25, "paidpilot": 25.1, "data": 37.8},
+           2: {"behind": 5.9, "criteria": 70.6},
+           3: {"visit1": 2.25, "paidpilot": 25.1, "data": 38.62},
            5: {"visit2": 1.0, "leader": 38.75, "real": 67.3},
            4: {"winner1": 13.9, "winner2": 35.6, "climax": 45.2, "weeks": 53.8}, 6: {"score": 1.5, "prove": 8.4, "stopearly": 51.9, "ask": 56.4, "give": 69.56, "already": 71.2, "end6": 72.65}}
 voice = []   # (index in seq, clip) for the soundtrack
@@ -238,7 +249,7 @@ for i, (key, name, role, lt) in enumerate(SPK, start=1):
 # bookend: back to the mirror from the cold open, Layla's voice "Week twelve. Now I know." (AI voice, see ai-log)
 marks["closing"] = len(seq)
 seq.append(full(L.format("0a"), "mirror_end", None, "trim=start=1.6:end=4.45,setpts=1.3*(PTS-STARTPTS),fps=30,scale=1920:1080,fade=t=in:st=0:d=0.5"))
-voice.append((len(seq) - 1, "out/voice/layla_close2_1.wav", 0.3))   # "Week twelve. Now I can see it." (voice A, take 2)
+voice.append((len(seq) - 1, "out/voice/layla_close2_1_room.wav", 0.6))   # take 2, with a little room and warmth so it sits in the music   # "Week twelve. Now I can see it." (voice A, take 2)
 marks["title"] = len(seq); seq.append(closing_title(5.0))
 seq.append(still(png(credits_faces(), "credits.png"), "credits", 3))
 voice.append((0, "out/voice/layla_open.wav", 3.0))      # cold open: Layla's own line over the mirror

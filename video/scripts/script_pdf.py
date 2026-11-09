@@ -143,9 +143,9 @@ def build(md_text):
     return h
 
 def cover():
-    team = [("Amjad Saad Bensalamah", "Chief Innovation Officer"), ("Ariel De Silvio", "Chief Technology & AI Officer"),
+    team = [("Amjad Bensalamah", "Chief Innovation Officer"), ("Ariel de Silvio", "Chief Technology & AI Officer"),
             ("Qhakazile Mathebula", "Chief Operations Officer"), ("Rebecca Fernandes", "Chief Marketing & Creative Officer"),
-            ("Saja AlOwayshiq", "Chief Customer Experience Officer"), ("Ignacio Montero Alcantara", "Chief Financial Officer")]
+            ("Saja Alowayshiq", "Chief Customer Experience Officer"), ("Nacho Alcantara", "Chief Financial Officer")]
     t = "".join(f"<div><b>{n}</b><span>{r}</span></div>" for n, r in team)
     strip = "".join(f'<img src="file://{ROOT}/out/pdf/layla_{i}.jpg">' for i in range(1, 6))
     return f"""<section class="cover">

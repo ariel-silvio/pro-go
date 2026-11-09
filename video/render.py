@@ -196,3 +196,24 @@ if __name__ == "__main__":
         score(5.0).save(os.path.join(out, "s3.png"))
     else:
         for n, fn, dur in SCENES: render(out, n, fn, dur); print("done", n)
+
+# ---------- text check (v17): every drawn line must fit inside its image and use only characters the font has ----------
+import atexit
+from fontTools.ttLib import TTFont as _TTF
+_CMAPS, TEXT_ISSUES = {}, []
+_orig_text = ImageDraw.ImageDraw.text
+def _checked_text(self, xy, text, fill=None, font=None, anchor=None, *a, **k):
+    if font is not None and isinstance(text, str) and hasattr(font, "path"):
+        cm = _CMAPS.get(font.path) or _CMAPS.setdefault(font.path, set(_TTF(font.path).getBestCmap()))
+        miss = sorted({c for c in text if c.strip() and ord(c) not in cm})
+        if miss: TEXT_ISSUES.append(f"missing glyph {miss} in {os.path.basename(font.path)}: {text!r}")
+        try:
+            l, t, r, b = self.textbbox(xy, text, font=font, anchor=anchor)
+            W, H = self.im.size
+            if l < 0 or r > W or b > H: TEXT_ISSUES.append(f"overflow ({l:.0f}-{r:.0f} of {W}): {text!r}")
+        except Exception: pass
+    return _orig_text(self, xy, text, fill, font, anchor, *a, **k)
+ImageDraw.ImageDraw.text = _checked_text
+@atexit.register
+def _report():
+    if TEXT_ISSUES: print("TEXT CHECK:", len(set(TEXT_ISSUES)), "issue(s)\n  " + "\n  ".join(sorted(set(TEXT_ISSUES))))

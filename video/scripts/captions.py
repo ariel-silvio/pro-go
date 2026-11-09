@@ -5,10 +5,13 @@ Times: raw seconds -> edit seconds with each chapter's own cut map (same numbers
 then + the chapter's start in out/animatic/timeline.json.
 Usage (from video/): python3 scripts/captions.py [timeline.json]  ->  out/captions/captions.ass and captions.srt"""
 import json, os, re, sys
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+import render as R
+FM = R.font(R.SANS_M, 48)
 
 TL = json.load(open(sys.argv[1] if len(sys.argv) > 1 else "out/animatic/timeline.json"))
 OUT = "out/captions"; os.makedirs(OUT, exist_ok=True)
-MAXC = 40
+MAXC = 32
 
 def keep_map(keep, sp):
     def E(t):
@@ -20,17 +23,17 @@ def keep_map(keep, sp):
     return E
 MAP = {1: lambda t: (t - 1.4) / 1.08,
        2: lambda t: t,                                      # ch2 file is already in edit seconds
-       3: keep_map([(2.1, 32.55), (33.45, 45.3), (47.72, 55.9), (58.82, 85.3)], 1.10),
+       3: keep_map([(2.1, 45.3), (47.72, 55.9), (58.82, 85.3)], 1.10),
        4: lambda t: t - 2.6,
        5: keep_map([(0.2, 3.68), (4.25, 43.85), (44.95, 81.2)], 1.08),
        6: lambda t: t}
-FILES = {i: f"edits/ch{i}_sentences_raw.json" for i in (1, 3, 4, 5, 6)}; FILES[2] = "edits/ch2_take2_sentences.json"
+FILES = {i: f"edits/ch{i}_sentences_raw.json" for i in (1, 3, 4, 5, 6)}; FILES[2] = "edits/ch2_take2_v17_sentences.json"
 FIX = [(r"\bLaila\b|\bLeila\b", "Layla"), (r"\bDina\b", "Dana"), (r"ProGol?\b", "PRO•GO"), (r"made-up", "made up"),
        (r"colorist", "colourist"), (r"\bcolors\b", "colours"), (r"\bcolor\b", "colour"), (r"service market", "ServiceMarket"),
        (r"need its own", "needs its own"), (r"at first place", "in the first place"), (r"That's why, then\.", "That's why them."),
        (r"Do they make salons stronger or takes its place", "Do they make salons stronger, or take their place"),
        (r"eight weeks weeks", "eight weeks"), (r"one leader, no committee, not a committee", "one leader, not a committee"),
-       (r"not an acquisition yet", "not an acquisition"), (r"we match three numbers", "we watch three numbers"),
+       (r"we match three numbers", "we watch three numbers"),
        (r"from the pilots\.", "from the pilot."), (r"instead cheaper, safer", "instead: cheaper, safer"),
        (r"Week number two", "Week two"), (r"company services", "companies' services")]
 DROP = {3: ("Data ownership is clearly defined.", "Commercially, the numbers must work.")}
@@ -54,21 +57,17 @@ def chunks(text):
         if all(len(o) <= MAXC for o in out) and len(out) <= n: return out
         n += 1
 
-# windows with no captions (film seconds): cold open, cards, full-screen type, lower thirds, the closing
+# v17: captions run whenever someone speaks. Quiet only where nobody speaks to camera: cold open (Layla's words are on screen),
+# chapter cards, the closing. Over any full-screen moment the caption sits centred; on the split screen, under the speaker
+# (below the lower third, which ends at y 935).
 F = lambda i: TL[f"ch{i}"]
 quiet = [(0, F(1))] + [(TL[f"card{i}"], F(i)) for i in range(2, 7)] + [(TL["closing"], TL["end"])]
-speaker_full = []
+speaker_full = []                                   # every full-screen window: captions centred
 for i in (1, 3, 4, 5, 6):
     p = f"edits/fulls_ch{i}.json"
-    if not os.path.exists(p): continue
-    for a, b in json.load(open(p)):
-        if (i, a) in ((1, round((80.1 - 1.4) / 1.08, 3)), (5, round(MAP[5](74.6), 3))): speaker_full.append((F(i) + a, F(i) + b))
-        else: quiet.append((F(i) + a, F(i) + b))
-LTS = {1: (1, 5), 2: (0.3, 4.2), 3: (0.6, 3.9), 4: (1, 5), 5: (MAP[5](7.4), MAP[5](11.4)), 6: (14.8, 18.8)}
-for i, (a, b) in LTS.items(): quiet.append((F(i) + a - 0.2, F(i) + b + 0.2))
+    if os.path.exists(p): speaker_full += [(F(i) + a, F(i) + b) for a, b in json.load(open(p))]
 if os.path.exists("edits/fulls_ch2.json"):
-    for a, b, kind in json.load(open("edits/fulls_ch2.json")):
-        (speaker_full if kind == "ariel" else quiet).append((F(2) + a, F(2) + b))
+    speaker_full += [(F(2) + a, F(2) + b) for a, b, kind in json.load(open("edits/fulls_ch2.json"))]
 
 def inside(t, wins): return any(a <= t < b for a, b in wins)
 cues = []
@@ -101,8 +100,9 @@ WrapStyle: 2
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: Half,Jost,38,&H00FFFFFF,&H00FFFFFF,&H00111111,&H8C111111,0,0,0,0,100,100,0,0,3,10,0,2,1000,40,64,1
-Style: Full,Jost,40,&H00FFFFFF,&H00FFFFFF,&H00111111,&H8C111111,0,0,0,0,100,100,0,0,3,10,0,2,200,200,64,1
+Style: Half,Jost Medium,48,&H00ECF3F7,&H00ECF3F7,&H33111111,&H00000000,0,0,0,0,100,100,0.5,0,3,12,0,2,1000,40,52,1
+Style: Full,Jost Medium,48,&H00ECF3F7,&H00ECF3F7,&H33111111,&H00000000,0,0,0,0,100,100,0.5,0,3,12,0,2,200,200,52,1
+Style: Rule,Jost Medium,48,&H00578DB0,&H00578DB0,&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,0,0,7,0,0,0,1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
@@ -111,6 +111,9 @@ ev, srt = [], []
 for k, (a, b, txt) in enumerate(cues, 1):
     style = "Full" if inside((a + b) / 2, speaker_full) else "Half"
     ev.append(f"Dialogue: 0,{ts(a)},{ts(b)},{style},,0,0,0,,{txt}")
+    w = 0.693 * FM.getlength(txt) + 0.5 * (len(txt) - 1); cx = 1440 if style == "Half" else 960   # libass width (measured)
+    x0, y0, y1 = cx - w / 2 - 12 - 6, 968, 1039                                    # style A: gold rule flush with the box's left edge
+    ev.append(f"Dialogue: 1,{ts(a)},{ts(b)},Rule,,0,0,0,,{{\\pos({x0:.0f},{y0:.0f})\\p1}}m 0 0 l 6 0 l 6 {y1 - y0:.0f} l 0 {y1 - y0:.0f}{{\\p0}}")
     srt.append(f"{k}\n{ts(a, True)} --> {ts(b, True)}\n{txt}\n")
 open(f"{OUT}/captions.ass", "w").write(hdr + "\n".join(ev) + "\n")
 open(f"{OUT}/captions.srt", "w").write("\n".join(srt))

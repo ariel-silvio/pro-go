@@ -95,7 +95,9 @@ def partners(dur, times, t_sub):
     def draw(t):
         img, d = card();
         for i, (w, t0) in enumerate(zip(["The salon", "ServiceMarket", "L'Oréal"], times)):
-            R.fade_text(img, (160, 280 + i * 150), w, R.font(R.SERIF, 104), INK, IVORY, a_in(t, t0, 0.5), dy=16)
+            a = a_in(t, t0, 0.5)
+            R.fade_text(img, (150, 296 + i * 150), str(i + 1), R.font(R.SERIF, 44), R.mix(GOLD, IVORY, 0.25), IVORY, a, dy=16)   # small, quieter count
+            R.fade_text(img, (205, 280 + i * 150), w, R.font(R.SERIF, 104), INK, IVORY, a, dy=16)
         a = a_in(t, t_sub, 0.6); d.rectangle([160, 770, 160 + int(60 * a), 772], fill=GOLD)
         R.fade_text(img, (160, 800), "three reasons to want it to work", R.font(R.SANS, 40), MUTED, IVORY, a, dy=8)
         return img
@@ -184,8 +186,12 @@ def rows_card(label_txt, rows, t_rows, big=None, t_big=0.0, bg=IVORY, fg=INK, su
             fs = 72
             while ImageDraw.Draw(img).textlength(main, font=R.font(R.SERIF, fs)) > LW - 200 and fs > 52: fs -= 2
             R.fade_text(img, (160, y), main, R.font(R.SERIF, fs), fg, bg, a, dy=12)
-            if small: R.fade_text(img, (162, y + 88), small, R.font(R.SANS, 38), sub, bg, a, dy=6)
-            y += 172 if small else 118
+            extra = 0
+            if small:
+                fsm = R.font(R.SANS, 38)
+                for k, ln in enumerate(R.wrap(ImageDraw.Draw(img), small, fsm, LW - 210)):   # long sub-lines wrap instead of running off the card
+                    R.fade_text(img, (162, y + 88 + k * 48), ln, fsm, sub, bg, a, dy=6); extra = k * 48
+            y += (172 if small else 118) + extra
         return img
     return draw
 def big_type_full(lines, t_lines, dur, name):
@@ -250,19 +256,26 @@ def ask_card(t_rows, t_final):
 
 # ---------- full-screen footage with type ----------
 def type_png(name, lab, big, line):
+    """Type over footage: ivory label (with a short gold rule), big white title, sub-line; soft shadow behind all of it."""
+    from PIL import ImageFilter
     img = Image.new("RGBA", (1920, 1080), (0, 0, 0, 0)); d = ImageDraw.Draw(img)
-    R.spaced(d, (160, 600), lab, R.font(R.SANS_M, 26), GOLD, 7)
-    d.text((152, 640), big, font=R.font(R.SERIF, 130), fill=WHITE)
-    if line: d.text((160, 820), line, font=R.font(R.SANS, 48), fill=(240, 235, 226))
-    return png(img, name)
+    if lab:
+        R.spaced(d, (160, 596), lab, R.font(R.SANS_M, 30), (247, 243, 236), 7)
+        d.rectangle([160, 640, 220, 642], fill=GOLD)
+    if big: d.text((152, 650), big, font=R.font(R.SERIF, 130), fill=WHITE)
+    if line: d.text((160, 830), line, font=R.font(R.SANS, 48), fill=(247, 243, 236))
+    sh = Image.new("RGBA", img.size, (0, 0, 0, 0)); sh.putalpha(img.getchannel("A").point(lambda v: int(v * 0.75)))
+    sh = sh.filter(ImageFilter.GaussianBlur(7))
+    out = Image.alpha_composite(sh, img)
+    return png(out, name)
 def shade_png():
-    """Soft dark gradient from the lower left, so white type reads on bright footage."""
+    """Dark gradient from the lower left, tall enough to sit behind the label as well as the title."""
     img = Image.new("RGBA", (1920, 1080)); px = img.load()
     for y in range(0, 1080, 4):
         for x in range(0, 1920, 4):
-            a = max(0.0, 1 - (((x - 0) / 1500) ** 2 + ((1080 - y) / 760) ** 2) ** 0.5)
+            a = max(0.0, 1 - (((x - 0) / 1550) ** 2 + ((1080 - y) / 900) ** 2) ** 0.5)
             for dy in range(4):
-                for dx in range(4): px[x + dx, y + dy] = (17, 17, 17, int(200 * a))
+                for dx in range(4): px[x + dx, y + dy] = (17, 17, 17, int(225 * min(1.0, a * 1.25)))
     return png(img, "shade.png")
 def full_seq(name, clips, dur, types):
     """clips: [(src, src_from, length)] joined with dissolves, slow push-in; types: [(t0, t1, png)] relative to the start."""
@@ -403,7 +416,7 @@ if __name__ == "__main__":
               lt_at=(1, 5), off=OFF1, sp=SP1)
     if "3" in CH:
         # ===== Chapter 3 · Qhakazile (Drive original, landscape; three cuts under full-screen moments; tight frame keeps a logo scarf out of shot) =====
-        SP3 = 1.10; KEEP3 = [(2.1, 32.55), (33.45, 45.3), (47.72, 55.9), (58.82, 85.3)]   # cut: "yet", "Data ownership is clearly defined.", "Commercially, the numbers must work."
+        SP3 = 1.10; KEEP3 = [(2.1, 45.3), (47.72, 55.9), (58.82, 85.3)]   # v17: "yet" restored (the join could not be made clean)   # cut: "yet", "Data ownership is clearly defined.", "Commercially, the numbers must work."
         def E(t):
             acc = 0.0
             for a, b in KEEP3:
@@ -462,7 +475,7 @@ if __name__ == "__main__":
               f"[a]atempo={SP5},afftdn=nf=-42:nr=14:tn=1,agate=threshold=0.012:ratio=2:range=0.25:attack=8:release=250,{FIN},loudnorm=I=-16:TP=-1.5:LRA=7[ao]"   # extra: room noise about 9 dB lower in her pauses
         ff("-i", raw5, "-i", "out/voice/saja_studio.m4a", "-filter_complex", fc5, "-map", "[vo]", "-map", "[ao]", "-ar", "48000", "-ac", "2", *ENC, "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", t5)
         T5 = length(t5)
-        visit2 = full_seq("full_visit2", [(L.format(4), 0.0, E(7.0) - E(1.3))], E(7.0) - E(1.3),
+        visit2 = full_seq("full_visit2", [(L.format(4), 0.0, 1.5), ("out/layla/layla_4_tail_slow.mp4", 0.0, E(7.0) - E(1.3) - 1.5)], E(7.0) - E(1.3),   # dissolve skips clip 4's 1.75-2.6 s (hand through arm)
                           [(0.2, E(7.0) - E(1.3), type_png("ty_v2.png", "WEEK 10", "Visit 2 of 2", None)),
                            (E(4.6) - E(1.3), E(7.0) - E(1.3), type_png("ty_v2_l.png", "", "", "a second scan, while the colour sets"))])
         leader = big_type_full(["One leader.", "Not a committee."], [0.15, E(45.2) - E(42.6)], E(46.6) - E(42.6), "leader")
@@ -482,7 +495,7 @@ if __name__ == "__main__":
                           [("One PRO•GO lead", "Professional Products Middle East"), ("Salons and budget", "in one leader's hands"),
                            ("Innovation Board", "reviews it every quarter")], r(37.7, (38.1, 46.7, 49.5)))), "fade"),
                      (E(52.3), anim("numbers", E(66.5) - E(52.3), rows_card("EVERY WEEK, THREE NUMBERS",
-                          [("≥ 40 % book visit 2", "within 90 days"), ("> 0 margin per visit", "after the salon and ServiceMarket"),
+                          [("40 % or more book visit 2", "within 90 days"), ("Every visit makes money", "after the salon and ServiceMarket"),
                            ("+5 points", "on the hair score")], r(52.3, (54.5, 58.9, 63.8)))), "fade"),
                      (E(66.5), "out/p4_rescan_66.mp4", "fade")],                                    # "Layla went from 58 to 66 by week ten"
               fulls=[(1.3, 7.0, visit2), (42.6, 46.6, leader), (74.6, 999, saja_full)],
@@ -510,7 +523,7 @@ if __name__ == "__main__":
                      (56.4, anim("weeks", 1.5, weeks(1.5)), "cut"),                           # "over 12 weeks"
                      (57.9, anim("lab", 1.45, struck("a lab.", 1.45, 0.75)), "cut"),          # "not in a lab"
                      (59.35, anim("survey", 1.6, struck("a survey.", 1.6, 0.9)), "cut"),      # "not in a survey"
-                     (60.95, L.format(4), "fade"),                                            # "worth more than the margin"
+                     (60.95, "out/layla/layla_4_clean_slow.mp4", "fade"),                  # "worth more than the margin" (clip 4 from 2.75 s, slowed: no arm artefact)
                      (66.0, anim("partners", 7.6, partners(7.6, (0.2, 0.6, 1.0), 1.64)), "fade")],   # "Three partners ..."
               fulls=[(13.0, 26.9, salon), (37.8, 45.6, smkt)],
               lt="out/lower_thirds/LT_S4_Rebecca.png", line=png(layla_line("Week 4. Nothing to report."), "line4.png"),
@@ -526,7 +539,7 @@ if __name__ == "__main__":
                       + [f"0.14*{sm(56.4, 13.4)}", f"0.02*{sm(0, 18.0)}"])   # a step in at each rule, back out at the next; slow push through the ask
         prove = big_type_full(["One Layla proves nothing.", "300 could."], [0.1, 10.8 - 8.4], 14.6 - 8.4, "prove300")
         stop = big_type_full(["Stopping early is cheaper", "than being right too late."], [0.1, 53.9 - 51.9], 56.2 - 51.9, "stopearly")
-        build("ch6", t6, (1080, 110, 470, Z6),
+        build("ch6", t6, (1080, "(200-50*(st(2,clip((t-56)/10,0,1))*0+ld(2)*ld(2)*(3-2*ld(2))))", 470, Z6),   # framing follows his face: centred through the ask
               lefts=[(0, "out/layla/layla_5_app.mp4", "fade"), (7.6, png(c_rule(None), "rule_0.png"), "fade"),
                      (18.0, png(c_rule(0), "rule_1.png"), "fade"),
                      (32.6, png(c_rule(1), "rule_2.png"), "fade"), (40.5, png(c_rule(2), "rule_3.png"), "fade"),

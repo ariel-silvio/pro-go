@@ -3,7 +3,7 @@
 Course rule: GenAI use must be acknowledged.
 
 - **Tool:** Claude Code (Anthropic), cloud session.
-- **Owner and reviewer:** Ariel De Silvio, Team D.
+- **Owner and reviewer:** Ariel de Silvio, Team D.
 - **Status:** all generated code, copy and numbers are unverified until checked against `FACTS.md` (handoff section 7).
 
 ## Phase 0 — 5 Nov 2026
