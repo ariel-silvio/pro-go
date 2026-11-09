@@ -52,9 +52,24 @@ x = t(0.08); n = len(x)
 cl = np.sin(2 * np.pi * 520 * x) * env(n, 0.0005, 0.012) + np.convolve(rng.normal(0, 1, n), np.ones(6) / 6, "same") * env(n, 0.0002, 0.003) * 0.6
 save("soft_click", cl)
 
-# count tick: very small high tick under the 58 -> 74 count
-x = t(0.05); n = len(x)
-save("count_tick", np.sin(2 * np.pi * 2600 * x) * env(n, 0.0004, 0.007))
+# count tick: a soft, rounded tick under the 58 -> 74 count (lower and gentler than before), then the scan's confirm note
+x = t(0.06); n = len(x)
+save("count_tick", (np.sin(2 * np.pi * 1500 * x) + 0.3 * np.sin(2 * np.pi * 750 * x)) * env(n, 0.0015, 0.01))
+n = int(SR * 0.9); x = np.arange(n) / SR
+save("confirm", 0.55 * soft(587.33, 0.0, 0.8)[:n] + 0.5 * soft(880.0, 0.14, 0.7)[:n], 0.05)
+
+# room tone for the cold open: quiet, low, brownish air that fades out by about 7 s
+d = 8.0; n = int(SR * d); x = np.arange(n) / SR
+br = np.cumsum(rng.standard_normal(n)); br -= np.convolve(br, np.ones(4800) / 4800, mode="same")   # brown noise, no DC drift
+br = np.convolve(br, np.ones(40) / 40, mode="same") * np.minimum(x / 0.8, 1) * np.clip((7.0 - x) / 2.5, 0, 1)
+save("room_tone", br, 0.2)
+
+# one piano-like note for the mirror bookend (D4, struck, slow decay, a little hammer)
+d = 4.0; n = int(SR * d); x = np.arange(n) / SR; f0 = 293.66
+pn = sum(a_ * np.sin(2 * np.pi * f0 * k_ * x * (1 + 0.0004 * k_ * k_)) * np.exp(-x / (1.6 / k_ ** 0.7))
+         for k_, a_ in ((1, 1.0), (2, 0.45), (3, 0.22), (4, 0.12), (5, 0.06)))
+pn = pn * np.minimum(x / 0.004, 1) + 0.05 * rng.standard_normal(n) * np.exp(-x / 0.01)
+save("piano_note", pn, 0.1)
 
 # climax (chapter 4, "And L'Oréal learns"): reverse swell into a deep, soft hit
 rng = np.random.default_rng(7)

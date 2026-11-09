@@ -39,7 +39,8 @@ def title_png():
     R.spaced(d, (960, 380), "L'ORÉAL GROUPE  ·  TEAM D", R.font(R.SANS_M, 26), R.GOLD_TXT, 7, True)
     d.text((960, 480), "12 weeks with Layla", font=R.font(R.SERIF, 112), fill=R.INK, anchor="mm")
     d.rectangle([850, 575, 1070, 577], fill=R.GOLD)
-    d.text((960, 640), "PRO•GO  ·  A proposal to the CEO", font=R.font(R.SANS, 38), fill=R.INK, anchor="mm")
+    d.text((960, 640), "Our recommendation: a 90-day pilot with ServiceMarket in Dubai", font=R.font(R.SANS, 40), fill=R.INK, anchor="mm")
+    d.text((960, 700), "PRO•GO  ·  a proposal to the CEO", font=R.font(R.SANS, 28), fill=R.MUTED, anchor="mm")
     p = os.path.join(TMP, "title.png"); img.save(p); return p
 
 P = f"(st(0,clip((t-{MOVE_AT})/{MOVE},0,1));ld(0)*ld(0)*(3-2*ld(0)))"   # smoothstep 0..1 during the move
@@ -54,7 +55,7 @@ for n, (a, b, text) in enumerate(LINES):
     fc.append(f"[{last}][l{n}]overlay=0:0[m{k}]"); last, k = f"m{k}", k + 1
 ins += ["-loop", "1", "-t", str(DUR), "-i", title_png()]
 fc.append(f"[{k}:v]format=rgba,fade=in:st={MOVE_AT + MOVE + 0.1}:d=0.9:alpha=1[tt]")
-fc.append(f"[{last}][tt]overlay=0:0,format=yuv420p[v]")
+fc.append(f"[{last}][tt]overlay=0:0,fade=in:st=0:d=1.6,format=yuv420p[v]")   # out of black: the film starts quietly
 pic = os.path.join(OUT, "cold_open_picture.mp4")
 ff(*ins, "-filter_complex", ";".join(fc), "-map", "[v]", "-t", str(DUR), *ENC, pic)
 

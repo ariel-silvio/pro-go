@@ -55,6 +55,67 @@ def credits():
         d.text((960, 760 + i * 40), t, font=f, fill=(170, 164, 156), anchor="mm")
     return img
 
+def face_tile(take, t, box, size=300, k=1.9):
+    """A square crop around the speaker's face from their graded take (box: face as fractions of the frame)."""
+    fr = os.path.join(TMP, f"face_{os.path.basename(take)}.png")
+    ff("-ss", str(t), "-i", take, "-frames:v", "1", fr)
+    im = Image.open(fr).convert("RGB"); W, H = im.size
+    cx, cy = (box[0] + box[2]) / 2 * W, (box[1] + box[3]) / 2 * H; side = (box[3] - box[1]) * H * k
+    im = im.crop((int(cx - side / 2), int(cy - side * 0.46), int(cx + side / 2), int(cy + side * 0.54)))
+    return im.resize((size, size), Image.LANCZOS)
+
+def credits_faces():
+    """Six faces, six names: the team behind the proposal."""
+    img = Image.new("RGB", (1920, 1080), R.INK); d = ImageDraw.Draw(img)
+    R.spaced(d, (960, 120), "L'ORÉAL GROUPE  ·  TEAM D", R.font(R.SANS_M, 24), R.GOLD, 7, True)
+    crew = [("Amjad Saad Bensalamah", "out/speakers/M4_S1_Amjad_edit.mp4", 30, (.44, .30, .56, .55)),
+            ("Ariel De Silvio", "out/speakers/M4_S2_Ariel_take2_graded.mp4", 30, (.49, .30, .63, .60)),
+            ("Qhakazile Mathebula", "out/speakers/M4_S3_Qhakazile_edit.mp4", 2, (.49, .22, .62, .45)),
+            ("Rebecca Fernandes", "out/speakers/M4_S4_Rebecca_edit.mp4", 30, (.33, .34, .46, .43), 3.4),
+            ("Saja AlOwayshiq", "out/speakers/M4_S5_Saja_edit.mp4", 30, (.63, .20, .76, .42)),
+            ("Ignacio Montero Alcantara", "out/speakers/M4_S6_Ignacio_edit.mp4", 30, (.52, .43, .70, .55), 2.7)]
+    for i, (name, take, t, box, *k) in enumerate(crew):
+        x, y = 960 + (i % 3 - 1) * 520, 200 + (i // 3) * 400
+        img.paste(face_tile(take, t, box, 260, *k), (x - 130, y))
+        d.text((x, y + 290), name, font=R.font(R.SERIF, 34), fill=R.WHITE, anchor="mm")
+    f = R.font(R.SANS, 22)
+    for i, t in enumerate(["Student project for IE Business School. Not affiliated with L'Oréal or ServiceMarket.",
+                           "Fictional characters, simulated data. Layla's voice is AI-generated. AI use disclosed (Claude, Gemini Omni Flash, Lyria, Descript)."]):
+        d.text((960, 990 + i * 34), t, font=f, fill=(170, 164, 156), anchor="mm")
+    return img
+
+def closing_title(dur=5.0):
+    """Item 36: the ask on the golden-hour sky (clip 0c, warmed), the PRO•GO lockup and a QR code to the live prototype."""
+    import qrcode
+    lay = []
+    def layer(draw_fn, name):
+        im = Image.new("RGBA", (1920, 1080), (0, 0, 0, 0)); draw_fn(im, ImageDraw.Draw(im)); return png(im, name)
+    lay.append((0.3, layer(lambda im, d: R.spaced(d, (160, 300), "OUR ASK", R.font(R.SANS_M, 28), R.GOLD, 8), "ct0.png")))
+    lay.append((0.5, layer(lambda im, d: d.text((152, 340), "90 days in Dubai.", font=R.font(R.SERIF, 120), fill=R.WHITE), "ct1.png")))
+    for k, ln in enumerate(["with ServiceMarket and our partner salons", "inside the €3m already planned", "decision at the Q4 2027 review"]):
+        lay.append((1.3 + 0.45 * k, layer(lambda im, d, ln=ln, k=k: d.text((160, 530 + k * 66), ln, font=R.font(R.SANS, 44), fill=(244, 238, 228)), f"ct{2 + k}.png")))
+    qr = qrcode.QRCode(border=2, box_size=8); qr.add_data("https://ariel-silvio.github.io/pro-go/"); qr.make(fit=True)
+    q = qr.make_image(fill_color=(17, 17, 17), back_color=(247, 243, 236)).convert("RGB").resize((230, 230), Image.NEAREST)
+    def lock(im, d):
+        d.text((160, 850), "PRO•GO", font=R.font(R.SERIF, 64), fill=R.WHITE)
+        d.text((164, 930), "12 weeks of colour care, at home", font=R.font(R.SANS, 28), fill=R.GOLD)
+        im.paste(q, (1530, 700)); d.text((1645, 960), "Try PRO•GO", font=R.font(R.SANS_M, 28), fill=R.WHITE, anchor="mm")
+    lay.append((2.9, layer(lock, "ct_lock.png")))
+    shade = R.Image.new("RGBA", (1920, 1080)); sd = ImageDraw.Draw(shade)
+    for x in range(0, 1920, 8): sd.rectangle([x, 0, x + 8, 1080], fill=(17, 17, 17, int(170 * max(0.0, 1 - x / 1500))))
+    sh = png(shade, "ct_shade.png")
+    out = os.path.join(TMP, "closing_title.mp4")
+    ins = ["-ss", "1.0", "-t", f"{dur + 0.1}", "-i", L.format("0c"), "-loop", "1", "-t", f"{dur}", "-i", sh]
+    fc = [f"[0:v]fps=30,scale=1920:1080,colorbalance=rs=0.08:gs=0.025:bs=-0.08:rm=0.05:bm=-0.05,eq=saturation=1.12:gamma=0.96,"
+          f"scale=w='trunc(1920*(1+0.04*t/{dur})/2)*2':h=-2:eval=frame,crop=1920:1080,setsar=1[b0]", "[b0][1:v]overlay=0:0[b1]"]
+    last, k = "b1", 2
+    for t0, pp in lay:
+        ins += ["-loop", "1", "-t", f"{dur}", "-i", pp]
+        fc.append(f"[{k}:v]format=rgba,fade=in:st={t0}:d=0.6:alpha=1[l{k}]")
+        fc.append(f"[{last}][l{k}]overlay=x=0:y='10*(1-min(1,max(0,(t-{t0})/0.6)))'[b{k}]"); last, k = f"b{k}", k + 1
+    fc.append(f"[{last}]fade=in:st=0:d=0.5,fade=out:st={dur - 0.5}:d=0.5,format=yuv420p[v]")
+    ff(*ins, "-filter_complex", ";".join(fc), "-map", "[v]", "-t", f"{dur}", *ENC, out); return out
+
 # ---------- building blocks ----------
 def norm_left(src, kind, dur=None):
     """Return a 960x1080 clip for the left half."""
@@ -135,9 +196,9 @@ EDITS = {1: "out/edits/ch1_edit.mp4", 2: "out/edits/ch2_edit.mp4", 3: "out/edits
 # moments inside the edits (seconds from the chapter start) for the soundtrack: diagram, score, the ask
 MOMENTS = {1: {"progo": 18.15, "gap": 41.67, "strike1": 66.2, "strike2": 71.3, "partner": 73.06},
            2: {"behind": 5.9, "criteria": 71.0},
-           3: {"paidpilot": 25.1, "data": 37.8},
+           3: {"visit1": 2.25, "paidpilot": 25.1, "data": 37.8},
            5: {"visit2": 1.0, "leader": 38.75, "real": 67.3},
-           4: {"winner1": 13.9, "winner2": 35.6, "climax": 45.2, "weeks": 53.8}, 6: {"score": 1.5, "ask": 56.4}}
+           4: {"winner1": 13.9, "winner2": 35.6, "climax": 45.2, "weeks": 53.8}, 6: {"score": 1.5, "prove": 8.4, "stopearly": 51.9, "ask": 56.4, "give": 69.56, "already": 71.2, "end6": 72.65}}
 voice = []   # (index in seq, clip) for the soundtrack
 CARD_DUR = 2.0   # chapter cards trimmed from 3 s to keep the film under 8:00
 CARDS = ["chapter_week0", "chapter_week1", "chapter_week2", "chapter_week4", "chapter_week10", "chapter_week12"]
@@ -176,14 +237,14 @@ for i, (key, name, role, lt) in enumerate(SPK, start=1):
         seq.append(split(f"ch{i}", left, 66 if i == 3 else 72, panel, LT.format(lt), line))   # ch3 placeholder: aim 65-66 s
 # bookend: back to the mirror from the cold open, Layla's voice "Week twelve. Now I know." (AI voice, see ai-log)
 marks["closing"] = len(seq)
-seq.append(full(L.format("0a"), "mirror_end", None, "trim=start=1.6:end=4.45,setpts=PTS-STARTPTS,fps=30,scale=1920:1080,fade=t=in:st=0:d=0.4"))
-voice.append((len(seq) - 1, "out/voice/layla_close.wav", 0.35))
-seq.append(full(M4.format("closing_card"), "closing", 4.5))
-seq.append(still(png(credits(), "credits.png"), "credits", 3))
+seq.append(full(L.format("0a"), "mirror_end", None, "trim=start=1.6:end=4.45,setpts=1.3*(PTS-STARTPTS),fps=30,scale=1920:1080,fade=t=in:st=0:d=0.5"))
+voice.append((len(seq) - 1, "out/voice/layla_close2_1.wav", 0.3))   # "Week twelve. Now I can see it." (voice A, take 2)
+marks["title"] = len(seq); seq.append(closing_title(5.0))
+seq.append(still(png(credits_faces(), "credits.png"), "credits", 3))
 voice.append((0, "out/voice/layla_open.wav", 3.0))      # cold open: Layla's own line over the mirror
 
 lst = os.path.join(TMP, "all.txt"); open(lst, "w").write("".join(f"file '{os.path.abspath(p)}'\n" for p in seq))
-final = os.path.join(OUT, "animatic_v15_voice.mp4"); part = final.replace(".mp4", ".part.mp4")
+final = os.path.join(OUT, "animatic_v16_voice.mp4"); part = final.replace(".mp4", ".part.mp4")
 starts, t = [], 0.0
 for p in seq: starts.append(t); t += length(p)
 ins = ["-f", "concat", "-safe", "0", "-i", lst, "-f", "lavfi", "-i", f"anullsrc=r=48000:cl=stereo:d={t:.3f}"]

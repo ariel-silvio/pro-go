@@ -65,7 +65,7 @@ def c_roles():
 def c_bigapps():
     img, d = card(); label(d, 280, "THE TWO BIG BEAUTY APPS", MUTED)
     d.text((160, 330), "Urban Company\nJustlife", font=R.font(R.SERIF, 76), fill=MUTED, spacing=16)
-    d.text((160, 560), "their own brand at your door", font=R.font(R.SANS, 34), fill=MUTED)
+    d.text((160, 560), "their own brand at your door", font=R.font(R.SANS, 40), fill=MUTED)
     arrow(d, 160, 680); d.text((240, 655), "the client moves to the app", font=R.font(R.SANS_M, 38), fill=R.INK)
     d.line([(160, 820), (800, 820)], fill=HAIR, width=2)
     return img
@@ -91,13 +91,13 @@ def c_crit(k):
         img, d = card(); label(d, 250, "OUR PARTNER CRITERIA")
         for i, t in enumerate(CRITERIA):
             y = 330 + i * 130; on = k == i + 1 or k == 4
-            col = INK if on else (176, 170, 160)
+            col = INK if on else (140, 134, 126)
             if k == 4: tick(d, 162, y + 16, M4C, 38)                   # ticked: the tick takes the number's place
             else: d.text((160, y), f"{i + 1}", font=R.font(R.SERIF, 64), fill=GOLD if on else col)
-            d.text((230, y + 10), t, font=R.font(R.SANS_M if i == 2 else R.SANS, 38), fill=col)
+            d.text((230, y + 10), t, font=R.font(R.SANS_M if i == 2 else R.SANS, 41), fill=col)
         if k == 4:
             d.rectangle([160, 740, 220, 742], fill=GOLD); wordmark(d, (160, 775), 44, M4C)
-            d.text((160, 845), "passes all three", font=R.font(R.SANS, 36), fill=MUTED)
+            d.text((160, 845), "passes all three", font=R.font(R.SANS, 40), fill=MUTED)
         return img
     draw.__name__ = f"c_crit{k}"; return draw
 
@@ -135,6 +135,7 @@ XF = 0.6                      # transition length (s)
 FPS = 30
 def fr(t): return round(t * FPS) / FPS          # snap times to whole frames
 PLAN = [(fr(a), fr(b), k, src) for a, b, k, src in PLAN]
+json.dump([[a, b, k] for a, b, k, _ in PLAN if k in ("layla", "ariel")], open("edits/fulls_ch2.json", "w"))   # for captions
 SHIFT = 960 - CROPX                             # in the split, take pixel x appears at x + SHIFT
 
 def vis(n, t0, dur, out):

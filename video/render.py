@@ -62,7 +62,7 @@ def chapter(t, week="Week 0", n="1", title="The problem"):
     rw = 160 * ease((t - 0.8) / 0.6)
     d.rectangle([160, 610, 160 + rw, 612], fill=GOLD)
     a3 = ease((t - 1.0) / 0.6)
-    fade_text(img, (160, 650), title, font(SANS, 56), MUTED, IVORY, a3, dy=10)
+    fade_text(img, (160, 650), title, font(SANS, 56), mix(MUTED, INK, 0.55), IVORY, a3, dy=10)
     out = clamp((t - 2.6) / 0.4)
     if out > 0: img = Image.blend(img, Image.new("RGB", (W, H), IVORY), out)
     return img
@@ -97,10 +97,12 @@ def score(t):
     r = 13
     ex, ey = X(wk), Y(s)
     d.ellipse([ex - r, ey - r, ex + r, ey + r], fill=GOLD)
+    a5 = ease((t - 4.0) / 0.6)                  # what the score stands for
+    d.text((160, 730), "colour that lasts  ·  less breakage  ·  shine", font=font(SANS, 34), fill=mix(IVORY, GOLD_TXT, a5))
     a4 = ease((t - 4.4) / 0.6)
     d.text((160, 900), "Illustrative. The pilot will test whether this improvement is real.",
            font=font(SANS, 32), fill=mix(IVORY, MUTED, a4))
-    out = clamp((t - 5.6) / 0.4)
+    out = clamp((t - 5.9) / 0.4)
     if out > 0: img = Image.blend(img, Image.new("RGB", (W, H), IVORY), out)
     return img
 

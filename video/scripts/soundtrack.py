@@ -41,7 +41,7 @@ music = np.zeros_like(bus)
 c = [None] + [TL[f"card{i}"] for i in range(1, 7)]; ch = [None] + [TL[f"ch{i}"] for i in range(1, 7)]
 SCORE, ASK, CLOSE = TL["score"], TL["ask"], TL["closing"]
 build_at = SCORE - 82.5                                                   # the build's swell peaks about 82 s in
-place(music, M("open_dram2"), 0.0,  length=17.5, fout=2.5, gain_db=2)     # cold open, dramatic, drops as chapter 1 starts
+place(music, M("open_v16b"), 2.0, length=15.5, fin=1.5, fout=2.5, gain_db=1)   # cold open v16: starts quietly at 2 s, gentle build, peak on the title (11 s)
 place(music, M("bed1"),       c[1], length=c[3] - c[1] + 2.5, fin=2.0, fout=3.0)          # weeks 0-1: sparse warm piano
 bed2_len = min(157.0, build_at + 4 - (c[3] - 0.5))
 place(music, M("bed2"),       c[3] - 0.5, length=bed2_len, fin=3.0, fout=4.0)            # week 2: strings join; pulse from about week 4
@@ -49,7 +49,8 @@ if build_at > c[3] - 0.5 + 157.0 - 4:                                           
     place(music, M("bed1"), c[3] + 152.0, src_from=60.0, length=build_at - c[3] - 148.0, fin=2.5, fout=3.0)
 place(music, M("build"),      build_at, length=SCORE + 10 - build_at, fin=3.0, fout=5.0)   # weeks 10-12: strings rise, swell on the score
 place(music, M("bed1"),       SCORE + 6.0, src_from=20.0, length=ASK - SCORE - 6.0, fin=4.0, fout=4.0, gain_db=-3)   # low pad under the rules
-place(music, M("close"),      CLOSE - 0.3, length=DUR - CLOSE + 0.3, fin=0.4, fout=3.0)   # motif returns on the closing card
+TITLE = TL.get("title", CLOSE + 3.7)
+place(music, M("close"),      TITLE - 0.6, length=DUR - TITLE + 0.6, fin=1.0, fout=3.0)   # after the piano note on the mirror, the motif returns on the closing title
 
 # gain envelope: duck under speech (chapter bodies), up on cards and the closing; half duck on the score
 SPEECH = [(ch[i], c[i + 1] if i < 6 else CLOSE) for i in range(1, 7)]
@@ -69,13 +70,23 @@ if CL:   # chapter 4 climax, "And L'Oréal learns": the bed falls away in her pa
 music *= (10 ** (g / 20))[:, None]
 if CL:   # climax cue (Lyria): 24.5 s into the cue it is rising; its peak lands on "not in a lab, not in a survey"
     place(music, M("climax_a"), CL - 0.1, src_from=24.5, length=19.5, fin=0.8, fout=3.5, gain_db=-10)
-i0, i1 = int((ASK - 2.0) * SR), int(ASK * SR)                              # the ask: music gone by the first word
-music[i0:i1] *= np.linspace(1, 0, i1 - i0)[:, None] ** 2; music[i1:int((CLOSE - 0.3) * SR)] = 0
+i0, i1 = int((ASK - 2.0) * SR), int(ASK * SR)                              # the ask: the bed gives way to the finale cue
+music[i0:i1] *= np.linspace(1, 0, i1 - i0)[:, None] ** 2; music[i1:int((TITLE - 0.6) * SR)] = 0
+GIVE, ALREADY = TL.get("give", ASK + 13.2), TL.get("already", ASK + 14.8)
+fin_ = M("finale_v16")[int(7.6 * SR):][:int((ALREADY - ASK) * SR)]          # the finale grows under the ask, peaks on "Give us 12 weeks"
+tt = np.arange(len(fin_)) / SR + ASK
+fg = np.interp(tt, [ASK, ASK + 1.5, GIVE - 0.4, GIVE + 0.2, ALREADY - 0.15, ALREADY], [-40, -15, -7, -5, -5, -60])
+music[int(ASK * SR):int(ASK * SR) + len(fin_)] += fin_ * (10 ** (fg / 20))[:, None]   # cut to silence on "Layla already did."
 bus += music
 
 # ---- sound effects ----
 S = {n: load(f"out/sfx/{n}.wav") for n in ["week_tick", "scan_shimmer", "message_chime", "soft_click", "count_tick",
-                                            "reverse_swell", "sub_hit", "winner_tone", "strike"]}
+                                            "reverse_swell", "sub_hit", "winner_tone", "strike", "confirm", "room_tone", "piano_note"]}
+place(bus, S["room_tone"], 0.0, gain_db=-30)                                            # cold open: the room before the music
+place(bus, S["week_tick"], 0.4, gain_db=-12)                                            # one clock tick, then her voice
+place(bus, S["piano_note"], CLOSE + 0.1, gain_db=-14)                                   # one piano note on the mirror, before her last line
+for k in ("visit1", "prove", "stopearly"):                                              # soft tone on the full-screen beats
+    if k in TL: place(bus, S["winner_tone"], TL[k] + 0.2, gain_db=-19)
 for i in range(1, 7): place(bus, S["week_tick"], c[i] + 0.25, gain_db=-8)                 # chapter cards
 place(bus, S["scan_shimmer"], ch[1] + 22.3, gain_db=-14)  # chapter 1: "we measure her hair" (app panel on 58)
 place(bus, S["message_chime"], ch[2] + 2.6, gain_db=-14)  # chapter 2: Dana's message (booking panel comes in at 2.4 s)
@@ -109,14 +120,22 @@ for f in range(180):
     for (x0, y0), (x1, y1) in zip(R.PTS, R.PTS[1:]):
         if x0 <= wk <= x1: s = y0 + (y1 - y0) * (wk - x0) / (x1 - x0)
     s = 74 if wk >= 12 else round(s)
-    if prev is not None and s != prev: place(bus, S["count_tick"], SCORE + f / 30, gain_db=-16)
+    if prev is not None and s != prev:
+        if s == 74: place(bus, S["confirm"], SCORE + f / 30, gain_db=-16)               # lands on the same confirm note as the scan
+        else: place(bus, S["count_tick"], SCORE + f / 30, gain_db=-20)
     prev = s
 
 wav = DST.replace(".mp4", "_music.wav")
 np.clip(bus, -1, 1).astype("<f4").tofile(wav + ".raw")
 subprocess.run(["ffmpeg", "-y", "-v", "error", "-f", "f32le", "-ar", str(SR), "-ac", "2", "-i", wav + ".raw", wav], check=True); os.remove(wav + ".raw")
-# voices (from the animatic) + music bus, gentle limiter
+# voices (from the animatic) + music bus, then the whole film to -14 LUFS (measured, one gain, limiter at -1 dBTP)
+mixw = DST.replace(".mp4", "_mix.wav")
 subprocess.run(["ffmpeg", "-y", "-v", "error", "-i", SRC, "-i", wav, "-filter_complex",
-                "[0:a]aresample=48000[v];[v][1:a]amix=inputs=2:normalize=0:duration=first,alimiter=limit=0.89[a]",
+                "[0:a]aresample=48000[v];[v][1:a]amix=inputs=2:normalize=0:duration=first[a]", "-map", "[a]", "-c:a", "pcm_f32le", mixw], check=True)
+log = subprocess.run(["ffmpeg", "-nostats", "-i", mixw, "-af", "ebur128", "-f", "null", "-"], capture_output=True, text=True).stderr
+I = float([l for l in log.splitlines() if l.strip().startswith("I:")][-1].split()[1])
+subprocess.run(["ffmpeg", "-y", "-v", "error", "-i", SRC, "-i", mixw, "-filter_complex",
+                f"[1:a]volume={-14.0 - I:.2f}dB,alimiter=limit=0.89:level=false[a]",
                 "-map", "0:v", "-map", "[a]", "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", DST], check=True)
+os.remove(mixw); print(f"mix was {I:.1f} LUFS, gain {-14.0 - I:+.1f} dB")
 print("wrote", DST, "and", wav)

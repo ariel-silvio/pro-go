@@ -5,6 +5,8 @@ const [base, out] = process.argv.slice(2);
 const seed = { variantId: 'v1', plan: 'essential', scanDone: true, reserved: true, slotId: 's2', checklist: { patch: true }, scenario: 'improved', nextBooked: false, renewed: false, alerts: [] };
 const shots = [
   // week 12 re-scan: same screen as week 8, values set to the film's illustrative week-12 score (58 -> 74)
+  // week 0: the salon's invitation to a free hair scan (clip 1, Amjad's chapter)
+  { name: 'screen_week0_invite', route: '#/customer/invite', patch: [['Hi Maya, your colour, at home, with the colourist you already know.', 'Hi Layla, your colour, at home, with the colourist you already know.']] },
   { name: 'screen_week12_74', route: '#/customer/after', patch: [['AFTER · 9 JUN', 'AFTER · 7 JUL'], ['66', '74'], ['+8', '+16'], ['Wed 9 Jun', 'Wed 4 Aug']] },
 ];
 (async () => {
