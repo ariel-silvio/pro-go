@@ -57,6 +57,7 @@ t = np.arange(len(music)) / SR; g = np.zeros(len(music), np.float32)
 for a, b in SPEECH:                    # -15 dB with 0.6 s ramps
     g = np.minimum(g, -15 * np.clip(np.minimum((t - a) / 0.6, (b - t) / 0.6), 0, 1))
 # (no lift on the score any more: Ignacio speaks over it, the music stays under him)
+g = g + np.interp(t, [2.6, 3.0, 10.6, 11.2], [0, -8, -8, 0])   # cold open: piano dips under Layla's voice
 g = g + np.interp(t, [SCORE - 1.5, SCORE - 0.5, SCORE + 7.0, SCORE + 8.5], [0, -4, -4, 0])   # the build swells here: keep it under his voice
 for k in ("partner", "real"):   # ch1 "So we partner", ch5 "The real numbers come from the pilot": the bed lifts 6 dB, then settles
     if k in TL:

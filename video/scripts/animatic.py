@@ -28,7 +28,7 @@ def speaker_panel(n, name, role, first):
     for i, ln in enumerate(R.wrap(d, f"“{first}”", f, 720)[:7]):
         d.text((80, 440 + i * 46), ln, font=f, fill=(231, 225, 216))
     d.text((80, 760), "Recording to come · about 70 s · looking screen-left", font=R.font(R.SANS, 24), fill=(150, 144, 136))
-    R.spaced(d, (560, 170), "ANIMATIC V14", R.font(R.SANS_M, 18), (150, 144, 136), 4)
+    R.spaced(d, (560, 170), "ANIMATIC V15", R.font(R.SANS_M, 18), (150, 144, 136), 4)
     return img
 
 def layla_line(text):
@@ -51,7 +51,7 @@ def credits():
         d.text((960, 360 + i * 56), t, font=R.font(R.SERIF, 40), fill=R.WHITE, anchor="mm")
     f = R.font(R.SANS, 24)
     for i, t in enumerate(["Student project for IE Business School. Not affiliated with L'Oréal or ServiceMarket.",
-                           "Fictional characters, simulated data. AI use disclosed (Claude, Gemini Omni Flash, Descript)."]):
+                           "Fictional characters, simulated data. AI use disclosed (Claude, Gemini Omni Flash, Lyria, Descript). Layla's voice is AI-generated."]):
         d.text((960, 760 + i * 40), t, font=f, fill=(170, 164, 156), anchor="mm")
     return img
 
@@ -139,7 +139,7 @@ MOMENTS = {1: {"progo": 18.15, "gap": 41.67, "strike1": 66.2, "strike2": 71.3, "
            5: {"visit2": 1.0, "leader": 38.75, "real": 67.3},
            4: {"winner1": 13.9, "winner2": 35.6, "climax": 45.2, "weeks": 53.8}, 6: {"score": 1.5, "ask": 56.4}}
 voice = []   # (index in seq, clip) for the soundtrack
-CARD_DUR = 2.3   # chapter cards trimmed from 3 s to keep the film under 8:00
+CARD_DUR = 2.0   # chapter cards trimmed from 3 s to keep the film under 8:00
 CARDS = ["chapter_week0", "chapter_week1", "chapter_week2", "chapter_week4", "chapter_week10", "chapter_week12"]
 
 seq, marks = [], {}
@@ -174,17 +174,23 @@ for i, (key, name, role, lt) in enumerate(SPK, start=1):
         seq.append(split(f"ch{i}", left, round(length(TAKES[i][0]), 3), panel, LT.format(lt), line, TAKES[i]))
     else:
         seq.append(split(f"ch{i}", left, 66 if i == 3 else 72, panel, LT.format(lt), line))   # ch3 placeholder: aim 65-66 s
-marks["closing"] = len(seq); seq.append(full(M4.format("closing_card"), "closing", 4.5))
-seq.append(still(png(credits(), "credits.png"), "credits", 4))
+# bookend: back to the mirror from the cold open, Layla's voice "Week twelve. Now I know." (AI voice, see ai-log)
+marks["closing"] = len(seq)
+seq.append(full(L.format("0a"), "mirror_end", None, "trim=start=1.6:end=4.45,setpts=PTS-STARTPTS,fps=30,scale=1920:1080,fade=t=in:st=0:d=0.4"))
+voice.append((len(seq) - 1, "out/voice/layla_close.wav", 0.35))
+seq.append(full(M4.format("closing_card"), "closing", 4.5))
+seq.append(still(png(credits(), "credits.png"), "credits", 3))
+voice.append((0, "out/voice/layla_open.wav", 3.0))      # cold open: Layla's own line over the mirror
 
 lst = os.path.join(TMP, "all.txt"); open(lst, "w").write("".join(f"file '{os.path.abspath(p)}'\n" for p in seq))
-final = os.path.join(OUT, "animatic_v14_voice.mp4"); part = final.replace(".mp4", ".part.mp4")
+final = os.path.join(OUT, "animatic_v15_voice.mp4"); part = final.replace(".mp4", ".part.mp4")
 starts, t = [], 0.0
 for p in seq: starts.append(t); t += length(p)
 ins = ["-f", "concat", "-safe", "0", "-i", lst, "-f", "lavfi", "-i", f"anullsrc=r=48000:cl=stereo:d={t:.3f}"]
 fc, mix = [], ["[1:a]"]
-for k, (idx, clip) in enumerate(voice):
-    ins += ["-i", clip]; ms = int(starts[idx] * 1000)
+for k, v in enumerate(voice):
+    idx, clip, off = v if len(v) == 3 else (*v, 0.0)
+    ins += ["-i", clip]; ms = int((starts[idx] + off) * 1000)
     fc.append(f"[{k+2}:a]aresample=48000,adelay={ms}|{ms}[a{k}]"); mix.append(f"[a{k}]")
 fc.append("".join(mix) + f"amix=inputs={len(mix)}:normalize=0:duration=first[aout]")
 ff(*ins, "-filter_complex", ";".join(fc), "-map", "0:v", "-map", "[aout]", "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", part)
