@@ -40,16 +40,19 @@ def clean(s):
     return s
 
 def chunks(text):
-    """Split a sentence into lines of at most MAXC characters, preferring breaks after commas."""
-    words, out, cur = text.split(), [], ""
-    for w in words:
-        if cur and len(cur) + 1 + len(w) > MAXC:
-            if "," in cur[:-1] and len(cur) > MAXC * 0.6:           # break at the last comma if the remainder is short
-                k = cur.rfind(",") + 1
-                if len(cur) - k < 16: out.append(cur[:k].strip()); cur = cur[k:].strip()
-            out.append(cur); cur = w
-        else: cur = (cur + " " + w).strip()
-    return out + [cur] if cur else out
+    """Split a sentence into the fewest lines of at most MAXC characters, balanced in length (no orphan words)."""
+    import math
+    words = text.split()
+    n = max(1, math.ceil(len(text) / MAXC))
+    while True:
+        target = len(text) / n; out, cur = [], ""
+        for w in words:
+            if cur and (len(cur) + 1 + len(w) > MAXC or (len(cur) >= target * 0.9 and len(out) < n - 1)):
+                out.append(cur); cur = w
+            else: cur = (cur + " " + w).strip()
+        out.append(cur)
+        if all(len(o) <= MAXC for o in out) and len(out) <= n: return out
+        n += 1
 
 # windows with no captions (film seconds): cold open, cards, full-screen type, lower thirds, the closing
 F = lambda i: TL[f"ch{i}"]

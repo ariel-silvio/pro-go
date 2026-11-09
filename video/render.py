@@ -32,6 +32,7 @@ def spaced(draw, xy, text, fnt, fill, tracking, anchor_center=False):
     return total
 
 def fade_text(img, xy, text, fnt, color, bg, a, anchor="la", dy=0):
+    if a <= 0: return                 # not yet visible: drawing it in the background colour would erase anything underneath
     d = ImageDraw.Draw(img)
     d.text((xy[0], xy[1] + (1 - a) * dy), text, font=fnt, fill=mix(bg, color, a), anchor=anchor)
 

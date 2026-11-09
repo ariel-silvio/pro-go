@@ -205,7 +205,7 @@ CARDS = ["chapter_week0", "chapter_week1", "chapter_week2", "chapter_week4", "ch
 
 seq, marks = [], {}
 # cold open 0:00-0:15: built by scripts/cold_open.py (mirror, leaving, horizon; text on a black third; title on the sky)
-seq.append(full("out/edits/cold_open_picture.mp4", "cold_open", 15.0))
+seq.append(full("out/edits/cold_open.mp4", "cold_open", 15.0))
 
 lefts = {1: [norm_left(L.format(1), "layla"), norm_left(L.format("1b"), "layla"), norm_left(L.format("1c"), "layla"),
              norm_left("out/p1_scan_result_58.mp4", "panel")],

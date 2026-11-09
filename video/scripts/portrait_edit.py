@@ -238,7 +238,9 @@ def ask_card(t_rows, t_final):
         y = 260
         for (main, small), t0 in zip(rows, t_rows):
             a = a_in(t, t0, 0.45) * out
-            R.fade_text(img, (160, y), main, R.font(R.SERIF, 66), WHITE, INK, a, dy=10)
+            fs = 64
+            while d.textlength(main, font=R.font(R.SERIF, fs)) > LW - 230: fs -= 2
+            R.fade_text(img, (160, y), main, R.font(R.SERIF, fs), WHITE, INK, a, dy=10)
             if small: R.fade_text(img, (162, y + 84), small, R.font(R.SANS, 38), GOLD, INK, a, dy=6)
             y += 168 if small else 110
         for i, ln in enumerate(("Give us", "12 weeks.")):
