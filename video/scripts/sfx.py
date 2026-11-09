@@ -21,14 +21,22 @@ tick = (np.sin(2 * np.pi * 1850 * x) + 0.45 * np.sin(2 * np.pi * 3720 * x) + 0.2
 tick += rng.normal(0, 1, n) * env(n, 0.0002, 0.004) * 0.35
 save("week_tick", tick)
 
-# scan shimmer: rising glassy partials with a breath of air, 1.6 s (cold open and week 12, so the loop closes)
-x = t(1.6); n = len(x); sh = np.zeros(n)
-for k, (f0, f1) in enumerate([(1200, 2100), (1800, 3150), (2400, 4200), (3000, 5250)]):
-    f = f0 + (f1 - f0) * (x / x[-1]) ** 1.5; ph = 2 * np.pi * np.cumsum(f) / SR
-    sh += np.sin(ph + k) * (0.6 ** k) * (1 + 0.25 * np.sin(2 * np.pi * (5 + k) * x))
-air = np.convolve(rng.normal(0, 1, n), np.ones(24) / 24, "same")
-sh = (sh + 0.25 * air) * np.sin(np.pi * np.clip(x / x[-1], 0, 1)) ** 1.6
-save("scan_shimmer", sh, 0.08)
+# scan read (replaces the first "shimmer", whose rising, wobbling partials sounded like a cat):
+# a soft unpitched light sweep (band-passed air moving upward), then a short warm confirm, D5 then A5, no glide, no vibrato
+x = t(1.25); n = len(x); sh = np.zeros(n)
+noise = rng.standard_normal(n); sweep = np.zeros(n); win = 1024; hop = 256
+for i0 in range(0, int(0.62 * SR) - win, hop):                 # band-pass the noise along a rising centre frequency
+    fc = 900 + 3400 * (i0 / (0.62 * SR)) ** 1.3
+    seg = np.fft.rfft(noise[i0:i0 + win] * np.hanning(win)); f = np.fft.rfftfreq(win, 1 / SR)
+    seg *= np.exp(-0.5 * ((f - fc) / (fc * 0.18)) ** 2)
+    sweep[i0:i0 + win] += np.fft.irfft(seg, win)
+sweep *= np.sin(np.pi * np.clip(x / 0.62, 0, 1)) ** 2 * 0.9
+def soft(freq, at, d=0.55):
+    y = np.zeros(n); k = int(at * SR); m = min(n - k, int(d * SR)); xx = np.arange(m) / SR
+    y[k:k + m] = (np.sin(2 * np.pi * freq * xx) + 0.12 * np.sin(2 * np.pi * 2 * freq * xx)) * np.minimum(xx / 0.012, 1) * np.exp(-xx / 0.22)
+    return y
+sh = sweep + 0.55 * soft(587.33, 0.52) + 0.5 * soft(880.0, 0.66)
+save("scan_shimmer", sh, 0.06)
 
 # message chime: two soft bell notes, generic (not any app's sound)
 def bell(freq, d=0.9):
