@@ -28,7 +28,7 @@ def speaker_panel(n, name, role, first):
     for i, ln in enumerate(R.wrap(d, f"“{first}”", f, 720)[:7]):
         d.text((80, 440 + i * 46), ln, font=f, fill=(231, 225, 216))
     d.text((80, 760), "Recording to come · about 70 s · looking screen-left", font=R.font(R.SANS, 24), fill=(150, 144, 136))
-    R.spaced(d, (560, 170), "ANIMATIC V12", R.font(R.SANS_M, 18), (150, 144, 136), 4)
+    R.spaced(d, (560, 170), "ANIMATIC V13", R.font(R.SANS_M, 18), (150, 144, 136), 4)
     return img
 
 def layla_line(text):
@@ -125,14 +125,16 @@ LINES = ["Week 0. Her salon sends a free hair scan.", "Wednesday, 18:00. Dana, f
          "Week 4. Nothing to report.", "Week 10. Visit 2 of 2.", "Week 12. 74. She renewed."]
 # Recorded takes: chapter -> (trimmed clip, crop x of the 960 px window around the face)
 TAKES = {1: ("out/speakers/M4_S1_Amjad_edit.mp4", None),   # IMG_4934 trimmed 1.4-85.2 s, 8% faster (scripts/portrait_edit.py)
-         2: ("out/speakers/M4_S2_Ariel_take2_graded.mp4", 552),   # take 2 (script v3): trimmed 10.6-92.0 s, 8% faster, pitch kept
+         2: ("out/speakers/M4_S2_Ariel_take2_graded.mp4", 552),
+         5: ("out/speakers/M4_S5_Saja_edit.mp4", None),   # Drive original; slips cut, 8% faster   # take 2 (script v3): trimmed 10.6-92.0 s, 8% faster, pitch kept
          4: ("out/speakers/M4_S4_Rebecca_edit.mp4", None),      # portrait take, edit by scripts/portrait_edit.py
          6: ("out/speakers/M4_S6_Ignacio_edit.mp4", None)}      # portrait, mirrored back, WhatsApp copy (Drive original to come)
 def length(p): return float(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", p], capture_output=True, text=True).stdout)
-EDITS = {1: "out/edits/ch1_edit.mp4", 2: "out/edits/ch2_edit.mp4", 4: "out/edits/ch4_edit.mp4", 6: "out/edits/ch6_edit.mp4"}   # synced edits, picture only
+EDITS = {1: "out/edits/ch1_edit.mp4", 2: "out/edits/ch2_edit.mp4", 5: "out/edits/ch5_edit.mp4", 4: "out/edits/ch4_edit.mp4", 6: "out/edits/ch6_edit.mp4"}   # synced edits, picture only
 # moments inside the edits (seconds from the chapter start) for the soundtrack: diagram, score, the ask
 MOMENTS = {1: {"progo": 18.15, "gap": 41.67, "strike1": 66.2, "strike2": 71.3, "partner": 73.06},
            2: {"behind": 5.9, "criteria": 71.0},
+           5: {"visit2": 1.0, "leader": 38.75, "real": 67.3},
            4: {"winner1": 13.9, "winner2": 35.6, "climax": 45.2, "weeks": 53.8}, 6: {"score": 1.5, "ask": 56.4}}
 voice = []   # (index in seq, clip) for the soundtrack
 CARD_DUR = 2.5   # chapter cards trimmed from 3 s to keep the film under 8:00
@@ -174,7 +176,7 @@ marks["closing"] = len(seq); seq.append(full(M4.format("closing_card"), "closing
 seq.append(still(png(credits(), "credits.png"), "credits", 4))
 
 lst = os.path.join(TMP, "all.txt"); open(lst, "w").write("".join(f"file '{os.path.abspath(p)}'\n" for p in seq))
-final = os.path.join(OUT, "animatic_v12_voice.mp4"); part = final.replace(".mp4", ".part.mp4")
+final = os.path.join(OUT, "animatic_v13_voice.mp4"); part = final.replace(".mp4", ".part.mp4")
 starts, t = [], 0.0
 for p in seq: starts.append(t); t += length(p)
 ins = ["-f", "concat", "-safe", "0", "-i", lst, "-f", "lavfi", "-i", f"anullsrc=r=48000:cl=stereo:d={t:.3f}"]

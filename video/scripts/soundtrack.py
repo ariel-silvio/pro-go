@@ -58,8 +58,9 @@ for a, b in SPEECH:                    # -15 dB with 0.6 s ramps
     g = np.minimum(g, -15 * np.clip(np.minimum((t - a) / 0.6, (b - t) / 0.6), 0, 1))
 # (no lift on the score any more: Ignacio speaks over it, the music stays under him)
 g = g + np.interp(t, [SCORE - 1.5, SCORE - 0.5, SCORE + 7.0, SCORE + 8.5], [0, -4, -4, 0])   # the build swells here: keep it under his voice
-if "partner" in TL:   # chapter 1: the bed lifts 6 dB on "So we partner", then settles
-    P = TL["partner"]; g = g + np.interp(t, [P - 0.3, P + 0.5, P + 3.5, P + 6.0], [0, 6, 6, 0])
+for k in ("partner", "real"):   # ch1 "So we partner", ch5 "The real numbers come from the pilot": the bed lifts 6 dB, then settles
+    if k in TL:
+        P = TL[k]; g = g + np.interp(t, [P - 0.3, P + 0.5, P + 3.5, P + 6.0], [0, 6, 6, 0])
 CL = TL.get("climax")
 if CL:   # chapter 4 climax, "And L'Oréal learns": the bed falls away in her pause, the climax cue takes over, then the bed returns
     dip = np.interp(t, [CL - 2.4, CL - 0.4, CL + 17.5, CL + 20.0], [0, -30, -30, 0])
@@ -88,9 +89,12 @@ for k in ("progo", "behind", "criteria"):                 # one soft tone on cha
     if k in TL: place(bus, S["winner_tone"], TL[k] + 0.2, gain_db=-18)
 for k in ("strike1", "strike2"):                          # chapter 1: build, buy struck through
     if k in TL: place(bus, S["strike"], TL[k] - 0.05, gain_db=-16)
-if "partner" in TL:                                       # chapter 1 climax: "So we partner" (Amjad full screen)
-    place(bus, S["reverse_swell"], TL["partner"] - 1.6, gain_db=-15)
-    place(bus, S["sub_hit"], TL["partner"] - 0.03, gain_db=-11)
+for k, hit in (("partner", -11), ("real", -13)):          # ch1 and ch5 lens moments: swell into a low hit (speaker full screen)
+    if k in TL:
+        place(bus, S["reverse_swell"], TL[k] - 1.6, gain_db=-15)
+        place(bus, S["sub_hit"], TL[k] - 0.03, gain_db=hit)
+for k in ("visit2", "leader"):                            # ch5: one soft tone on "Visit 2 of 2" and "One leader. Not a committee."
+    if k in TL: place(bus, S["winner_tone"], TL[k] + 0.2, gain_db=-18)
 if "weeks" in TL:                                         # the 0 -> 12 week counter: one tick per number
     prev = 0
     for f in range(23):

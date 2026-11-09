@@ -156,7 +156,7 @@ def build_buy_partner(t_words, t_strike1, t_strike2, t_partner):
         img, d = card(INK)
         R.spaced(d, (160, 230), "THREE WAYS TO GET IT", R.font(R.SANS_M, 24), GOLD, 6)
         for i, (w, t0) in enumerate(zip(words, t_words)):
-            a = a_in(t, t0, 0.4); y = 290 + i * 200; f = R.font(R.SERIF, 120)
+            a = a_in(t, t0, 0.4); y = 270 + i * 240; f = R.font(R.SERIF, 120)
             lit = i == 2 and t >= t_partner
             col = R.mix(WHITE, GOLD, a_in(t, t_partner, 0.6)) if i == 2 else WHITE
             if i < 2 and t >= (t_strike1, t_strike2)[i]: col = R.mix(WHITE, (110, 106, 100), a_in(t, (t_strike1, t_strike2)[i], 0.4))
@@ -164,10 +164,36 @@ def build_buy_partner(t_words, t_strike1, t_strike2, t_partner):
             if i < 2:
                 ts = (t_strike1, t_strike2)[i]; sa = R.ease((t - ts) / 0.35); w_px = d.textlength(w, font=f)
                 if sa > 0: d.rectangle([152, y + 82, 152 + int(w_px * sa), y + 88], fill=GOLD)
-                R.fade_text(img, (165, y + 150), why[i], R.font(R.SANS, 30), (170, 164, 156), INK, a_in(t, ts + 0.2, 0.4))
+                R.fade_text(img, (165, y + 158), why[i], R.font(R.SANS, 32), (190, 184, 176), INK, a_in(t, ts + 0.2, 0.4))
             if lit: d.rectangle([152, y + 160, 152 + int(220 * a_in(t, t_partner, 0.6)), y + 164], fill=GOLD)
         return img
     return draw
+
+
+# ---------- Saja's chapter (times in edit seconds, relative to the card's start) ----------
+def rows_card(label_txt, rows, t_rows, big=None, t_big=0.0, bg=IVORY, fg=INK, sub=MUTED):
+    """A label, an optional big line, then rows that appear one by one (each: (main, small))."""
+    def draw(t):
+        img, d = card(bg)
+        R.spaced(d, (160, 220), label_txt, R.font(R.SANS_M, 24), GOLDT if bg == IVORY else GOLD, 6)
+        y = 280
+        if big:
+            R.fade_text(img, (152, y), big, R.font(R.SERIF, 110), fg, bg, a_in(t, t_big, 0.5), dy=16); y += 170
+        for (main, small), t0 in zip(rows, t_rows):
+            a = a_in(t, t0, 0.45)
+            R.fade_text(img, (160, y), main, R.font(R.SERIF, 64), fg, bg, a, dy=12)
+            if small: R.fade_text(img, (162, y + 80), small, R.font(R.SANS, 30), sub, bg, a, dy=6)
+            y += 150 if small else 105
+        return img
+    return draw
+def big_type_full(lines, t_lines, dur, name):
+    """Full-screen ink card, big serif lines appearing one by one (1920x1080)."""
+    def draw(t):
+        img = Image.new("RGB", (1920, 1080), INK)
+        for i, (ln, t0) in enumerate(zip(lines, t_lines)):
+            R.fade_text(img, (960, 430 + i * 170), ln, R.font(R.SERIF, 140), WHITE if i == 0 else GOLD, INK, a_in(t, t0, 0.5), anchor="mm", dy=16)
+        return img
+    return anim(name, dur, draw, size=(1920, 1080))
 
 # ---------- full-screen footage with type ----------
 def type_png(name, lab, big, line):
@@ -222,11 +248,11 @@ def prep_take(raw, a, b, out, mirror=False, denoise=False, loud=-16, audio=None,
        *ENC, "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", out)
     return out
 
-def speaker_full(take, t0, dur, name, push=1.05, z0=1.22, y0=0.42):
+def speaker_full(take, t0, dur, name, push=1.05, z0=1.22, y0=0.42, x0=0.5):
     """The (landscape) speaker full screen for dur seconds from edit time t0, with a slow push-in."""
     out = os.path.join(TMP, name + ".mp4")
     ff("-ss", f"{t0:.3f}", "-t", f"{dur + 0.1:.3f}", "-i", take, "-an", "-vf",
-       f"scale=w='trunc(1920*{z0}*(1+{push - 1}*t/{dur})/2)*2':h=-2:eval=frame,crop=1920:1080:(iw-1920)/2:(ih-1080)*{y0},setsar=1,fps=30", *ENC, out)
+       f"scale=w='trunc(1920*{z0}*(1+{push - 1}*t/{dur})/2)*2':h=-2:eval=frame,crop=1920:1080:(iw-1920)*{x0}:(ih-1080)*{y0},setsar=1,fps=30", *ENC, out)
     return out
 
 def left_clip(src, dur, n, name):
@@ -238,11 +264,12 @@ def left_clip(src, dur, n, name):
         ff("-ss", off or "0", "-stream_loop", "-1", "-i", path, "-t", f"{dur:.3f}", "-an", "-vf", f"fps=30,scale=-2:1080,crop={LW}:1080", *ENC, p)
     return p
 
-def build(name, take, right, lefts, fulls, lt, line, lt_at, off, sp=1.0):
+def build(name, take, right, lefts, fulls, lt, line, lt_at, off, sp=1.0, map_t=None):
     """right = (scale width, crop x, crop y, zoom (t0, t1, z) or None); lefts: [(t, src, transition)] with
     transition 'fade' or 'cut' into that item; fulls: [(t0, t1, mp4)]. Times in raw seconds; off = trim start."""
     T = length(take)
-    starts = [max(0.0, (s - off) / sp) for s, _, _ in lefts] + [T]
+    M = map_t or (lambda t: (t - off) / sp)   # with map_t, lefts are already in edit seconds; fulls stay in raw seconds
+    starts = [max(0.0, s) if map_t else max(0.0, M(s)) for s, _, _ in lefts] + [T]
     trans = [tr for _, _, tr in lefts]
     xd = [XF if tr == "fade" else 1 / FPS for tr in trans]                   # a 'cut' is a 1-frame mix
     parts = [left_clip(src, b - a + (xd[n + 1] if n + 1 < len(lefts) else 0) + 0.1, n, name)   # +0.1: frame rounding
@@ -264,7 +291,7 @@ def build(name, take, right, lefts, fulls, lt, line, lt_at, off, sp=1.0):
     ins = ["-i", leftv, "-i", take]
     fc = [rv, "[0:v][r]hstack=inputs=2[s0]"]; last, k = "s0", 2
     for a, b, mp4 in fulls:
-        a, b = (a - off) / sp, min((b - off) / sp, T)
+        a, b = M(a), min(M(b), T)
         ins += ["-itsoffset", f"{a:.3f}", "-i", mp4]
         fc.append(f"[{k}:v]format=yuva420p,fade=in:st={a:.3f}:d={XF}:alpha=1,fade=out:st={b - XF:.3f}:d={XF}:alpha=1[f{k}]")
         fc.append(f"[{last}][f{k}]overlay=0:0:eof_action=pass:enable='between(t,{a:.3f},{b:.3f})'[s{k}]"); last, k = f"s{k}", k + 1
@@ -316,6 +343,47 @@ if __name__ == "__main__":
               fulls=[(21.0, 25.6, pro), (80.1, 999, amjad_full)],                                      # PRO•GO full screen; [LENS] "So we partner"
               lt="out/lower_thirds/LT_S1_Amjad.png", line=png(layla_line("Week 0. Her salon sends a free hair scan."), "line1.png"),
               lt_at=(1, 5), off=OFF1, sp=SP1)
+    if "5" in CH:
+        # ===== Chapter 5 · Saja (IMG_1473 from Drive, landscape; two slips cut: "weeks weeks", "no committee") =====
+        SP5 = 1.08; KEEP = [(0.2, 3.68), (4.25, 43.85), (44.95, 81.2)]
+        def E(t):                                          # raw -> edit seconds across the two cuts
+            acc = 0.0
+            for a, b in KEEP:
+                if t < b: return (acc + max(0.0, t - a)) / SP5
+                acc += b - a
+            return acc / SP5
+        raw5 = os.environ["RAW5"]; t5 = "out/speakers/M4_S5_Saja_edit.mp4"
+        parts = "".join(f"[0:v]trim={a}:{b},setpts=PTS-STARTPTS[v{i}];[0:a]atrim={a}:{b},asetpts=PTS-STARTPTS[a{i}];" for i, (a, b) in enumerate(KEEP))
+        fc5 = parts + "".join(f"[v{i}][a{i}]" for i in range(len(KEEP))) + f"concat=n={len(KEEP)}:v=1:a=1[v][a];" \
+              f"[v]setpts=PTS/{SP5},fps=30,scale=1920:1080,{LOOK}[vo];" \
+              f"[a]atempo={SP5},highpass=f=80,afftdn=nf=-28,acompressor=threshold=-26dB:ratio=2.5:attack=15:release=200:makeup=2,loudnorm=I=-16:TP=-1.5:LRA=7[ao]"
+        ff("-i", raw5, "-filter_complex", fc5, "-map", "[vo]", "-map", "[ao]", "-ar", "48000", "-ac", "2", *ENC, "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", t5)
+        T5 = length(t5)
+        visit2 = full_seq("full_visit2", [(L.format(4), 0.0, E(7.0) - E(1.3))], E(7.0) - E(1.3),
+                          [(0.2, E(7.0) - E(1.3), type_png("ty_v2.png", "WEEK 10", "Visit 2 of 2", None)),
+                           (E(4.6) - E(1.3), E(7.0) - E(1.3), type_png("ty_v2_l.png", "", "", "eight weeks after the first, and a second scan"))])
+        leader = big_type_full(["One leader.", "Not a committee."], [0.15, E(45.2) - E(42.6)], E(46.6) - E(42.6), "leader")
+        saja_full = speaker_full(t5, E(74.6), T5 - E(74.6), "saja_full", z0=1.5, y0=0.15, x0=0.88)   # she sits right in her frame
+        r = lambda t0, ts: [E(x) - E(t0) for x in ts]
+        build("ch5", t5, (2160, 980, 0, None),
+              lefts=[(0, L.format("5b"), "fade"),
+                     (E(7.0), L.format("5b") + "@4", "fade"),                                       # "where a pilot teaches you something ..."
+                     (E(12.3), anim("pilot", E(24.3) - E(12.3), rows_card("HERE IS OURS",
+                          [("Downtown + Business Bay", "two communities"), ("3–5 partner salons", None), ("90 days", "from Q2 2027")],
+                          r(12.3, (16.2, 18.2, 20.3)), big="Dubai", t_big=E(14.1) - E(12.3))), "fade"),
+                     (E(24.3), anim("byhand", E(31.8) - E(24.3), rows_card("AT THE START",
+                          [("No new app", None), ("Matched by hand", "client to professional, on purpose")], r(24.3, (24.5, 26.7)))), "fade"),
+                     (E(31.8), anim("app2028", E(37.7) - E(31.8), rows_card("THE APP",
+                          [("after the test", "proves people want this")], r(31.8, (34.3,)), big="2028", t_big=0.1)), "fade"),
+                     (E(37.7), anim("owner", E(52.3) - E(37.7), rows_card("WHO OWNS IT",
+                          [("PRO•GO venture unit", "inside Professional Products"), ("Salons and budget", "in one leader's hands"),
+                           ("Innovation Board", "reviews it every quarter")], r(37.7, (38.1, 46.7, 49.5)))), "fade"),
+                     (E(52.3), anim("numbers", E(66.5) - E(52.3), rows_card("EVERY WEEK, THREE NUMBERS",
+                          [("Second visit in 90 days", "how many book it"), ("Each visit makes money", "after the salon and ServiceMarket"),
+                           ("The hair score moves", None)], r(52.3, (54.5, 58.9, 63.8)))), "fade"),
+                     (E(66.5), "out/p4_rescan_66.mp4", "fade")],                                    # "Layla went from 58 to 66 by week ten"
+              fulls=[(1.3, 7.0, visit2), (42.6, 46.6, leader), (74.6, 999, saja_full)],
+              lt="out/lower_thirds/LT_S5_Saja.png", line=None, lt_at=(E(7.4), E(11.4)), off=0, sp=1, map_t=E)
     if "4" in CH:
         # ===== Chapter 4 · Rebecca (raw 75.5 s, speech 3.1-72.2) =====
         OFF4 = 2.6
