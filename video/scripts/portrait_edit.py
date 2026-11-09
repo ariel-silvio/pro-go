@@ -61,7 +61,9 @@ def c_rule(k):
         d.text((150, 290), head.title() if head != "FALL BACK" else "Fall back", font=R.font(R.SERIF, 170), fill=INK)
         d.rectangle([160, 520, 220, 522], fill=GOLD)
         for i, ln in enumerate(lines): d.text((160, 555 + i * 64), ln, font=R.font(R.SANS, 50), fill=INK)
-        d.text((160, 575 + len(lines) * 64), "→ " + then, font=R.font(R.SANS_M, 40), fill=M4C)
+        y = 575 + len(lines) * 64; ym = y + 26                    # drawn arrow: the brand fonts have no "→" glyph
+        d.line([(162, ym), (192, ym)], fill=M4C, width=4); d.line([(180, ym - 10), (193, ym), (180, ym + 10)], fill=M4C, width=4)
+        d.text((210, y), then, font=R.font(R.SANS_M, 40), fill=M4C)
     return img
 
 # ---------- animated cards for Rebecca's climax (ink background) ----------
