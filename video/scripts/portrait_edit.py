@@ -98,7 +98,7 @@ def partners(dur, times, t_sub):
         img, d = card();
         for i, (w, t0) in enumerate(zip(["The salon", "ServiceMarket", "L'Oréal"], times)):
             a = a_in(t, t0, 0.5)
-            R.fade_text(img, (150, 296 + i * 150), str(i + 1), R.font(R.SERIF, 44), R.mix(GOLD, IVORY, 0.25), IVORY, a, dy=16)   # small, quieter count
+            R.fade_text(img, (146, 290 + i * 150), str(i + 1), R.font(R.SERIF, 54), GOLDT, IVORY, a, dy=16)   # smaller and quieter than the names, still clear
             R.fade_text(img, (205, 280 + i * 150), w, R.font(R.SERIF, 104), INK, IVORY, a, dy=16)
         a = a_in(t, t_sub, 0.6); d.rectangle([160, 770, 160 + int(60 * a), 772], fill=GOLD)
         R.fade_text(img, (160, 800), "three reasons to want it to work", R.font(R.SANS, 40), MUTED, IVORY, a, dy=8)

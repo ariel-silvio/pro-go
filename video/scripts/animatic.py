@@ -81,9 +81,9 @@ def credits_faces():
         d.text((x, y + 290), name, font=R.font(R.SERIF, 34), fill=R.WHITE, anchor="mm")
     import qrcode
     qr = qrcode.QRCode(border=2, box_size=8); qr.add_data("https://ariel-silvio.github.io/pro-go/"); qr.make(fit=True)
-    q = qr.make_image(fill_color=(17, 17, 17), back_color=(247, 243, 236)).convert("RGB").resize((170, 170), Image.NEAREST)
-    img.paste(q, (1700, 812)); d.text((1785, 1000), "Try PRO•GO", font=R.font(R.SANS_M, 22), fill=R.WHITE, anchor="mm")
-    d.text((1785, 1030), "ariel-silvio.github.io/pro-go", font=R.font(R.SANS, 16), fill=(200, 194, 186), anchor="mm")
+    q = qr.make_image(fill_color=(17, 17, 17), back_color=(247, 243, 236)).convert("RGB").resize((230, 230), Image.NEAREST)
+    img.paste(q, (1650, 760)); d.text((1765, 1012), "Try PRO•GO", font=R.font(R.SANS_M, 24), fill=R.WHITE, anchor="mm")
+    d.text((1765, 1044), "ariel-silvio.github.io/pro-go", font=R.font(R.SANS, 18), fill=(200, 194, 186), anchor="mm")
     f = R.font(R.SANS, 22)
     for i, t in enumerate(["Student project for IE Business School. Not affiliated with L'Oréal or ServiceMarket.",
                            "Fictional characters, simulated data. Layla's voice is AI-generated. AI use disclosed (Claude, Gemini Omni Flash, Lyria, Descript)."]):
@@ -255,7 +255,7 @@ seq.append(still(png(credits_faces(), "credits.png"), "credits", 3))
 voice.append((0, "out/voice/layla_open.wav", 3.0))      # cold open: Layla's own line over the mirror
 
 lst = os.path.join(TMP, "all.txt"); open(lst, "w").write("".join(f"file '{os.path.abspath(p)}'\n" for p in seq))
-final = os.path.join(OUT, "animatic_v16_voice.mp4"); part = final.replace(".mp4", ".part.mp4")
+final = os.path.join(OUT, "animatic_v17_voice.mp4"); part = final.replace(".mp4", ".part.mp4")
 starts, t = [], 0.0
 for p in seq: starts.append(t); t += length(p)
 ins = ["-f", "concat", "-safe", "0", "-i", lst, "-f", "lavfi", "-i", f"anullsrc=r=48000:cl=stereo:d={t:.3f}"]
