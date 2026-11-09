@@ -238,9 +238,9 @@ def ask_card(t_rows, t_final):
         y = 260
         for (main, small), t0 in zip(rows, t_rows):
             a = a_in(t, t0, 0.45) * out
-            R.fade_text(img, (160, y), main, R.font(R.SERIF, 58), WHITE, INK, a, dy=10)
-            if small: R.fade_text(img, (162, y + 74), small, R.font(R.SANS, 34), GOLD, INK, a, dy=6)
-            y += 150 if small else 100
+            R.fade_text(img, (160, y), main, R.font(R.SERIF, 66), WHITE, INK, a, dy=10)
+            if small: R.fade_text(img, (162, y + 84), small, R.font(R.SANS, 38), GOLD, INK, a, dy=6)
+            y += 168 if small else 110
         for i, ln in enumerate(("Give us", "12 weeks.")):
             R.fade_text(img, (152, 380 + i * 170), ln, R.font(R.SERIF, 150), WHITE if i == 0 else GOLD, INK, a_in(t, t_final + 0.15 * i, 0.6), dy=18)
         return img
@@ -524,7 +524,7 @@ if __name__ == "__main__":
                       + [f"0.14*{sm(56.4, 13.4)}", f"0.02*{sm(0, 18.0)}"])   # a step in at each rule, back out at the next; slow push through the ask
         prove = big_type_full(["One Layla proves nothing.", "300 could."], [0.1, 10.8 - 8.4], 14.6 - 8.4, "prove300")
         stop = big_type_full(["Stopping early is cheaper", "than being right too late."], [0.1, 53.9 - 51.9], 56.2 - 51.9, "stopearly")
-        build("ch6", t6, (1080, 60, 470, Z6),
+        build("ch6", t6, (1080, 110, 470, Z6),
               lefts=[(0, "out/layla/layla_5_app.mp4", "fade"), (7.6, png(c_rule(None), "rule_0.png"), "fade"),
                      (18.0, png(c_rule(0), "rule_1.png"), "fade"),
                      (32.6, png(c_rule(1), "rule_2.png"), "fade"), (40.5, png(c_rule(2), "rule_3.png"), "fade"),
