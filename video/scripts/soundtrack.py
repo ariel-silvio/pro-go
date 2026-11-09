@@ -41,7 +41,7 @@ music = np.zeros_like(bus)
 c = [None] + [TL[f"card{i}"] for i in range(1, 7)]; ch = [None] + [TL[f"ch{i}"] for i in range(1, 7)]
 SCORE, ASK, CLOSE = TL["score"], TL["ask"], TL["closing"]
 build_at = SCORE - 82.5                                                   # the build's swell peaks about 82 s in
-place(music, M("open_v16b"), 2.0, length=15.5, fin=1.5, fout=2.5, gain_db=1)   # cold open v16: starts quietly at 2 s, gentle build, peak on the title (11 s)
+place(music, M("open_v16a"), 2.0, length=15.5, fin=1.5, fout=2.5, gain_db=1)   # cold open v16 (Ariel picked A): starts quietly at 2 s, gentle build, peak on the title (11 s)
 place(music, M("bed1"),       c[1], length=c[3] - c[1] + 2.5, fin=2.0, fout=3.0)          # weeks 0-1: sparse warm piano
 bed2_len = min(157.0, build_at + 4 - (c[3] - 0.5))
 place(music, M("bed2"),       c[3] - 0.5, length=bed2_len, fin=3.0, fout=4.0)            # week 2: strings join; pulse from about week 4

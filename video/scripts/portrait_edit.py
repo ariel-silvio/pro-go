@@ -457,7 +457,7 @@ if __name__ == "__main__":
         parts = "".join(f"[0:v]trim={a}:{b},setpts=PTS-STARTPTS[v{i}];[1:a]atrim={a}:{b},asetpts=PTS-STARTPTS[a{i}];" for i, (a, b) in enumerate(KEEP))
         fc5 = parts + "".join(f"[v{i}][a{i}]" for i in range(len(KEEP))) + f"concat=n={len(KEEP)}:v=1:a=1[v][a];" \
               f"[v]setpts=PTS/{SP5},fps=30,scale=1920:1080,{GRADES['Saja']},format=yuv420p[vo];" \
-              f"[a]atempo={SP5},{FIN},loudnorm=I=-16:TP=-1.5:LRA=7[ao]"
+              f"[a]atempo={SP5},afftdn=nf=-42:nr=14:tn=1,agate=threshold=0.012:ratio=2:range=0.25:attack=8:release=250,{FIN},loudnorm=I=-16:TP=-1.5:LRA=7[ao]"   # extra: room noise about 9 dB lower in her pauses
         ff("-i", raw5, "-i", "out/voice/saja_studio.m4a", "-filter_complex", fc5, "-map", "[vo]", "-map", "[ao]", "-ar", "48000", "-ac", "2", *ENC, "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", t5)
         T5 = length(t5)
         visit2 = full_seq("full_visit2", [(L.format(4), 0.0, E(7.0) - E(1.3))], E(7.0) - E(1.3),
