@@ -541,7 +541,8 @@ if __name__ == "__main__":
                       + [f"0.14*{sm(56.4, 13.4)}", f"0.02*{sm(0, 18.0)}"])   # a step in at each rule, back out at the next; slow push through the ask
         prove = big_type_full(["One Layla proves nothing.", "300 could."], [0.1, 10.8 - 8.4], 14.6 - 8.4, "prove300")
         stop = big_type_full(["Stopping early is cheaper", "than being right too late."], [0.1, 53.9 - 51.9], 56.2 - 51.9, "stopearly")
-        build("ch6", t6, (1080, "(200-50*(st(2,clip((t-56)/10,0,1))*0+ld(2)*ld(2)*(3-2*ld(2))))", 470, Z6),   # framing follows his face: centred through the ask
+        build("ch6", t6, (1080, "(200-50*(st(2,clip((t-56)/10,0,1))*0+ld(2)*ld(2)*(3-2*ld(2))))",
+                         "(470+300*(st(3,clip((t-56)/10,0,1))*0+ld(3)*ld(3)*(3-2*ld(3))))", Z6),   # through the ask his face also rises to the upper third   # framing follows his face: centred through the ask
               lefts=[(0, "out/layla/layla_5_app.mp4", "fade"), (7.6, png(c_rule(None), "rule_0.png"), "fade"),
                      (18.0, png(c_rule(0), "rule_1.png"), "fade"),
                      (32.6, png(c_rule(1), "rule_2.png"), "fade"), (40.5, png(c_rule(2), "rule_3.png"), "fade"),
