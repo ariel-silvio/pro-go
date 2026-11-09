@@ -93,7 +93,7 @@ for k, hit in (("partner", -11), ("real", -13)):          # ch1 and ch5 lens mom
     if k in TL:
         place(bus, S["reverse_swell"], TL[k] - 1.6, gain_db=-15)
         place(bus, S["sub_hit"], TL[k] - 0.03, gain_db=hit)
-for k in ("visit2", "leader"):                            # ch5: one soft tone on "Visit 2 of 2" and "One leader. Not a committee."
+for k in ("visit2", "leader", "paidpilot", "data"):                            # ch5: one soft tone on "Visit 2 of 2" and "One leader. Not a committee."
     if k in TL: place(bus, S["winner_tone"], TL[k] + 0.2, gain_db=-18)
 if "weeks" in TL:                                         # the 0 -> 12 week counter: one tick per number
     prev = 0

@@ -195,6 +195,22 @@ def big_type_full(lines, t_lines, dur, name):
         return img
     return anim(name, dur, draw, size=(1920, 1080))
 
+
+def data_full(t_cols, dur, name):
+    """Full-screen ink card: the data stays where it is created (two columns appear on her words)."""
+    cols = [("Hair results", "L'Oréal and the salon", "with Layla's consent"), ("Booking data", "ServiceMarket", "")]
+    def draw(t):
+        img = Image.new("RGB", (1920, 1080), INK); d = ImageDraw.Draw(img)
+        R.spaced(d, (160, 250), "THE DATA STAYS WHERE IT'S CREATED", R.font(R.SANS_M, 28), R.mix(INK, GOLD, a_in(t, 0, 0.5)), 7)
+        for i, ((what, who, note), t0) in enumerate(zip(cols, t_cols)):
+            a = a_in(t, t0, 0.5); x = 160 + i * 860
+            R.fade_text(img, (x, 360), what, R.font(R.SANS_M, 40), (200, 194, 186), INK, a, dy=10)
+            d.rectangle([x, 430, x + int(80 * a), 432], fill=GOLD)
+            R.fade_text(img, (x - 6, 470), who, R.font(R.SERIF, 72), WHITE, INK, a, dy=14)
+            if note: R.fade_text(img, (x, 600), note, R.font(R.SANS, 36), GOLD, INK, a_in(t, t0 + 0.6, 0.5))
+        return img
+    return anim(name, dur, draw, size=(1920, 1080))
+
 # ---------- full-screen footage with type ----------
 def type_png(name, lab, big, line):
     img = Image.new("RGBA", (1920, 1080), (0, 0, 0, 0)); d = ImageDraw.Draw(img)
@@ -343,6 +359,43 @@ if __name__ == "__main__":
               fulls=[(21.0, 25.6, pro), (80.1, 999, amjad_full)],                                      # PRO•GO full screen; [LENS] "So we partner"
               lt="out/lower_thirds/LT_S1_Amjad.png", line=png(layla_line("Week 0. Her salon sends a free hair scan."), "line1.png"),
               lt_at=(1, 5), off=OFF1, sp=SP1)
+    if "3" in CH:
+        # ===== Chapter 3 · Qhakazile (Drive original, landscape; three cuts under full-screen moments; tight frame keeps a logo scarf out of shot) =====
+        SP3 = 1.10; KEEP3 = [(2.1, 32.55), (33.45, 45.3), (47.72, 55.9), (58.82, 85.3)]   # cut: "yet", "Data ownership is clearly defined.", "Commercially, the numbers must work."
+        def E(t):
+            acc = 0.0
+            for a, b in KEEP3:
+                if t < b: return (acc + max(0.0, t - a)) / SP3
+                acc += b - a
+            return acc / SP3
+        t3 = "out/speakers/M4_S3_Qhakazile_edit.mp4"
+        parts = "".join(f"[0:v]trim={a}:{b},setpts=PTS-STARTPTS[v{i}];[0:a]atrim={a}:{b},asetpts=PTS-STARTPTS[a{i}];" for i, (a, b) in enumerate(KEEP3))
+        fc3 = parts + "".join(f"[v{i}][a{i}]" for i in range(len(KEEP3))) + f"concat=n={len(KEEP3)}:v=1:a=1[v][a];" \
+              f"[v]setpts=PTS/{SP3},fps=30,scale=1920:1080,{LOOK},split=2[vs][vb];[vb]gblur=sigma=38[vbb];" \
+              f"[1:v]format=gray,scale=1920:1080[mk];[vs][vbb][mk]maskedmerge,format=yuv420p[vo];" \
+              f"[a]atempo={SP3},highpass=f=80,afftdn=nf=-30,acompressor=threshold=-26dB:ratio=2.5:attack=15:release=200:makeup=2,loudnorm=I=-16:TP=-1.5:LRA=7[ao]"
+        ff("-i", os.environ["RAW3"], "-loop", "1", "-i", "out/edits/portrait_parts/scarf_mask.png", "-filter_complex", fc3, "-map", "[vo]", "-map", "[ao]", "-ar", "48000", "-ac", "2", *ENC, "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", t3)
+        T3 = length(t3)
+        r = lambda t0, ts: [E(x) - E(t0) for x in ts]
+        pilot = big_type_full(["A paid pilot.", "Not an acquisition."], [0.15, E(31.75) - E(29.7)], E(33.7) - E(29.7), "paidpilot")
+        data = data_full(r(44.6, (47.8, 52.9)), E(59.0) - E(44.6), "datafull")
+        build("ch3", t3, (2400, 575, 0, None),                                                 # medium framing; the scarf (brand monogram) is blurred in the take
+              lefts=[(0, L.format(3), "fade"),                                                   # "Week two. Dana arrives ..."
+                     (E(9.5), anim("partners3", E(29.7) - E(9.5), rows_card("THREE PARTNERS MAKE THAT HOUR",
+                          [("The salon", "Dana and the relationship"), ("L'Oréal", "the products and the plan"),
+                           ("ServiceMarket", "booking, insurance, payment, permits")], r(9.5, (12.3, 15.6, 19.7)))), "fade"),
+                     (E(33.5), anim("deal", E(44.6) - E(33.5), rows_card("THE DEAL",
+                          [("Paid per visit", "for 90 days"), ("In return", "the only colour subscription on their platform")],
+                          r(33.5, (33.6, 38.3)))), "fade"),
+                     (E(59.0), anim("price", E(72.9) - E(59.0), rows_card("ONE SUBSCRIPTION · 12 WEEKS · ABOUT",
+                          [("2 home visits", None), ("The scans", None), ("Her products", None), ("Our fee fits inside", None)],
+                          r(59.0, (64.0, 65.9, 66.6, 68.2)), big="AED 1,000", t_big=E(61.0) - E(59.0))), "fade"),
+                     (E(72.9), L.format("0c") + "@5", "fade"),                                  # "longer-term agreement ... across the UAE"
+                     (E(81.6), anim("only3", T3 - E(81.6) + 0.2, rows_card("",
+                          [("Only when", None), ("the economics", None), ("justify it.", None)], [0.2, 0.5, 0.8], bg=INK, fg=WHITE, sub=GOLD)), "fade")],
+              fulls=[(29.7, 33.7, pilot), (44.6, 59.0, data)],
+              lt="out/lower_thirds/LT_S3_Qhakazile.png", line=png(layla_line("Visit 1 of 2. My colourist. My living room."), "line3.png"),
+              lt_at=(1, 5), off=0, sp=1, map_t=E)
     if "5" in CH:
         # ===== Chapter 5 · Saja (IMG_1473 from Drive, landscape; two slips cut: "weeks weeks", "no committee") =====
         SP5 = 1.08; KEEP = [(0.2, 3.68), (4.25, 43.85), (44.95, 81.2)]
