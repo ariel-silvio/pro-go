@@ -7,7 +7,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from PIL import Image, ImageDraw
 import render as R
 
-TAKE, CROPX = "out/speakers/M4_S2_Ariel_take2_edit.mp4", 552   # take 2 (8 Nov, script v3): IMG_2880 trimmed 10.6-92.0 s, 8% faster, pitch kept
+TAKE, CROPX = "out/speakers/M4_S2_Ariel_take2_graded.mp4", 552   # take 2 (8 Nov, script v3): IMG_2880 trimmed 10.6-92.0 s, 8% faster, pitch kept
 OUT = "out/edits"; TMP = os.path.join(OUT, "ch2_parts"); os.makedirs(TMP, exist_ok=True)
 ENC = ["-c:v", "libx264", "-crf", "20", "-preset", "veryfast", "-pix_fmt", "yuv420p", "-r", "30", "-an"]
 def ff(*a): subprocess.run(["ffmpeg", "-y", "-loglevel", "error", *a], check=True)
@@ -107,12 +107,22 @@ def line_overlay(text):   # Layla's on-screen line, same style as the animatic
     d.rectangle([140, 830, 140 + w + 40, 905], fill=R.IVORY + (235,)); d.text((160, 843), text, font=f, fill=INK)
     return img
 
+# ---------- full-screen moment: "behind that message sits ServiceMarket ... since 2013" ----------
+import portrait_edit as PE
+PE.SHADE = PE.shade_png()
+def full_behind(dur, t_line):
+    return PE.full_seq("full_behind", [(PE.L.format("2c"), 0.0, dur)], dur,
+                       [(0.2, dur, PE.type_png("ty_behind.png", "BEHIND THE MESSAGE", "ServiceMarket", None)),
+                        (t_line, dur, PE.type_png("ty_behind_l.png", "", "", "home services in Dubai since 2013"))])
+
 # ---------- segments ----------
 c = {k: cut_after(k) for k in (0, 2, 3, 4, 6, 8, 9, 12, 14, 16, 17, 18, 19, 21)}
+BEHIND = full_behind(round(c[4] - c[2] + 1.0, 2), round(c[3] - c[2], 2))
 PLAN = [  # (start, end, kind, source); sentence numbers in edits/ch2_take2_sentences.json
     (0, c[0], "layla", ("out/layla/layla_2.mp4", "Wednesday, 18:00. Dana, from my salon.")),
     (c[0], c[2], "split", "out/p3_booking_confirmation.mp4"),          # "she thinks she's talking to her salon, and she is"
-    (c[2], c[3], "split", c_behind), (c[3], c[4], "split", c_2013), (c[4], c[6], "split", c_200),
+    (c[2], c[4], "layla", (BEHIND, None)),                              # full screen with type, same style as chapter 4
+    (c[4], c[6], "split", c_200),
     (c[6], c[8], "split", c_roles),                                     # booking, payment; adds insurance and permits
     (c[8], c[9], "ariel", None),                                        # "That's the capability we're missing."
     (c[9], c[12], "split", c_bigapps), (c[12], c[14], "split", c_other_way),

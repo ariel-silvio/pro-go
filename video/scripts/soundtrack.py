@@ -58,6 +58,8 @@ for a, b in SPEECH:                    # -15 dB with 0.6 s ramps
     g = np.minimum(g, -15 * np.clip(np.minimum((t - a) / 0.6, (b - t) / 0.6), 0, 1))
 # (no lift on the score any more: Ignacio speaks over it, the music stays under him)
 g = g + np.interp(t, [SCORE - 1.5, SCORE - 0.5, SCORE + 7.0, SCORE + 8.5], [0, -4, -4, 0])   # the build swells here: keep it under his voice
+if "partner" in TL:   # chapter 1: the bed lifts 6 dB on "So we partner", then settles
+    P = TL["partner"]; g = g + np.interp(t, [P - 0.3, P + 0.5, P + 3.5, P + 6.0], [0, 6, 6, 0])
 CL = TL.get("climax")
 if CL:   # chapter 4 climax, "And L'Oréal learns": the bed falls away in her pause, the climax cue takes over, then the bed returns
     dip = np.interp(t, [CL - 2.4, CL - 0.4, CL + 17.5, CL + 20.0], [0, -30, -30, 0])
@@ -71,9 +73,9 @@ bus += music
 
 # ---- sound effects ----
 S = {n: load(f"out/sfx/{n}.wav") for n in ["week_tick", "scan_shimmer", "message_chime", "soft_click", "count_tick",
-                                            "reverse_swell", "sub_hit", "winner_tone"]}
+                                            "reverse_swell", "sub_hit", "winner_tone", "strike"]}
 for i in range(1, 7): place(bus, S["week_tick"], c[i] + 0.25, gain_db=-8)                 # chapter cards
-place(bus, S["scan_shimmer"], ch[1] + 19.6, gain_db=-14)  # chapter 1: scan result on the phone
+place(bus, S["scan_shimmer"], ch[1] + 22.3, gain_db=-14)  # chapter 1: "we measure her hair" (app panel on 58)
 place(bus, S["message_chime"], ch[2] + 2.6, gain_db=-14)  # chapter 2: Dana's message (booking panel comes in at 2.4 s)
 if "diagram" in TL:
     for i in range(5): place(bus, S["soft_click"], TL["diagram"] + 0.4 + 0.8 * i, gain_db=-12)   # diagram boxes
@@ -82,6 +84,13 @@ for k in ("winner1", "winner2"):                          # chapter 4: one soft 
 if CL:
     place(bus, S["reverse_swell"], CL - 1.6, gain_db=-12)  # into "And L'Oréal learns"
     place(bus, S["sub_hit"], CL - 0.03, gain_db=-7)
+for k in ("progo", "behind", "criteria"):                 # one soft tone on chapter 1's PRO•GO, chapter 2's ServiceMarket and the three ticks
+    if k in TL: place(bus, S["winner_tone"], TL[k] + 0.2, gain_db=-18)
+for k in ("strike1", "strike2"):                          # chapter 1: build, buy struck through
+    if k in TL: place(bus, S["strike"], TL[k] - 0.05, gain_db=-16)
+if "partner" in TL:                                       # chapter 1 climax: "So we partner" (Amjad full screen)
+    place(bus, S["reverse_swell"], TL["partner"] - 1.6, gain_db=-15)
+    place(bus, S["sub_hit"], TL["partner"] - 0.03, gain_db=-11)
 if "weeks" in TL:                                         # the 0 -> 12 week counter: one tick per number
     prev = 0
     for f in range(23):

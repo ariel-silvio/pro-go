@@ -1,5 +1,5 @@
 """Synthesise the film's designed sound effects (original, license-free). Usage (from video/): python3 scripts/sfx.py
-Writes out/sfx/*.wav at 48 kHz: week_tick, scan_shimmer, message_chime, soft_click, count_tick, reverse_swell, sub_hit, winner_tone."""
+Writes out/sfx/*.wav at 48 kHz: week_tick, scan_shimmer, message_chime, soft_click, count_tick, reverse_swell, sub_hit, winner_tone, strike."""
 import os, subprocess
 import numpy as np
 SR = 48000; OUT = "out/sfx"; os.makedirs(OUT, exist_ok=True)
@@ -62,3 +62,8 @@ hit += 0.15 * np.convolve(rng.standard_normal(n), k, mode="same") * env(n, 0.002
 save("sub_hit", hit / np.max(np.abs(hit)) * 0.8)
 # winner tone (chapter 4: the salon, ServiceMarket): one soft bell, warm
 save("winner_tone", bell(659.25, 1.6) * 0.6 + np.pad(bell(987.77, 1.2), (0, int(SR * 0.4))) * 0.25, 0.05)
+# strike (chapter 1, "build" and "buy" struck through): a short, soft swish, like a pen across paper
+d = 0.32; x = t(d); n = len(x)
+sw2 = np.convolve(rng.standard_normal(n), np.ones(24) / 24, mode="same") * np.sin(np.pi * x / d) ** 2
+sw2 = sw2 - np.convolve(sw2, np.ones(200) / 200, mode="same")           # thin it: no low rumble
+save("strike", sw2, 0.1)
