@@ -371,10 +371,10 @@ if __name__ == "__main__":
         t3 = "out/speakers/M4_S3_Qhakazile_edit.mp4"
         parts = "".join(f"[0:v]trim={a}:{b},setpts=PTS-STARTPTS[v{i}];[0:a]atrim={a}:{b},asetpts=PTS-STARTPTS[a{i}];" for i, (a, b) in enumerate(KEEP3))
         fc3 = parts + "".join(f"[v{i}][a{i}]" for i in range(len(KEEP3))) + f"concat=n={len(KEEP3)}:v=1:a=1[v][a];" \
-              f"[v]setpts=PTS/{SP3},fps=30,scale=1920:1080,{LOOK},split=2[vs][vb];[vb]gblur=sigma=38[vbb];" \
-              f"[1:v]format=gray,scale=1920:1080[mk];[vs][vbb][mk]maskedmerge,format=yuv420p[vo];" \
+              f"[v]setpts=PTS/{SP3},fps=30,scale=1920:1080,{LOOK},split=2[base][reg];[reg]crop=410:580:660:500,split=2[r1][r2];" \
+              f"[r2]gblur=sigma=26[rb];[1:v]format=gray[mk];[r1][rb][mk]maskedmerge[rm];[base][rm]overlay=660:500:shortest=1,format=yuv420p[vo];" \
               f"[a]atempo={SP3},highpass=f=80,afftdn=nf=-30,acompressor=threshold=-26dB:ratio=2.5:attack=15:release=200:makeup=2,loudnorm=I=-16:TP=-1.5:LRA=7[ao]"
-        ff("-i", os.environ["RAW3"], "-loop", "1", "-i", "out/edits/portrait_parts/scarf_mask.png", "-filter_complex", fc3, "-map", "[vo]", "-map", "[ao]", "-ar", "48000", "-ac", "2", *ENC, "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", t3)
+        ff("-i", os.environ["RAW3"], "-loop", "1", "-i", "out/edits/portrait_parts/scarf_mask_crop.png", "-filter_complex", fc3, "-map", "[vo]", "-map", "[ao]", "-ar", "48000", "-ac", "2", *ENC, "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", t3)
         T3 = length(t3)
         r = lambda t0, ts: [E(x) - E(t0) for x in ts]
         pilot = big_type_full(["A paid pilot.", "Not an acquisition."], [0.15, E(31.75) - E(29.7)], E(33.7) - E(29.7), "paidpilot")
