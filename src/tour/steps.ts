@@ -13,7 +13,7 @@ export interface TourStep {
 
 export const tourSteps: TourStep[] = [
   { path: '/customer/invite', seconds: 10, target: 'invite',
-    caption: "Maya's own salon invites her. Her colourist, Dana, will come to her home." },
+    caption: "Layla's own salon invites her. Her colourist, Dana, will come to her home." },
   { path: '/customer/scan', seconds: 8, target: 'scan',
     caption: 'A free hair scan. Simulated: no camera, three illustrated steps.' },
   { path: '/customer/result', seconds: 17, target: 'index',

@@ -1,7 +1,7 @@
 import { Package, CalendarDays, RefreshCw } from 'lucide-react';
 import { CONFIG, aed, eur } from '../config';
 import { Card, Chip, ColouristCard, Headline, Label, LinkButton, Note, Screen } from '../components/ui';
-import { firstScan, nextVisit, plansFor, priceVariants, secondScan, slots } from '../data/mock';
+import { firstScan, nextVisit, plansFor, priceVariants, secondScan, slots, weekTwelveScan } from '../data/mock';
 import { useStore } from '../state/store';
 
 export default function S9Account() {
@@ -54,7 +54,8 @@ export default function S9Account() {
 
       <div>
         <p className="t-label text-muted">Your scans</p>
-        <p className="mt-1 text-sm">Hair Health Index {firstScan.index} on 14 Apr → {after.index} on 9 Jun <Chip kind="est">Illustrative</Chip></p>
+        <p className="mt-1 text-sm">Hair Health Index {firstScan.index} on 14 Apr → {after.index} on 9 Jun{state.scenario === 'improved' && <> → {weekTwelveScan.index} on {weekTwelveScan.label}</>} <Chip kind="est">Illustrative</Chip></p>
+        {state.scenario === 'improved' && <p className="t-card-body text-muted">Week 12: scanned at home with the app, no visit needed.</p>}
         <p className="t-card-body text-muted">Not a medical measurement.</p>
       </div>
       <ColouristCard subtitle="Your colourist, Salon Aurora" />

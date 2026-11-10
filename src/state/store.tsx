@@ -60,9 +60,9 @@ export function initialState(): DemoState {
 }
 
 function withAlert(state: DemoState, scenario: Scenario): Alert[] {
-  const others = state.alerts.filter((a) => a.customer !== 'Maya');
+  const others = state.alerts.filter((a) => a.customer !== 'Layla');
   if (scenario === 'improved') return others;
-  return [...others, { id: `maya-${scenario}`, customer: 'Maya', scenario, text: 'Result did not improve: Maya' }];
+  return [...others, { id: `maya-${scenario}`, customer: 'Layla', scenario, text: 'Result did not improve: Layla' }];
 }
 
 function reducer(state: DemoState, a: Action): DemoState {

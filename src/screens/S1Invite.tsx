@@ -15,7 +15,7 @@ export default function S1Invite() {
         <Label>Salon Aurora · Downtown Dubai</Label>
         <Headline>Salon Aurora invites you to PRO•GO Colour Plan</Headline>
       </div>
-      <p className="t-quote">Hi Maya, your colour, at home, with the colourist you already know.</p>
+      <p className="t-quote">Hi Layla, your colour, at home, with the colourist you already know.</p>
       <ColouristCard />
       <ul className="flex flex-col gap-3">
         {benefits.map((b) => (
