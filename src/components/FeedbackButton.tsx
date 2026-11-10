@@ -5,7 +5,7 @@ const base = 't-label inline-flex min-h-11 items-center gap-2 border px-4';
 
 export function FeedbackButton({ persona = 'customer' }: { persona?: string }) {
   if (!feedbackReady()) {
-    return <button type="button" disabled className={`${base} border-hairline text-muted`}>Form link coming soon</button>;
+    return null;   // no form yet: show nothing rather than a disabled "coming soon" button
   }
   return (
     <a href={feedbackUrl({ persona })} target="_blank" rel="noopener noreferrer" className={`${base} border-ink text-ink`}>
