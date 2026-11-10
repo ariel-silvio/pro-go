@@ -51,7 +51,7 @@ def credits():
         d.text((960, 360 + i * 56), t, font=R.font(R.SERIF, 40), fill=R.WHITE, anchor="mm")
     f = R.font(R.SANS, 24)
     for i, t in enumerate(["Student project for IE Business School. Not affiliated with L'Oréal or ServiceMarket.",
-                           "Fictional characters, simulated data. AI use disclosed (Claude, Gemini Omni Flash, Lyria, Descript). Layla's voice is AI-generated."]):
+                           "Fictional characters, simulated data. AI use disclosed (Claude, ChatGPT, Gemini Omni Flash, Lyria, Descript). Layla's voice is AI-generated."]):
         d.text((960, 760 + i * 40), t, font=f, fill=(170, 164, 156), anchor="mm")
     return img
 
@@ -69,15 +69,12 @@ def credits_faces():
     """Six faces, six names: the team behind the proposal."""
     img = Image.new("RGB", (1920, 1080), R.INK); d = ImageDraw.Draw(img)
     R.spaced(d, (960, 120), "L'ORÉAL GROUPE  ·  TEAM D", R.font(R.SANS_M, 24), R.GOLD, 7, True)
-    crew = [("Amjad Bensalamah", "out/speakers/M4_S1_Amjad_edit.mp4", 75.7, (.517, .47, .25)),     # front-view frames, picked by hand
-            ("Ariel de Silvio", "out/speakers/M4_S2_Ariel_take2_graded.mp4", 19.4, (.60, .395, .34)),
-            ("Qhakazile Mathebula", "out/speakers/M4_S3_Qhakazile_edit.mp4", 3.4, (.55, .38, .27)),
-            ("Rebecca Fernandes", "out/stills/credit_rebecca.png", 0, (.40, .40, .145)),   # raw 74.25 s, just after her last line (graded)
-            ("Saja Alowayshiq", "out/speakers/M4_S5_Saja_edit.mp4", 1.0, (.72, .31, .255)),
-            ("Nacho Alcantara", "out/speakers/M4_S6_Ignacio_edit.mp4", 70.7, (.555, .55, .20))]
-    for i, (name, take, t, face) in enumerate(crew):
+    # v18: the team's own portraits (Drive folder, 10 Nov), cropped to the face so no brand logo or product shows
+    crew = [("Amjad Bensalamah", "amjad"), ("Ariel de Silvio", "ariel"), ("Qhakazile Mathebula", "qhakazile"),
+            ("Rebecca Fernandes", "rebecca"), ("Saja Alowayshiq", "saja"), ("Nacho Alcantara", "nacho")]
+    for i, (name, key) in enumerate(crew):
         x, y = 960 + (i % 3 - 1) * 520, 200 + (i // 3) * 400
-        img.paste(face_tile(take, t, face, 260), (x - 130, y))
+        img.paste(Image.open(f"out/stills/portraits/{key}.png").convert("RGB").resize((260, 260), Image.LANCZOS), (x - 130, y))
         d.text((x, y + 290), name, font=R.font(R.SERIF, 34), fill=R.WHITE, anchor="mm")
     import qrcode
     qr = qrcode.QRCode(border=2, box_size=8); qr.add_data("https://ariel-silvio.github.io/pro-go/"); qr.make(fit=True)
@@ -86,7 +83,7 @@ def credits_faces():
     d.text((1765, 1044), "ariel-silvio.github.io/pro-go", font=R.font(R.SANS, 18), fill=(200, 194, 186), anchor="mm")
     f = R.font(R.SANS, 22)
     for i, t in enumerate(["Student project for IE Business School. Not affiliated with L'Oréal or ServiceMarket.",
-                           "Fictional characters, simulated data. Layla's voice is AI-generated. AI use disclosed (Claude, Gemini Omni Flash, Lyria, Descript)."]):
+                           "Fictional characters, simulated data. Layla's voice is AI-generated. AI use disclosed (Claude, ChatGPT, Gemini Omni Flash, Lyria, Descript)."]):
         d.text((960, 990 + i * 34), t, font=f, fill=(170, 164, 156), anchor="mm")
     return img
 
@@ -255,7 +252,7 @@ seq.append(still(png(credits_faces(), "credits.png"), "credits", 3))
 voice.append((0, "out/voice/layla_open.wav", 3.0))      # cold open: Layla's own line over the mirror
 
 lst = os.path.join(TMP, "all.txt"); open(lst, "w").write("".join(f"file '{os.path.abspath(p)}'\n" for p in seq))
-final = os.path.join(OUT, "animatic_v17_voice.mp4"); part = final.replace(".mp4", ".part.mp4")
+final = os.path.join(OUT, "animatic_v18_voice.mp4"); part = final.replace(".mp4", ".part.mp4")
 starts, t = [], 0.0
 for p in seq: starts.append(t); t += length(p)
 ins = ["-f", "concat", "-safe", "0", "-i", lst, "-f", "lavfi", "-i", f"anullsrc=r=48000:cl=stereo:d={t:.3f}"]
