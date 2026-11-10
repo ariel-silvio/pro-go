@@ -3,6 +3,8 @@ import { resetDemo } from '../state/store';
 import { useTour } from '../tour/Tour';
 
 const qrSrc = `${import.meta.env.BASE_URL}qr.png`;
+const qrVideo = `${import.meta.env.BASE_URL}qr-video.png`;
+const VIDEO_URL = 'https://youtu.be/T2k37jMMXo4';
 const smallBtn = 't-label min-h-11 border border-ink px-3 hover:bg-paper';
 
 export function SidePanel({ screen }: { screen?: ScreenMeta }) {
@@ -33,6 +35,19 @@ export function SidePanel({ screen }: { screen?: ScreenMeta }) {
       <div className="mt-6 flex items-center gap-4">
         <img src={qrSrc} alt="QR code that opens this prototype on a phone" width={96} height={96} className="border border-hairline bg-paper" />
         <p className="t-card-body text-muted">Scan to open on your phone.<br /><span className="text-ink">ariel-silvio.github.io/pro-go</span></p>
+      </div>
+      <div className="mt-6 border-t border-hairline pt-5">
+        <p className="t-label text-gold-text">Watch the M4 video</p>
+        <div className="mt-3 flex items-center gap-4">
+          <a href={VIDEO_URL} target="_blank" rel="noopener noreferrer" aria-label="Open the M4 video on YouTube">
+            <img src={qrVideo} alt="QR code that opens the Team D M4 video, 12 weeks with Layla" width={96} height={96} className="border border-hairline" />
+          </a>
+          <p className="t-card-body text-muted">
+            <span className="font-serif text-base text-ink">12 weeks with Layla</span><br />
+            Team D, 8 minutes.<br />
+            <a href={VIDEO_URL} target="_blank" rel="noopener noreferrer" className="text-ink underline underline-offset-2">youtu.be/T2k37jMMXo4</a>
+          </p>
+        </div>
       </div>
     </aside>
   );
