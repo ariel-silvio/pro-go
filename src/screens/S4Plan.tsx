@@ -65,8 +65,7 @@ export default function S4Plan() {
         })}
       </fieldset>
 
-      <Note>This is a prototype. No payment, no booking. "Reserve my place" opens a short anonymous form.</Note>
-      {!feedbackReady() && <p className="t-card-body text-muted">Form link coming soon: the button continues the demo.</p>}
+      <Note>{feedbackReady() ? 'This is a prototype. No payment, no booking. "Reserve my place" opens a short anonymous form.' : 'This is a prototype. No payment, no booking.'}</Note>
       <div className="mt-auto flex flex-col gap-2">
         <button type="button" onClick={reserve} className={btnPrimary}>Reserve my place</button>
         <div className="flex justify-center"><Chip kind="low">Price: Team D assumption, LOW confidence</Chip></div>
