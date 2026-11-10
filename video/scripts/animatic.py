@@ -69,12 +69,13 @@ def credits_faces():
     """Six faces, six names: the team behind the proposal."""
     img = Image.new("RGB", (1920, 1080), R.INK); d = ImageDraw.Draw(img)
     R.spaced(d, (960, 120), "L'ORÉAL GROUPE  ·  TEAM D", R.font(R.SANS_M, 24), R.GOLD, 7, True)
-    # v18: the team's own portraits (Drive folder, 10 Nov), cropped to the face so no brand logo or product shows
+    # v18: the team's own portraits (Drive folder, 10 Nov), circular, face centred (Ariel: logos may show on this screen)
     crew = [("Amjad Bensalamah", "amjad"), ("Ariel de Silvio", "ariel"), ("Qhakazile Mathebula", "qhakazile"),
             ("Rebecca Fernandes", "rebecca"), ("Saja Alowayshiq", "saja"), ("Nacho Alcantara", "nacho")]
     for i, (name, key) in enumerate(crew):
         x, y = 960 + (i % 3 - 1) * 520, 200 + (i // 3) * 400
-        img.paste(Image.open(f"out/stills/portraits/{key}.png").convert("RGB").resize((260, 260), Image.LANCZOS), (x - 130, y))
+        t = Image.open(f"out/stills/portraits/{key}.png").resize((280, 280), Image.LANCZOS)      # circular, face centred
+        img.paste(t, (x - 140, y - 12), t)
         d.text((x, y + 290), name, font=R.font(R.SERIF, 34), fill=R.WHITE, anchor="mm")
     import qrcode
     qr = qrcode.QRCode(border=2, box_size=8); qr.add_data("https://ariel-silvio.github.io/pro-go/"); qr.make(fit=True)
