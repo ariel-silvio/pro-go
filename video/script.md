@@ -62,7 +62,7 @@ Each speaker: about 170 words, read calmly. **Time yourself: 65 to 75 seconds.**
 **ON SCREEN, left, once:** *Week 0. Her salon sends a free hair scan.*
 **SOUND.** Week tick on the card. Piano motif alone, sparse, a long gap between phrases. Room tone stays under the Layla shots. Let the music thin out on "If it didn't work, she sees it" so the line lands in near-silence.
 
-**AMJAD SAAD BENSALAMAH · Chief Innovation Officer** · lower third: *Amjad Saad Bensalamah* / *CHIEF INNOVATION OFFICER*
+**AMJAD BENSALAMAH · Chief Innovation Officer** · lower third: *Amjad Bensalamah* / *CHIEF INNOVATION OFFICER*
 
 > Layla is made up. Everything about her is real.
 >
@@ -88,7 +88,7 @@ Each speaker: about 170 words, read calmly. **Time yourself: 65 to 75 seconds.**
 **ON SCREEN, left:** *Wednesday, 18:00. Dana, from my salon.*
 **SOUND.** Week tick. Ceramic cup set down on marble; one short, soft message chime (generic, not WhatsApp) as the booking arrives; the phone lifted off the counter. Piano continues, a little warmer.
 
-**ARIEL DE SILVIO · Chief Technology & AI Officer** · lower third: *Ariel De Silvio* / *CHIEF TECHNOLOGY & AI OFFICER*
+**ARIEL DE SILVIO · Chief Technology & AI Officer** · lower third: *Ariel de Silvio* / *CHIEF TECHNOLOGY & AI OFFICER*
 
 > Week one. Layla books her first visit. She thinks she's talking to her salon, and she is. But behind that message sits ServiceMarket.
 >
@@ -167,7 +167,7 @@ Each speaker: about 170 words, read calmly. **Time yourself: 65 to 75 seconds.**
 **ON SCREEN, left:** *Week 10. Visit 2 of 2.*
 **SOUND.** Week tick. Slow brush strokes through long hair, curtains moving, the city far below. Strings rise a little under "the real numbers come from the pilot": the film starts to lift.
 
-**SAJA ALOWAYSHIQ · Chief Customer Experience Officer** · lower third: *Saja AlOwayshiq* / *CHIEF CUSTOMER EXPERIENCE OFFICER*
+**SAJA ALOWAYSHIQ · Chief Customer Experience Officer** · lower third: *Saja Alowayshiq* / *CHIEF CUSTOMER EXPERIENCE OFFICER*
 
 > Week ten. Dana's second visit, eight weeks after the first, and a second scan. This is where a pilot either teaches you something or just spends your money.
 >
@@ -194,7 +194,7 @@ Each speaker: about 170 words, read calmly. **Time yourself: 65 to 75 seconds.**
 **ON SCREEN, left:** *Week 12. 74. She renewed.*
 **SOUND.** Week tick. A soft phone tap; the same scan shimmer as in the cold open, so the audience hears the loop close. As the score counts 58 → 74, faint ticks under the count, then **the one music swell of the film on 74**. Back to a steady, quiet pad for the rules. **Music drops out completely on "So this is our ask"**: only room tone under the ask, and the last line, "Layla already did", in near-silence.
 
-**IGNACIO MONTERO ALCANTARA · Chief Financial Officer** · lower third: *Ignacio Montero Alcantara* / *CHIEF FINANCIAL OFFICER*
+**NACHO ALCANTARA · Chief Financial Officer** · lower third: *Nacho Alcantara* / *CHIEF FINANCIAL OFFICER*
 
 > Week twelve. No visit this time. Layla scans again on her phone. Seventy-four. And she renews.
 >

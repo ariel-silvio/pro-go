@@ -41,7 +41,7 @@ music = np.zeros_like(bus)
 c = [None] + [TL[f"card{i}"] for i in range(1, 7)]; ch = [None] + [TL[f"ch{i}"] for i in range(1, 7)]
 SCORE, ASK, CLOSE = TL["score"], TL["ask"], TL["closing"]
 build_at = SCORE - 82.5                                                   # the build's swell peaks about 82 s in
-place(music, M("open_dram2"), 0.0,  length=17.5, fout=2.5, gain_db=2)     # cold open, dramatic, drops as chapter 1 starts
+place(music, M("open_v16a"), 2.0, length=15.5, fin=1.5, fout=2.5, gain_db=1)   # cold open v16 (Ariel picked A): starts quietly at 2 s, gentle build, peak on the title (11 s)
 place(music, M("bed1"),       c[1], length=c[3] - c[1] + 2.5, fin=2.0, fout=3.0)          # weeks 0-1: sparse warm piano
 bed2_len = min(157.0, build_at + 4 - (c[3] - 0.5))
 place(music, M("bed2"),       c[3] - 0.5, length=bed2_len, fin=3.0, fout=4.0)            # week 2: strings join; pulse from about week 4
@@ -49,7 +49,8 @@ if build_at > c[3] - 0.5 + 157.0 - 4:                                           
     place(music, M("bed1"), c[3] + 152.0, src_from=60.0, length=build_at - c[3] - 148.0, fin=2.5, fout=3.0)
 place(music, M("build"),      build_at, length=SCORE + 10 - build_at, fin=3.0, fout=5.0)   # weeks 10-12: strings rise, swell on the score
 place(music, M("bed1"),       SCORE + 6.0, src_from=20.0, length=ASK - SCORE - 6.0, fin=4.0, fout=4.0, gain_db=-3)   # low pad under the rules
-place(music, M("close"),      CLOSE - 0.3, length=DUR - CLOSE + 0.3, fin=0.4, fout=3.0)   # motif returns on the closing card
+TITLE = TL.get("title", CLOSE + 3.7)
+# (v17: the separate closing cue, in E-flat, is gone: the finale's own ending, in A minor, carries the mirror, title and credits)
 
 # gain envelope: duck under speech (chapter bodies), up on cards and the closing; half duck on the score
 SPEECH = [(ch[i], c[i + 1] if i < 6 else CLOSE) for i in range(1, 7)]
@@ -57,7 +58,11 @@ t = np.arange(len(music)) / SR; g = np.zeros(len(music), np.float32)
 for a, b in SPEECH:                    # -15 dB with 0.6 s ramps
     g = np.minimum(g, -15 * np.clip(np.minimum((t - a) / 0.6, (b - t) / 0.6), 0, 1))
 # (no lift on the score any more: Ignacio speaks over it, the music stays under him)
+g = g + np.interp(t, [2.6, 3.0, 10.6, 11.2], [0, -8, -8, 0])   # cold open: piano dips under Layla's voice
 g = g + np.interp(t, [SCORE - 1.5, SCORE - 0.5, SCORE + 7.0, SCORE + 8.5], [0, -4, -4, 0])   # the build swells here: keep it under his voice
+for k in ("partner", "real"):   # ch1 "So we partner", ch5 "The real numbers come from the pilot": the bed lifts 6 dB, then settles
+    if k in TL:
+        P = TL[k]; g = g + np.interp(t, [P - 0.3, P + 0.5, P + 3.5, P + 6.0], [0, 6, 6, 0])
 CL = TL.get("climax")
 if CL:   # chapter 4 climax, "And L'Oréal learns": the bed falls away in her pause, the climax cue takes over, then the bed returns
     dip = np.interp(t, [CL - 2.4, CL - 0.4, CL + 17.5, CL + 20.0], [0, -30, -30, 0])
@@ -65,16 +70,33 @@ if CL:   # chapter 4 climax, "And L'Oréal learns": the bed falls away in her pa
 music *= (10 ** (g / 20))[:, None]
 if CL:   # climax cue (Lyria): 24.5 s into the cue it is rising; its peak lands on "not in a lab, not in a survey"
     place(music, M("climax_a"), CL - 0.1, src_from=24.5, length=19.5, fin=0.8, fout=3.5, gain_db=-10)
-i0, i1 = int((ASK - 2.0) * SR), int(ASK * SR)                              # the ask: music gone by the first word
-music[i0:i1] *= np.linspace(1, 0, i1 - i0)[:, None] ** 2; music[i1:int((CLOSE - 0.3) * SR)] = 0
+i0, i1 = int((ASK - 2.0) * SR), int(ASK * SR)                              # the ask: the bed gives way to the finale cue
+music[i0:i1] *= np.linspace(1, 0, i1 - i0)[:, None] ** 2; music[i1:] = 0
+GIVE, ALREADY = TL.get("give", ASK + 13.2), TL.get("already", ASK + 14.8)
+LAST = TL.get("end6", CLOSE) - 0.45                                         # his last word ends; the picture fades to black after it
+FIN = M("finale_v16")
+fin_ = FIN[int(7.6 * SR):][:int((LAST + 0.6 - ASK) * SR)]                   # the finale grows under the ask, peaks on "Give us 12 weeks"
+tt = np.arange(len(fin_)) / SR + ASK
+fg = np.interp(tt, [ASK, ASK + 1.5, GIVE - 0.4, GIVE + 0.2, LAST - 0.1, LAST + 0.5], [-40, -15, -7, -5, -6, -32])
+music[int(ASK * SR):int(ASK * SR) + len(fin_)] += fin_ * (10 ** (fg / 20))[:, None]   # holds through "Layla already did.", drops on his last word
+# the same piece's ending (cue 54.3 s on) rises out of the dip: under the mirror and Layla's line, swells on the title, the last chord rings over the credits
+OUT0 = LAST + 0.3; out_ = FIN[int((54.3 - (CLOSE - OUT0)) * SR):][:int((DUR - OUT0) * SR)]
+tt = np.arange(len(out_)) / SR + OUT0
+og = np.interp(tt, [OUT0, CLOSE + 0.2, CLOSE + 0.6, TITLE + 1.0, TITLE + 2.2, DUR - 1.2, DUR], [-34, -16, -19, -17, -7, -9, -40])   # stays under her voice, swells after it
+music[int(OUT0 * SR):int(OUT0 * SR) + len(out_)] += out_ * (10 ** (og / 20))[:, None]
 bus += music
 
 # ---- sound effects ----
 S = {n: load(f"out/sfx/{n}.wav") for n in ["week_tick", "scan_shimmer", "message_chime", "soft_click", "count_tick",
-                                            "reverse_swell", "sub_hit", "winner_tone"]}
+                                            "reverse_swell", "sub_hit", "winner_tone", "strike", "confirm", "room_tone", "piano_note"]}
+place(bus, S["room_tone"], 0.0, gain_db=-30)                                            # cold open: the room before the music
+place(bus, S["week_tick"], 0.4, gain_db=-12)                                            # one clock tick, then her voice
+place(bus, S["piano_note"], CLOSE + 0.1, gain_db=-17)                                   # one piano note (A, the piece's home note) as the mirror appears
+for k in ("visit1", "prove", "stopearly"):                                              # soft tone on the full-screen beats
+    if k in TL: place(bus, S["winner_tone"], TL[k] + 0.2, gain_db=-19)
 for i in range(1, 7): place(bus, S["week_tick"], c[i] + 0.25, gain_db=-8)                 # chapter cards
-place(bus, S["scan_shimmer"], ch[1] + 19.6, gain_db=-14)  # chapter 1: scan result on the phone
-place(bus, S["message_chime"], ch[2] + 3.8, gain_db=-14)  # chapter 2: Dana's message
+place(bus, S["scan_shimmer"], ch[1] + 22.3, gain_db=-14)  # chapter 1: "we measure her hair" (app panel on 58)
+place(bus, S["message_chime"], ch[2] + 2.6, gain_db=-14)  # chapter 2: Dana's message (booking panel comes in at 2.4 s)
 if "diagram" in TL:
     for i in range(5): place(bus, S["soft_click"], TL["diagram"] + 0.4 + 0.8 * i, gain_db=-12)   # diagram boxes
 for k in ("winner1", "winner2"):                          # chapter 4: one soft tone as each winner is named
@@ -82,6 +104,16 @@ for k in ("winner1", "winner2"):                          # chapter 4: one soft 
 if CL:
     place(bus, S["reverse_swell"], CL - 1.6, gain_db=-12)  # into "And L'Oréal learns"
     place(bus, S["sub_hit"], CL - 0.03, gain_db=-7)
+for k in ("progo", "behind", "criteria"):                 # one soft tone on chapter 1's PRO•GO, chapter 2's ServiceMarket and the three ticks
+    if k in TL: place(bus, S["winner_tone"], TL[k] + 0.2, gain_db=-18)
+for k in ("strike1", "strike2"):                          # chapter 1: build, buy struck through
+    if k in TL: place(bus, S["strike"], TL[k] - 0.05, gain_db=-16)
+for k, hit in (("partner", -11), ("real", -13)):          # ch1 and ch5 lens moments: swell into a low hit (speaker full screen)
+    if k in TL:
+        place(bus, S["reverse_swell"], TL[k] - 1.6, gain_db=-15)
+        place(bus, S["sub_hit"], TL[k] - 0.03, gain_db=hit)
+for k in ("visit2", "leader", "paidpilot", "data"):                            # ch5: one soft tone on "Visit 2 of 2" and "One leader. Not a committee."
+    if k in TL: place(bus, S["winner_tone"], TL[k] + 0.2, gain_db=-18)
 if "weeks" in TL:                                         # the 0 -> 12 week counter: one tick per number
     prev = 0
     for f in range(23):
@@ -95,14 +127,22 @@ for f in range(180):
     for (x0, y0), (x1, y1) in zip(R.PTS, R.PTS[1:]):
         if x0 <= wk <= x1: s = y0 + (y1 - y0) * (wk - x0) / (x1 - x0)
     s = 74 if wk >= 12 else round(s)
-    if prev is not None and s != prev: place(bus, S["count_tick"], SCORE + f / 30, gain_db=-16)
+    if prev is not None and s != prev:
+        if s == 74: place(bus, S["confirm"], SCORE + f / 30, gain_db=-16)               # lands on the same confirm note as the scan
+        else: place(bus, S["count_tick"], SCORE + f / 30, gain_db=-20)
     prev = s
 
 wav = DST.replace(".mp4", "_music.wav")
 np.clip(bus, -1, 1).astype("<f4").tofile(wav + ".raw")
 subprocess.run(["ffmpeg", "-y", "-v", "error", "-f", "f32le", "-ar", str(SR), "-ac", "2", "-i", wav + ".raw", wav], check=True); os.remove(wav + ".raw")
-# voices (from the animatic) + music bus, gentle limiter
+# voices (from the animatic) + music bus, then the whole film to -14 LUFS (measured, one gain, limiter at -1 dBTP)
+mixw = DST.replace(".mp4", "_mix.wav")
 subprocess.run(["ffmpeg", "-y", "-v", "error", "-i", SRC, "-i", wav, "-filter_complex",
-                "[0:a]aresample=48000[v];[v][1:a]amix=inputs=2:normalize=0:duration=first,alimiter=limit=0.89[a]",
+                "[0:a]aresample=48000[v];[v][1:a]amix=inputs=2:normalize=0:duration=first[a]", "-map", "[a]", "-c:a", "pcm_f32le", mixw], check=True)
+log = subprocess.run(["ffmpeg", "-nostats", "-i", mixw, "-af", "ebur128", "-f", "null", "-"], capture_output=True, text=True).stderr
+I = float([l for l in log.splitlines() if l.strip().startswith("I:")][-1].split()[1])
+subprocess.run(["ffmpeg", "-y", "-v", "error", "-i", SRC, "-i", mixw, "-filter_complex",
+                f"[1:a]volume={-14.0 - I:.2f}dB,alimiter=limit=0.89:level=false[a]",
                 "-map", "0:v", "-map", "[a]", "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", DST], check=True)
+os.remove(mixw); print(f"mix was {I:.1f} LUFS, gain {-14.0 - I:+.1f} dB")
 print("wrote", DST, "and", wav)

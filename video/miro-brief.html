@@ -1,0 +1,307 @@
+<title>PRO•GO Miro Brief</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,500&family=Jost:wght@400;500&display=swap">
+<style>
+/* Layout: one reading column; each Miro panel is a numbered brief with "what to add", a paste-ready block and its sources. Team D Brand Kit. */
+:root{
+  --bg:#F7F3EC; --paper:#FFFFFF; --ink:#111111; --muted:#5F5A54; --hair:#E3DDD3;
+  --gold:#B08D57; --goldt:#8A6A3B; --teal:#1B6B63; --warn:#9E2B3A; --chip:#EFE8DC;
+  --serif:'Bodoni Moda', 'Didot', Georgia, serif; --sans:'Jost', 'Avenir Next', 'Helvetica Neue', Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#141312; --paper:#1C1A18; --ink:#F2EDE4; --muted:#B4ACA0; --hair:#34302B;
+  --gold:#C9A46B; --goldt:#D2B07A; --teal:#5FB3A8; --warn:#E07A88; --chip:#2A2622; color-scheme:dark } }
+:root[data-theme="dark"]{
+  --bg:#141312; --paper:#1C1A18; --ink:#F2EDE4; --muted:#B4ACA0; --hair:#34302B;
+  --gold:#C9A46B; --goldt:#D2B07A; --teal:#5FB3A8; --warn:#E07A88; --chip:#2A2622; color-scheme:dark }
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.55;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:860px;margin:0 auto;padding-block:40px 80px;display:flex;flex-direction:column;gap:28px}
+.label{font-weight:500;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--goldt)}
+h1{font-family:var(--serif);font-weight:500;font-size:clamp(34px,6vw,52px);line-height:1.05;margin:8px 0 6px;text-wrap:balance}
+h2{font-family:var(--serif);font-weight:500;font-size:26px;line-height:1.15;margin:0;text-wrap:balance}
+h3{font-size:13px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0}
+p{margin:0;max-width:68ch} ul,ol{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:4px}
+a{color:var(--teal)}
+.lead{color:var(--muted);font-size:18px}
+.rule{width:64px;height:2px;background:var(--gold)}
+.box{background:var(--paper);border:1px solid var(--hair);padding:20px 22px;display:flex;flex-direction:column;gap:12px}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.fact{display:flex;flex-direction:column;gap:2px;min-width:0}
+.fact b{font-weight:500}
+.fact span{color:var(--muted);font-size:14px}
+.tag{display:inline-block;font-size:11px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;padding:2px 8px;background:var(--chip);color:var(--goldt)}
+.tag.a{color:var(--warn)} .tag.f{color:var(--teal)}
+nav ol{columns:2;column-gap:28px;display:block} nav li{margin-bottom:4px;break-inside:avoid}
+@media (max-width:560px){ nav ol{columns:1} }
+.panel{background:var(--paper);border:1px solid var(--hair);border-top:3px solid var(--gold);padding:22px;display:flex;flex-direction:column;gap:14px;scroll-margin-top:16px}
+.panel .head{display:flex;gap:14px;align-items:baseline}
+.panel .letter{font-family:var(--serif);font-size:30px;color:var(--gold);line-height:1;min-width:24px}
+.meta{display:flex;flex-wrap:wrap;gap:8px 16px;font-size:14px;color:var(--muted)}
+.paste{position:relative;background:var(--bg);border:1px dashed var(--hair);padding:14px 16px 14px;font-size:15px;white-space:pre-wrap;min-width:0;overflow-wrap:anywhere}
+.paste-head{display:flex;justify-content:space-between;align-items:center;gap:8px}
+button.copy{font:inherit;font-size:12px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;background:transparent;color:var(--teal);border:1px solid var(--teal);padding:4px 10px;cursor:pointer}
+button.copy:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.scroll{overflow-x:auto} table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+th,td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--hair);vertical-align:top}
+th{font-weight:500;color:var(--muted);font-size:12px;letter-spacing:.1em;text-transform:uppercase}
+footer{color:var(--muted);font-size:13px}
+@media (prefers-reduced-motion:no-preference){ button.copy{transition:background .15s} button.copy:hover{background:var(--chip)} }
+</style>
+
+<div class="wrap">
+  <header style="display:flex;flex-direction:column;gap:10px">
+    <div class="label">L'Oréal Groupe · Team D · M4 · Miro brief</div>
+    <h1>PRO•GO Miro Brief</h1>
+    <p class="lead">What to add to the M4 section of our Miro board, panel by panel, so the board carries the evidence behind the video. Written for whoever does the update: no prior context needed.</p>
+    <div class="rule"></div>
+  </header>
+
+  <section class="box" aria-labelledby="ctx">
+    <h2 id="ctx">The context in one minute</h2>
+    <p><b>The course:</b> Corporate Entrepreneurship (IE EMBA). We act as L'Oréal's innovation team presenting to the CEO. Milestone 4 is an <b>open innovation pilot</b> with an existing startup or partner.</p>
+    <p><b>Our proposal:</b> PRO•GO, a 12-week hair-care subscription. The client's own colourist from her partner salon visits her at home twice (week 2 and week 10), with a hair scan before and after. The external partner is <b>ServiceMarket</b>, a Dubai home-services operator, which runs booking, payment, insurance and the salon's permit paperwork.</p>
+    <p><b>The video</b> (7:58, all six of us) is the pitch: <a href="https://share.descript.com/view/1ZMWxs3twm0" target="_blank" rel="noopener">share.descript.com/view/1ZMWxs3twm0</a>. On purpose, it shows no sources: the board must carry them.</p>
+    <div class="facts">
+      <div class="fact"><b>Due on Miro</b><span>Sat 14 Nov, 12:00 · post the link in "Team deliverables – Milestone 4"</span></div>
+      <div class="fact"><b>Forum questions the board must answer</b><span>The capability we lack · which partner and why · the collaboration model and what each side gets · the pilot, who owns it, when to stop, adapt or scale</span></div>
+      <div class="fact"><b>Main sources</b><span>M2 dashboard (<a href="https://rebeccaf8.github.io/Loreal-Innovation-Portfolio-2035/" target="_blank" rel="noopener">link</a>) · M3 board frame 4 · fact list at the end of <code>video/script.md</code> (pro-go repo)</span></div>
+      <div class="fact"><b>One rule for every panel</b><span>Label each figure <span class="tag f">fact + source</span> or <span class="tag a">Team D assumption</span></span></div>
+    </div>
+  </section>
+
+  <nav class="box" aria-label="Panels">
+    <h3>Panels to add (A–P), in reading order</h3>
+    <ol type="A">
+      <li><a href="#A">Our recommendation</a></li><li><a href="#B">Capability gap and build / buy / partner / invest</a></li>
+      <li><a href="#C">Partner scouting and scored choice</a></li><li><a href="#D">Collaboration model: venture client</a></li>
+      <li><a href="#E">Ecosystem map</a></li><li><a href="#F">Pilot hypotheses and thresholds</a></li>
+      <li><a href="#G">Unit economics per visit</a></li><li><a href="#H">Governance, review rhythm, scaling</a></li>
+      <li><a href="#I">Partner-salon offer</a></li><li><a href="#J">Colourist charter</a></li>
+      <li><a href="#K">Customer promise (Layla)</a></li><li><a href="#L">Risk register</a></li>
+      <li><a href="#M">Salons to approach</a></li><li><a href="#N">Sources for the video's numbers</a></li>
+      <li><a href="#O">FAQ for peer feedback</a></li><li><a href="#P">AI disclosure</a></li>
+    </ol>
+  </nav>
+
+  <article class="panel" id="A"><div class="head"><span class="letter">A</span><h2>Our recommendation</h2></div>
+    <div class="meta"><span>Place: top-left of the M4 section, the first thing the CEO reads</span><span>Answers: CEO, professor</span></div>
+    <div class="paste-head"><h3>Paste</h3><button class="copy" type="button">Copy</button></div>
+    <div class="paste">Our recommendation: a 90-day venture-client pilot with ServiceMarket and 3–5 partner salons in Downtown and Business Bay, Dubai, from Q2 2027.
+Inside the €3m already planned. The next €7m is decided at the Q4 2027 review, on three numbers: second visits, margin per visit, hair-score change.
+What we need from you: approval to start partner talks and to staff one PRO•GO lead in Professional Products Middle East.</div>
+    <p><span class="tag f">fact</span> €3m now / €7m at the Q4 2027 review: M2 dashboard. <span class="tag a">assumption</span> pilot budget within the €3m is not sized yet: leave it out or add "≈ €X (Team D estimate)" once agreed.</p>
+  </article>
+
+  <article class="panel" id="B"><div class="head"><span class="letter">B</span><h2>Capability gap and build / buy / partner / invest</h2></div>
+    <div class="meta"><span>Answers: forum Q1 · professor "is external collaboration justified?" · peers "do they need a partner at all?"</span></div>
+    <div class="paste-head"><h3>Paste</h3><button class="copy" type="button">Copy</button></div>
+    <div class="paste">The capability we lack: getting a licensed, insured, permitted professional into a private home in Dubai, on time. L'Oréal has the science, the products and the salons that trust us. It has never run home visits.
+Build: years to set up operations, permits and insurance. Too slow for a 2027 test.
+Buy: owning a home-service company would put L'Oréal between the salon and its client, the opposite of what salons need.
+Invest (minority stake): no strategic reason before the pilot proves demand.
+Partner: an operator that already does this every day, and works through salons. → ServiceMarket.</div>
+  </article>
+
+  <article class="panel" id="C"><div class="head"><span class="letter">C</span><h2>Partner scouting and scored choice</h2></div>
+    <div class="meta"><span>Answers: forum Q2 · professor "show the scouting" · peers "why not Urban Company?"</span></div>
+    <p>Show a small funnel (longlist of 6–8 Dubai home-service or beauty platforms → shortlist of 3–5 → choice), then score the shortlist 1–5 on our three criteria from the video. Add 2–3 names to the table after a quick web search; keep the scores as <span class="tag a">Team D judgement</span>.</p>
+    <div class="scroll"><table>
+      <thead><tr><th>Partner</th><th>Runs home visits in Dubai today</th><th>Works through salons, not around them</th><th>Makes the salon stronger</th><th>Note</th></tr></thead>
+      <tbody>
+        <tr><td>ServiceMarket</td><td>5</td><td>5</td><td>4</td><td>Since 2013; 200+ vetted partner companies, salon at home included (company profile). Sells other companies' services.</td></tr>
+        <tr><td>Urban Company</td><td>5</td><td>2</td><td>2</td><td>Its own brand on the professional at the door; the client relationship moves to the app.</td></tr>
+        <tr><td>Justlife</td><td>4</td><td>2</td><td>2</td><td>Same pattern as Urban Company.</td></tr>
+        <tr><td>(add 2–3 more)</td><td></td><td></td><td></td><td></td></tr>
+      </tbody></table></div>
+  </article>
+
+  <article class="panel" id="D"><div class="head"><span class="letter">D</span><h2>Collaboration model: venture client</h2></div>
+    <div class="meta"><span>Answers: forum Q3 · professor "name the vehicle" · CEO "is the partner credible?"</span></div>
+    <div class="paste-head"><h3>Paste</h3><button class="copy" type="button">Copy</button></div>
+    <div class="paste">Model: venture-client pilot. L'Oréal buys ServiceMarket's service (paid per visit, 90 days). No equity, no joint venture, no acquisition before the pilot proves demand.
+We ask: to be the only colour subscription on its platform in our two pilot communities during the test.
+What ServiceMarket gets: the L'Oréal name behind its service; a door to salons it could never sign one by one; paid visits from day one.
+What the salon gets: keeps the client, earns on visits it could not make alone (target +10 % income per partner salon by 2030).
+What L'Oréal gets: in-use data on real hair, in real homes, over 12 weeks, and a new recurring service.
+Validation before launch: one call with ServiceMarket's partnerships team to test appetite for exclusivity and per-visit pricing.</div>
+    <p><span class="tag f">fact</span> +10 % salon income by 2030: M2 dashboard. <span class="tag a">assumption</span> per-visit payment and exclusivity are Team D proposals, not agreed.</p>
+  </article>
+
+  <article class="panel" id="E"><div class="head"><span class="letter">E</span><h2>Ecosystem map</h2></div>
+    <div class="meta"><span>Answers: professor (ecosystem actors)</span></div>
+    <p>Draw the actors as boxes with arrows for money, data and service:</p>
+    <ul>
+      <li><b>Layla</b> (client) pays one subscription → <b>L'Oréal / PRO•GO</b></li>
+      <li><b>L'Oréal</b> pays per visit → <b>ServiceMarket</b> (booking, routing, payment, insurance, permit paperwork)</li>
+      <li><b>ServiceMarket</b> pays the visit fee → <b>partner salon</b> → its <b>colourist</b> (Dana)</li>
+      <li><b>L'Oréal</b> supplies products, the scan and the 12-week plan → salon and Layla</li>
+      <li><b>Dubai Municipality</b> (home-service permits) · <b>insurer</b> · <b>payment provider</b> around the edges</li>
+      <li>Data: hair results stay with L'Oréal and the salon (with consent); booking data stays with ServiceMarket</li>
+    </ul>
+  </article>
+
+  <article class="panel" id="F"><div class="head"><span class="letter">F</span><h2>Pilot hypotheses and thresholds</h2></div>
+    <div class="meta"><span>Answers: professor (lean startup, desirability / viability / feasibility) · CEO "what counts as success?"</span></div>
+    <div class="scroll"><table>
+      <thead><tr><th>Lens</th><th>Hypothesis</th><th>Metric</th><th>Baseline</th><th>Threshold</th><th>If missed</th></tr></thead>
+      <tbody>
+        <tr><td>Desirability</td><td>Clients want a second PRO•GO visit</td><td>% booking a 2nd visit within 90 days</td><td>Today's salon colour re-booking rate (to find)</td><td>≥ 40 %</td><td>Change: price or services</td></tr>
+        <tr><td>Viability</td><td>Every visit makes money</td><td>Margin per visit after salon and ServiceMarket</td><td>Break-even ≈ AED 420–500 per visit</td><td>&gt; 0</td><td>Change: new price or new deal</td></tr>
+        <tr><td>Feasibility</td><td>Salons send colourists out, on time</td><td>Visits delivered on time; salons active</td><td>—</td><td>3–5 salons active</td><td>Fall back: salon subscription</td></tr>
+        <tr><td>Value proof</td><td>The plan improves hair</td><td>Hair-score change, visit 1 → re-scan</td><td>Visit-1 score</td><td>+5 points</td><td>Review the plan or the scan</td></tr>
+      </tbody></table></div>
+    <p><span class="tag f">fact</span> 40 % repeat target and 300 clients in 2027: M2 dashboard. <span class="tag a">assumption</span> +5 points and the re-booking baseline. Riskiest assumption: salons releasing colourists for home visits.</p>
+  </article>
+
+  <article class="panel" id="G"><div class="head"><span class="letter">G</span><h2>Unit economics per visit</h2></div>
+    <div class="meta"><span>Answers: CEO and classmates (the most likely critique)</span></div>
+    <p>One small table at pilot volume, and the same table at scale. Fill the blanks; mark every line.</p>
+    <div class="scroll"><table>
+      <thead><tr><th>Per visit (AED)</th><th>Pilot</th><th>At scale</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td>Revenue: subscription ≈ AED 900–1,200 ÷ 2 visits</td><td>450–600</td><td>450–600</td><td><span class="tag f">M3 price</span></td></tr>
+        <tr><td>Salon payout (colourist time incl. travel)</td><td></td><td></td><td><span class="tag a">assumption</span></td></tr>
+        <tr><td>ServiceMarket fee</td><td></td><td></td><td><span class="tag a">assumption</span></td></tr>
+        <tr><td>Products and kit</td><td></td><td></td><td><span class="tag a">assumption</span></td></tr>
+        <tr><td>Scan, insurance, transport, permits</td><td></td><td></td><td><span class="tag a">assumption</span></td></tr>
+        <tr><td><b>Margin per visit</b></td><td></td><td></td><td>Go rule: &gt; 0</td></tr>
+      </tbody></table></div>
+    <p>Break-even ≈ AED 420–500 per visit (script fact list). Ignacio to check the fee leaves margin above it.</p>
+  </article>
+
+  <article class="panel" id="H"><div class="head"><span class="letter">H</span><h2>Governance, review rhythm, scaling</h2></div>
+    <div class="meta"><span>Answers: forum Q4 · CEO "who is the one leader?" · fixes an inconsistency</span></div>
+    <div class="paste-head"><h3>Paste</h3><button class="copy" type="button">Copy</button></div>
+    <div class="paste">Owner: one PRO•GO lead in the PRO•GO venture unit, inside Professional Products Middle East. Holds the salon relationships and the pilot budget.
+Rhythm: monthly reviews during the 90-day pilot; the Innovation Board reviews quarterly after the pilot.
+Go: ≥ 40 % book a second visit within 90 days and every visit makes money → next €7m at the Q4 2027 review; add salons.
+Change: people come back but the money doesn't work → new price, new services or a new deal with ServiceMarket.
+Fall back: salons won't send colourists out → test a salon subscription instead.
+Stop: two missed monthly reviews in a row.
+At scale: the venture unit hands over to Professional Products Middle East with its own P&L.</div>
+    <p><b>Why this matters:</b> the video says "two missed reviews in a row" and "reviews every quarter". Two quarters is longer than a 90-day pilot, so the board makes the reviews monthly during the pilot.</p>
+  </article>
+
+  <article class="panel" id="I"><div class="head"><span class="letter">I</span><h2>Partner-salon offer</h2></div>
+    <div class="meta"><span>Answers: salon owners · classmates "channel conflict" · our own fall-back rule</span></div>
+    <ul>
+      <li>Payout per visit at least what the colourist earns in the salon for the same time (travel included)</li>
+      <li>Off-peak slots first (weekday mornings)</li>
+      <li>Permits, insurance and transport handled through ServiceMarket</li>
+      <li>In the contract: the client stays the salon's; the salon's name on every booking; the salon sees the scan results (with consent)</li>
+      <li>Non-solicitation, so colourists don't take PRO•GO clients private</li>
+      <li>Weekly payment</li>
+      <li>Starter kit, training and "PRO•GO certified", and a minimum number of bookings during the 90 days</li>
+    </ul>
+    <p><span class="tag a">Team D proposal</span> all terms.</p>
+  </article>
+
+  <article class="panel" id="J"><div class="head"><span class="letter">J</span><h2>Colourist charter</h2></div>
+    <div class="meta"><span>Answers: service quality, repeat visits, safety</span></div>
+    <ul>
+      <li>Paid per 3.5-hour visit block including travel, at a premium over a salon appointment, plus tips; 2–3 home visits a day at most</li>
+      <li>Kit supplied: portable rinse unit, daylight lamp, cape, floor mats, chemical disposal bag</li>
+      <li>Scan, treatment and advice happen while the colour sets</li>
+      <li>Safety: verified addresses, check-in and check-out in the app, a contact line, the right to leave; women clients first</li>
+      <li>Permit and approvals on her phone; patch test 48 hours before (already in the prototype)</li>
+      <li>The hair score is Layla's journey, never the colourist's performance review</li>
+      <li>Two taps in the app per visit; scan under one minute; named in the booking; "PRO•GO certified"</li>
+    </ul>
+  </article>
+
+  <article class="panel" id="K"><div class="head"><span class="letter">K</span><h2>Customer promise (Layla)</h2></div>
+    <div class="meta"><span>Answers: why she says yes, and what would stop her</span></div>
+    <div class="paste-head"><h3>Paste</h3><button class="copy" type="button">Copy</button></div>
+    <div class="paste">Your own colourist, at home, in private. A named backup from the same salon if needed.
+Setup and clean-up included: cape, floor mat, rinse.
+Your score in plain words: colour that lasts, less breakage, shine.
+Your data: you see it, you can delete it anytime.
+Pause or cancel in one message. A WhatsApp check-in at week 4.</div>
+    <p>Why it matters: for many clients in Dubai, privacy and a female professional at home are a stronger reason to buy than convenience alone.</p>
+  </article>
+
+  <article class="panel" id="L"><div class="head"><span class="letter">L</span><h2>Risk register</h2></div>
+    <div class="meta"><span>Answers: peers "a risk they missed" · CEO</span></div>
+    <div class="scroll"><table>
+      <thead><tr><th>Risk</th><th>Likelihood</th><th>Impact</th><th>Mitigation</th><th>Owner</th></tr></thead>
+      <tbody>
+        <tr><td>Salons won't release colourists</td><td>Medium</td><td>High</td><td>Partner-salon offer (I); fall-back rule</td><td>PRO•GO lead</td></tr>
+        <tr><td>Channel conflict with non-partner salons</td><td>Medium</td><td>High</td><td>Client stays the salon's; salon advisory group</td><td>Professional Products ME</td></tr>
+        <tr><td>Colourist takes clients private</td><td>Medium</td><td>Medium</td><td>Non-solicitation; premium home-visit pay</td><td>Partner salon</td></tr>
+        <tr><td>Dependence on ServiceMarket (owned by e& since 2023)</td><td>Medium</td><td>Medium</td><td>Short pilot contract; a second operator on the shortlist (C)</td><td>PRO•GO lead</td></tr>
+        <tr><td>Permit rule differs from our assumption</td><td>Medium</td><td>High</td><td>Verify with Dubai Municipality before launch</td><td>ServiceMarket / legal</td></tr>
+        <tr><td>Liability for colour at home</td><td>Low</td><td>High</td><td>Insurance through ServiceMarket; patch test 48 h before</td><td>ServiceMarket</td></tr>
+        <tr><td>Hair data and consent (UAE data protection)</td><td>Low</td><td>High</td><td>L'Oréal as data controller; consent; delete on request</td><td>L'Oréal legal</td></tr>
+        <tr><td>Scan not reliable enough</td><td>Medium</td><td>Medium</td><td>Calibrate devices; "not a medical measurement"</td><td>L'Oréal R&I</td></tr>
+        <tr><td>Capacity: ~600 visits in 90 days</td><td>Medium</td><td>Medium</td><td>3–5 salons; off-peak slots; cap sign-ups</td><td>PRO•GO lead</td></tr>
+      </tbody></table></div>
+    <p><span class="tag a">Team D judgement</span> likelihood and impact.</p>
+  </article>
+
+  <article class="panel" id="M"><div class="head"><span class="letter">M</span><h2>Salons to approach</h2></div>
+    <div class="meta"><span>Label it clearly: <b>shortlist to approach</b>, not partners</span></div>
+    <ul>
+      <li><b>First wave, in the pilot area:</b> Indi Salon (The Binary, Business Bay) · Eline Beauty Salon (Bay Avenue, Business Bay) · Bobby Pin Ladies Salon (Business Bay) · Le Michel Salons (The Dubai EDITION, Downtown)</li>
+      <li><b>Second wave, for the UAE scale-up:</b> Grand Flora (Jumeirah, Al Mizhar) · Sisters Beauty Lounge (Mall of the Emirates)</li>
+      <li>Left out on purpose: salons tied to a competing colour brand</li>
+    </ul>
+    <p>Sources and details: <code>video/pilot-salons.md</code> in the pro-go repo. Call each salon to confirm colour services and interest in home visits.</p>
+  </article>
+
+  <article class="panel" id="N"><div class="head"><span class="letter">N</span><h2>Sources for the video's numbers</h2></div>
+    <div class="meta"><span>Answers: professor (evidence); the video shows no sources</span></div>
+    <div class="scroll"><table>
+      <thead><tr><th>In the video</th><th>Source</th></tr></thead>
+      <tbody>
+        <tr><td>300 active care clients in 2027 · 40 % second visit within 90 days</td><td>M2 dashboard</td></tr>
+        <tr><td>€3m now, €7m at the Q4 2027 review</td><td>M2 dashboard</td></tr>
+        <tr><td>+10 % income per partner salon by 2030</td><td>M2 dashboard (Team D target)</td></tr>
+        <tr><td>Subscription ≈ AED 1,000 for 12 weeks (900–1,200)</td><td>M3 price target (frame 3), prototype plan screen</td></tr>
+        <tr><td>Go / change / fall back / stop</td><td>M3 frame 4</td></tr>
+        <tr><td>ServiceMarket: Dubai since 2013, 200+ vetted partner companies, salon at home</td><td>Company profile (its own figure)</td></tr>
+        <tr><td>Urban Company and Justlife: their own brand at the door</td><td>Their Dubai salon-at-home pages</td></tr>
+        <tr><td>Layla 58 → 66 → 74</td><td><b>Illustrative</b> (fictional client)</td></tr>
+        <tr><td>Home-visit permit and staff approvals</td><td>BusinessDubai, Gulf News · <b>not yet verified</b> with Dubai Municipality</td></tr>
+      </tbody></table></div>
+  </article>
+
+  <article class="panel" id="O"><div class="head"><span class="letter">O</span><h2>FAQ for peer feedback</h2></div>
+    <div class="meta"><span>Short answers, each pointing to its panel; reuse them in forum replies</span></div>
+    <ul>
+      <li><b>Why not Urban Company?</b> Its brand stands at the door, so the client moves to the app. We need the salon in front. (C)</li>
+      <li><b>Does each visit make money?</b> That is our go rule; the table shows the costs per visit. (G)</li>
+      <li><b>Who owns the client?</b> The salon, by contract. L'Oréal sees the hair data with consent. (I, K)</li>
+      <li><b>90 days but "two missed reviews"?</b> Reviews are monthly during the pilot. (H)</li>
+      <li><b>Why Dubai first?</b> Home services are already common, salons are dense, and the M1–M3 work chose the Middle East market.</li>
+      <li><b>Is the score valid?</b> Not a medical measurement; Layla's numbers are illustrative; the pilot measures real change. (F, L)</li>
+    </ul>
+  </article>
+
+  <article class="panel" id="P"><div class="head"><span class="letter">P</span><h2>AI disclosure</h2></div>
+    <div class="paste-head"><h3>Paste</h3><button class="copy" type="button">Copy</button></div>
+    <div class="paste">AI use in the M4 video: Claude (script drafting, editing pipeline, graphics), Gemini Omni Flash (Layla scenes, no faces), Lyria (music), Gemini speech (Layla's voice), Descript (Studio Sound for some voices). Layla is a fictional composite; her scores are illustrative. Full log: video/ai-log.md in the pro-go repo.</div>
+  </article>
+
+  <section class="box" aria-labelledby="also">
+    <h2 id="also">Also outstanding on the M3 frames</h2>
+    <ul>
+      <li>Frame 3: visits per subscriber per year 4 → <b>6</b> (fits the 8-week colour cycle and the €3m itemisation)</li>
+      <li>The "Beauty Genius" and gate / review wording, as listed in <code>video/consistency-m2-m3-m4.md</code></li>
+    </ul>
+  </section>
+
+  <footer>Team D · student project for IE Business School; not affiliated with L'Oréal or ServiceMarket. Prepared 9 Nov 2026.</footer>
+</div>
+
+<script>
+document.querySelectorAll('button.copy').forEach(function (b) {
+  b.addEventListener('click', function () {
+    var box = b.closest('.paste-head').nextElementSibling, text = box.innerText;
+    function done(ok) { b.textContent = ok ? 'Copied' : 'Select and copy'; setTimeout(function () { b.textContent = 'Copy'; }, 1800); }
+    function fallback() { var r = document.createRange(); r.selectNodeContents(box); var s = window.getSelection(); s.removeAllRanges(); s.addRange(r); done(false); }
+    try { navigator.clipboard.writeText(text).then(function () { done(true); }, fallback); } catch (e) { fallback(); }
+  });
+});
+</script>

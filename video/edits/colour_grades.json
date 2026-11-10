@@ -1,0 +1,8 @@
+{
+ "Amjad": "colorlevels=rimin=0.000:gimin=0.000:bimin=0.000,colorbalance=rs=-0.015:gs=0.003:bs=-0.013:rm=-0.008:bm=-0.006,eq=gamma=1.000:contrast=1.020:saturation=0.860",
+ "Ariel": "colorbalance=rs=-0.015:bs=0.015:rm=-0.01,eq=gamma=1.04:contrast=1.02:saturation=0.92",
+ "Qhakazile": "colorlevels=rimin=0.071:gimin=0.071:bimin=0.071,colorbalance=rs=-0.043:gs=-0.003:bs=-0.015:rm=-0.022:bm=-0.008,eq=gamma=1.160:contrast=1.020:saturation=1.220",
+ "Rebecca": "colorlevels=rimin=0.002:gimin=0.002:bimin=0.002,colorbalance=rs=-0.061:gs=0.009:bs=-0.045:rm=-0.030:bm=-0.022,eq=gamma=1.000:contrast=1.020:saturation=0.943",
+ "Saja": "colorlevels=rimin=0.015:gimin=0.015:bimin=0.015,colorchannelmixer=rr=1.045:gg=0.975:bb=0.985,eq=gamma=0.98:contrast=1.06:saturation=1.08",
+ "Ignacio": "colorlevels=rimin=0.036:gimin=0.036:bimin=0.036,colorbalance=rs=-0.062:gs=0.000:bs=-0.031:rm=-0.031:bm=-0.015,eq=gamma=1.000:contrast=1.020:saturation=0.884"
+}

@@ -32,6 +32,7 @@ def spaced(draw, xy, text, fnt, fill, tracking, anchor_center=False):
     return total
 
 def fade_text(img, xy, text, fnt, color, bg, a, anchor="la", dy=0):
+    if a <= 0: return                 # not yet visible: drawing it in the background colour would erase anything underneath
     d = ImageDraw.Draw(img)
     d.text((xy[0], xy[1] + (1 - a) * dy), text, font=fnt, fill=mix(bg, color, a), anchor=anchor)
 
@@ -62,7 +63,7 @@ def chapter(t, week="Week 0", n="1", title="The problem"):
     rw = 160 * ease((t - 0.8) / 0.6)
     d.rectangle([160, 610, 160 + rw, 612], fill=GOLD)
     a3 = ease((t - 1.0) / 0.6)
-    fade_text(img, (160, 650), title, font(SANS, 56), MUTED, IVORY, a3, dy=10)
+    fade_text(img, (160, 650), title, font(SANS, 56), mix(MUTED, INK, 0.55), IVORY, a3, dy=10)
     out = clamp((t - 2.6) / 0.4)
     if out > 0: img = Image.blend(img, Image.new("RGB", (W, H), IVORY), out)
     return img
@@ -97,10 +98,12 @@ def score(t):
     r = 13
     ex, ey = X(wk), Y(s)
     d.ellipse([ex - r, ey - r, ex + r, ey + r], fill=GOLD)
+    a5 = ease((t - 4.0) / 0.6)                  # what the score stands for
+    d.text((160, 730), "colour that lasts  ·  less breakage  ·  shine", font=font(SANS, 34), fill=mix(IVORY, GOLD_TXT, a5))
     a4 = ease((t - 4.4) / 0.6)
     d.text((160, 900), "Illustrative. The pilot will test whether this improvement is real.",
            font=font(SANS, 32), fill=mix(IVORY, MUTED, a4))
-    out = clamp((t - 5.6) / 0.4)
+    out = clamp((t - 5.9) / 0.4)
     if out > 0: img = Image.blend(img, Image.new("RGB", (W, H), IVORY), out)
     return img
 
@@ -193,3 +196,24 @@ if __name__ == "__main__":
         score(5.0).save(os.path.join(out, "s3.png"))
     else:
         for n, fn, dur in SCENES: render(out, n, fn, dur); print("done", n)
+
+# ---------- text check (v17): every drawn line must fit inside its image and use only characters the font has ----------
+import atexit
+from fontTools.ttLib import TTFont as _TTF
+_CMAPS, TEXT_ISSUES = {}, []
+_orig_text = ImageDraw.ImageDraw.text
+def _checked_text(self, xy, text, fill=None, font=None, anchor=None, *a, **k):
+    if font is not None and isinstance(text, str) and hasattr(font, "path"):
+        cm = _CMAPS.get(font.path) or _CMAPS.setdefault(font.path, set(_TTF(font.path).getBestCmap()))
+        miss = sorted({c for c in text if c.strip() and ord(c) not in cm})
+        if miss: TEXT_ISSUES.append(f"missing glyph {miss} in {os.path.basename(font.path)}: {text!r}")
+        try:
+            l, t, r, b = self.textbbox(xy, text, font=font, anchor=anchor)
+            W, H = self.im.size
+            if l < 0 or r > W or b > H: TEXT_ISSUES.append(f"overflow ({l:.0f}-{r:.0f} of {W}): {text!r}")
+        except Exception: pass
+    return _orig_text(self, xy, text, fill, font, anchor, *a, **k)
+ImageDraw.ImageDraw.text = _checked_text
+@atexit.register
+def _report():
+    if TEXT_ISSUES: print("TEXT CHECK:", len(set(TEXT_ISSUES)), "issue(s)\n  " + "\n  ".join(sorted(set(TEXT_ISSUES))))

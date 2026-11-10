@@ -9,7 +9,7 @@ export default function ColouristHome() {
   const [open, setOpen] = useState<string | null>(null);
   const variant = priceVariants.find((v) => v.id === state.variantId) ?? priceVariants[0];
   const mayaPlan = plansFor(variant).find((p) => p.id === state.plan)!;
-  const mayaAlert = state.alerts.find((a) => a.customer === 'Maya');
+  const mayaAlert = state.alerts.find((a) => a.customer === 'Layla');
 
   return (
     <Screen>

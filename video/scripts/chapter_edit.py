@@ -7,14 +7,15 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from PIL import Image, ImageDraw
 import render as R
 
-TAKE, CROPX = "out/speakers/M4_S2_Ariel_take1_edit.mp4", 650
+TAKE, CROPX = "out/speakers/M4_S2_Ariel_take2_v17.mp4", 552   # v17: false start before "Urban Company" cut (30.62-31.02 s of the graded take)
+PUNCH0 = 30.62                                                    # the cut: Ariel's half steps in 6 % from here to the next card change   # take 2 (8 Nov, script v3): IMG_2880 trimmed 10.6-92.0 s, 8% faster, pitch kept
 OUT = "out/edits"; TMP = os.path.join(OUT, "ch2_parts"); os.makedirs(TMP, exist_ok=True)
 ENC = ["-c:v", "libx264", "-crf", "20", "-preset", "veryfast", "-pix_fmt", "yuv420p", "-r", "30", "-an"]
 def ff(*a): subprocess.run(["ffmpeg", "-y", "-loglevel", "error", *a], check=True)
 def length(p): return float(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", p], capture_output=True, text=True).stdout)
 
 # ---------- cut points: quietest 20 ms between the chosen sentences ----------
-S = json.load(open("edits/ch2_sentences.json")); T = length(TAKE)
+S = json.load(open("edits/ch2_take2_v17_sentences.json")); T = length(TAKE)
 raw = subprocess.run(["ffmpeg", "-loglevel", "error", "-i", TAKE, "-vn", "-ac", "1", "-ar", "16000", "-f", "s16le", "-"], capture_output=True).stdout
 pcm = array.array("h", raw); hop = 320
 env = [math.sqrt(sum(x * x for x in pcm[i:i + hop]) / hop) for i in range(0, len(pcm) - hop, hop)]
@@ -65,8 +66,8 @@ def c_roles():
 def c_bigapps():
     img, d = card(); label(d, 280, "THE TWO BIG BEAUTY APPS", MUTED)
     d.text((160, 330), "Urban Company\nJustlife", font=R.font(R.SERIF, 76), fill=MUTED, spacing=16)
-    d.text((160, 560), "send their own staff to your door", font=R.font(R.SANS, 34), fill=MUTED)
-    arrow(d, 160, 680); d.text((240, 655), "would replace the salon", font=R.font(R.SANS_M, 38), fill=R.INK)
+    d.text((160, 560), "their own brand at your door", font=R.font(R.SANS, 40), fill=MUTED)
+    arrow(d, 160, 680); d.text((240, 655), "the client moves to the app", font=R.font(R.SANS_M, 38), fill=R.INK)
     d.line([(160, 820), (800, 820)], fill=HAIR, width=2)
     return img
 def c_other_way():
@@ -84,28 +85,58 @@ def c_test():
     d.text((160, 690), "That's why we chose it.", font=R.font(R.SANS, 36), fill=MUTED)
     return img
 
+CRITERIA = ["Runs home visits in Dubai today", "Works through salons, not around them", "Makes the salon stronger"]
+def c_crit(k):
+    """The three partner-selection criteria: k = 0 all listed, 1-3 the one he is asking, 4 all three ticked."""
+    def draw():
+        img, d = card(); label(d, 250, "OUR PARTNER CRITERIA")
+        for i, t in enumerate(CRITERIA):
+            y = 330 + i * 130; on = k == i + 1 or k == 4
+            col = INK if on else (140, 134, 126)
+            if k == 4: tick(d, 162, y + 16, M4C, 38)                   # ticked: the tick takes the number's place
+            else: d.text((160, y), f"{i + 1}", font=R.font(R.SERIF, 64), fill=GOLD if on else col)
+            d.text((230, y + 10), t, font=R.font(R.SANS_M if i == 2 else R.SANS, 41), fill=col)
+        if k == 4:
+            d.rectangle([160, 740, 220, 742], fill=GOLD); wordmark(d, (160, 775), 44, M4C)
+            d.text((160, 845), "passes all three", font=R.font(R.SANS, 40), fill=MUTED)
+        return img
+    draw.__name__ = f"c_crit{k}"; return draw
+
 def line_overlay(text):   # Layla's on-screen line, same style as the animatic
     img = Image.new("RGBA", (1920, 1080), (0, 0, 0, 0)); d = ImageDraw.Draw(img)
     f = R.font(R.SERIF, 40); w = d.textlength(text, font=f)
     d.rectangle([140, 830, 140 + w + 40, 905], fill=R.IVORY + (235,)); d.text((160, 843), text, font=f, fill=INK)
     return img
 
+# ---------- full-screen moment: "behind that message sits ServiceMarket ... since 2013" ----------
+import portrait_edit as PE
+PE.SHADE = PE.shade_png()
+def full_behind(dur, t_line):
+    return PE.full_seq("full_behind", [(PE.L.format("2c"), 0.0, dur)], dur,
+                       [(0.2, dur, PE.type_png("ty_behind.png", "BEHIND THE MESSAGE", "ServiceMarket", None)),
+                        (t_line, dur, PE.type_png("ty_behind_l.png", "", "", "home services in Dubai since 2013"))])
+
 # ---------- segments ----------
-c = {k: cut_after(k) for k in (0, 1, 2, 3, 5, 6, 8, 10, 13, 15, 17)}
-PLAN = [  # (start, end, kind, source)
+c = {k: cut_after(k) for k in (0, 2, 3, 4, 6, 8, 9, 12, 14, 16, 17, 18, 19, 21)}
+BEHIND = full_behind(round(c[4] - c[2] + 1.0, 2), round(c[3] - c[2], 2))
+PLAN = [  # (start, end, kind, source); sentence numbers in edits/ch2_take2_sentences.json
     (0, c[0], "layla", ("out/layla/layla_2.mp4", "Wednesday, 18:00. Dana, from my salon.")),
-    (c[0], c[1], "split", "out/p3_booking_confirmation.mp4"),
-    (c[1], c[2], "split", c_behind), (c[2], c[3], "split", c_2013), (c[3], c[5], "split", c_200),
-    (c[5], c[6], "ariel", None),
-    (c[6], c[8], "split", c_roles), (c[8], c[10], "split", c_bigapps), (c[10], c[13], "split", c_other_way),
-    (c[13], c[15], "layla", ("out/layla/layla_3g.mp4", None)),
-    (c[15], c[17], "ariel", None),
-    (c[17], T, "split", c_test),
+    (c[0], c[2], "split", "out/p3_booking_confirmation.mp4"),          # "she thinks she's talking to her salon, and she is"
+    (c[2], c[4], "layla", (BEHIND, None)),                              # full screen with type, same style as chapter 4
+    (c[4], c[6], "split", c_200),
+    (c[6], c[8], "split", c_roles),                                     # booking, payment; adds insurance and permits
+    (c[8], c[9], "ariel", None),                                        # "That's the capability we're missing."
+    (c[9], c[12], "split", c_bigapps), (c[12], c[14], "split", c_other_way),
+    (c[14], c[16], "layla", ("out/layla/layla_3g_slow.mp4", None)),     # "if Layla ever feels ..." (3g at 93 % speed: fills the 9.6 s)
+    (c[16], c[17], "split", c_crit(0)), (c[17], c[18], "split", c_crit(1)), (c[18], c[19], "split", c_crit(2)),
+    (c[19], c[21], "ariel", None),                                      # [LENS] "and the one that decides it: ..."
+    (c[21], T, "split", c_crit(4)),                                     # "ServiceMarket passes all three. That's why them."
 ]
 XF = 0.6                      # transition length (s)
 FPS = 30
 def fr(t): return round(t * FPS) / FPS          # snap times to whole frames
 PLAN = [(fr(a), fr(b), k, src) for a, b, k, src in PLAN]
+json.dump([[a, b, k] for a, b, k, _ in PLAN if k in ("layla", "ariel")], open("edits/fulls_ch2.json", "w"))   # for captions
 SHIFT = 960 - CROPX                             # in the split, take pixel x appears at x + SHIFT
 
 def vis(n, t0, dur, out):
@@ -127,7 +158,10 @@ def vis(n, t0, dur, out):
         left = ["-loop", "1", "-t", f"{dur:.3f}", "-i", p]; lf = "[0:v]fps=30[l]"
     else:
         left = ["-stream_loop", "-1", "-ss", f"{rel:.3f}", "-i", src]; lf = "[0:v]fps=30,scale=960:1080,setpts=PTS-STARTPTS[l]"
-    fc = f"{lf};[1:v]fps=30,crop=960:1080:{CROPX}:0[r];[l][r]hstack=inputs=2[v]"; ins, last = left + right, "v"
+    k = f"if(between(t+{t0:.3f},{PUNCH0},{c[12]}),1.06,1)"            # punch-in hides the jump cut
+    rf = (f"[1:v]fps=30,scale=w='trunc(1920*{k}/2)*2':h=-2:eval=frame,"
+          f"crop=960:1080:x='({CROPX}+480)*iw/1920-480':y='(ih-1080)*0.35',setsar=1[r]")
+    fc = f"{lf};{rf};[l][r]hstack=inputs=2[v]"; ins, last = left + right, "v"
     if n == 1:   # first time we see Ariel: lower third
         ins += ["-loop", "1", "-i", "out/lower_thirds/LT_S2_Ariel.png"]
         fc += f";[v][2:v]overlay=0:0:enable='between(t,{0.3 - rel:.2f},{4.2 - rel:.2f})'[v2]"; last = "v2"

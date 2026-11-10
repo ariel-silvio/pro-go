@@ -4,7 +4,7 @@ import json, os, re
 HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.dirname(HERE)
 t = open(os.path.join(ROOT, "script.md"), encoding="utf-8").read()
 WEEKS = ["Week 0", "Week 1", "Week 2", "Week 4", "Week 10", "Week 12"]
-NAMES = {"SAJA ALOWAYSHIQ": "Saja AlOwayshiq", "ARIEL DE SILVIO": "Ariel De Silvio"}
+NAMES = {"SAJA ALOWAYSHIQ": "Saja Alowayshiq", "ARIEL DE SILVIO": "Ariel de Silvio"}
 parts, chunks = [], re.split(r"\*\*([A-Z ]+) · (Chief[^*]+)\*\*[^\n]*\n", t)[1:]
 for k in range(0, len(chunks), 3):
     name, role, body = chunks[k], chunks[k + 1].strip(), chunks[k + 2].split("\n---")[0]

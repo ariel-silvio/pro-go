@@ -10,7 +10,7 @@ export interface ScreenMeta {
 
 export const customerScreens: ScreenMeta[] = [
   { id: 'S1', path: '/customer/invite', title: 'Invite from her salon',
-    seeing: "Maya's own salon invites her to PRO•GO Colour Plan and introduces the colourist who will visit her.",
+    seeing: "Layla's own salon invites her to PRO•GO Colour Plan and introduces the colourist who will visit her.",
     tests: 'A salon-routed invitation, with her own colourist, feels trustworthy.' },
   { id: 'S2', path: '/customer/scan', title: 'Free hair scan (simulated)',
     seeing: 'Three illustrative capture steps. No camera is used.',
@@ -44,13 +44,13 @@ export const otherScreens: ScreenMeta[] = [
   { id: 'Colourist', path: '/colourist', title: "Dana's day",
     seeing: "The colourist's view: today's home visits with first names only, the last scan, local notes and a step-by-step visit checklist.",
     tests: 'A salon colourist can run home visits with a simple checklist, inside the manual MVP.',
-    note: "Maya's card follows the customer demo: plan, patch test and a flag if her result did not improve." },
+    note: "Layla's card follows the customer demo: plan, patch test and a flag if her result did not improve." },
   { id: 'Salon', path: '/salon', title: 'Partner salon dashboard',
     seeing: 'The salon owner invites consenting clients, checks which colourists hold a home-service permit, sets its revenue share and watches cannibalisation.',
     tests: 'Salons see PRO•GO as extra income, not as a rival for their chairs.',
     note: 'Untick a permit to see a colourist blocked from home visits: this is the Dubai permit risk. Set S7 to Flat or Worse to see the alert.' },
   { id: 'CEO', path: '/ceo', title: 'CEO scoreboard',
-    seeing: 'The six board KPIs with their targets, and a calculator for margin per visit, the riskiest number.',
+    seeing: 'The seven board KPIs with their targets, and a calculator for margin per visit, the riskiest number.',
     tests: 'A visit at about AED 500 leaves a positive margin per visit after paying the salon, travel and products.',
     note: 'Targets only by default. "Show simulated demo data" fills the tiles with invented values under a SIMULATED watermark.' },
 ];

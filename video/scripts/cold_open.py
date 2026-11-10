@@ -11,9 +11,9 @@ ENC = ["-c:v", "libx264", "-crf", "20", "-preset", "veryfast", "-pix_fmt", "yuv4
 def ff(*a): subprocess.run(["ffmpeg", "-y", "-loglevel", "error", *a], check=True)
 L = "out/layla/layla_{}.mp4"
 DUR, XF, PANEL, SHIFT = 15.0, 0.5, 640, 320
-MOVE_AT, MOVE = 11.0, 0.7                     # panel slides out, horizon goes full screen
-LINES = [(0.4, 2.6, "Layla. 34. Dubai."), (3.0, 6.9, "Every eight weeks, she colours her hair."),
-         (7.4, 10.7, "No one has ever measured what it does to it.")]
+MOVE_AT, MOVE = 10.8, 1.8                     # panel slides out slowly (eased), horizon goes full screen
+LINES = [(0.4, 3.0, "Layla. 34. Dubai."), (3.2, 6.8, "Every eight weeks, I colour my hair."),   # the text follows her voice (first person)
+         (7.0, 10.8, "And every time, I wonder what it's really doing to it.")]
 
 # 1) picture: three clips with dissolves (15.0 s)
 clips = [(L.format("0a"), 1.6, 4.45), (L.format("0b"), 3.9, 8.55), (L.format("0c"), 1.5, 10.0)]   # 0a from 1.6 s: before that her face shows in the mirror
@@ -39,7 +39,8 @@ def title_png():
     R.spaced(d, (960, 380), "L'ORÉAL GROUPE  ·  TEAM D", R.font(R.SANS_M, 26), R.GOLD_TXT, 7, True)
     d.text((960, 480), "12 weeks with Layla", font=R.font(R.SERIF, 112), fill=R.INK, anchor="mm")
     d.rectangle([850, 575, 1070, 577], fill=R.GOLD)
-    d.text((960, 640), "PRO•GO  ·  A proposal to the CEO", font=R.font(R.SANS, 38), fill=R.INK, anchor="mm")
+    d.text((960, 640), "Our recommendation: a 90-day pilot with ServiceMarket in Dubai", font=R.font(R.SANS, 40), fill=R.INK, anchor="mm")
+    d.text((960, 700), "PRO•GO  ·  a proposal to the CEO", font=R.font(R.SANS, 28), fill=R.MUTED, anchor="mm")
     p = os.path.join(TMP, "title.png"); img.save(p); return p
 
 P = f"(st(0,clip((t-{MOVE_AT})/{MOVE},0,1));ld(0)*ld(0)*(3-2*ld(0)))"   # smoothstep 0..1 during the move
@@ -53,8 +54,8 @@ for n, (a, b, text) in enumerate(LINES):
     fc.append(f"[{k}:v]format=rgba,fade=in:st={a}:d=0.45:alpha=1,fade=out:st={b - 0.45}:d=0.45:alpha=1[l{n}]")
     fc.append(f"[{last}][l{n}]overlay=0:0[m{k}]"); last, k = f"m{k}", k + 1
 ins += ["-loop", "1", "-t", str(DUR), "-i", title_png()]
-fc.append(f"[{k}:v]format=rgba,fade=in:st={MOVE_AT + MOVE + 0.1}:d=0.9:alpha=1[tt]")
-fc.append(f"[{last}][tt]overlay=0:0,format=yuv420p[v]")
+fc.append(f"[{k}:v]format=rgba,fade=in:st={MOVE_AT + MOVE * 0.6:.2f}:d=1.0:alpha=1[tt]")
+fc.append(f"[{last}][tt]overlay=0:0,fade=in:st=0:d=1.6,format=yuv420p[v]")   # out of black: the film starts quietly
 pic = os.path.join(OUT, "cold_open_picture.mp4")
 ff(*ins, "-filter_complex", ";".join(fc), "-map", "[v]", "-t", str(DUR), *ENC, pic)
 

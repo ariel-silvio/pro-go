@@ -37,6 +37,9 @@ export function secondScan(s: Scenario): Scan {
   };
 }
 
+// Week 12: Layla re-scans at home with the app (film: 58 -> 66 -> 74). Only when the visit result improved.
+export const weekTwelveScan = { index: 74, takenAt: '2027-07-07', label: '7 Jul' };
+
 export const metrics: { key: MetricKey; label: string; line: string }[] = [
   { key: 'moisture', label: 'Moisture', line: 'How much water your hair holds. Low often feels dry at the ends.' },
   { key: 'strength', label: 'Strength', line: 'How well strands hold up to brushing and styling.' },
@@ -66,7 +69,7 @@ export const colourists = [
   { id: 'lina', name: 'Lina', initial: 'L', salon: 'aurora', permitDefault: false },
 ];
 
-export const customer = { name: 'Maya', age: 34, area: 'Business Bay', cycleWeeks: 8 };
+export const customer = { name: 'Layla', age: 34, area: 'Business Bay', cycleWeeks: 8 };
 
 // First visit slots, April 2027 (pilot runs from Q2 2027). Dates checked against the calendar.
 export const slots: Slot[] = [
@@ -114,18 +117,18 @@ export function aiNotes(scan: Scan, cycleWeeks = customer.cycleWeeks): string[] 
 
 // ---------- Phase 2: colourist, salon and CEO views ----------
 
-// Dana's day. Maya's card reads live demo state; the other two are fixed.
+// Dana's day. Layla's card reads live demo state; the other two are fixed.
 export const todaysVisits = [
   { id: 'v-hala', time: '10:00', customer: 'Hala', area: 'Downtown Dubai', service: 'Essential: roots touch-up + treatment', scan: 64, note: 'Prefers ammonia-free colour.' },
   { id: 'v-sara', time: '14:00', customer: 'Sara', area: 'Business Bay', service: 'Signature: balayage touch-up + treatment', scan: 71, note: 'Second visit of her plan.' },
-  { id: 'v-maya', time: '18:00', customer: 'Maya', area: 'Business Bay', service: '', scan: firstScan.index, note: 'First visit. Low moisture.' },
+  { id: 'v-maya', time: '18:00', customer: 'Layla', area: 'Business Bay', service: '', scan: firstScan.index, note: 'First visit. Low moisture.' },
 ];
 
 export const visitSteps = ['Scan', 'Colour', 'Treatment', 'Re-scan', 'Book next visit'];
 
 // Salon Aurora's client records (fictional). Only clients who agreed to be contacted can be invited.
 export const salonClients = [
-  { id: 'c-maya', name: 'Maya', lastVisit: '3 Mar 2027', cycleWeeks: 8, consent: true, active: true },
+  { id: 'c-maya', name: 'Layla', lastVisit: '3 Mar 2027', cycleWeeks: 8, consent: true, active: true },
   { id: 'c-hala', name: 'Hala', lastVisit: '10 Mar 2027', cycleWeeks: 6, consent: true, active: true },
   { id: 'c-sara', name: 'Sara', lastVisit: '24 Feb 2027', cycleWeeks: 10, consent: true, active: true },
   { id: 'c-noura', name: 'Noura', lastVisit: '17 Mar 2027', cycleWeeks: 8, consent: true, active: false },
@@ -155,6 +158,8 @@ export const kpis: Kpi[] = [
     definition: 'Share of customers who book a second at-home PRO•GO visit within 90 days, instead of going back to the salon chair.', sim: '43%', simOnTrack: true },
   { id: 'margin', name: 'Margin per visit', target: 'Positive by Q4 2027', later: 'Checked at the Q4 2027 review',
     definition: 'Visit price minus pay to the partner salon, travel and products.', sim: 'AED +125', simOnTrack: true },
+  { id: 'score', name: 'Hair score change', target: '+5 points or more in 12 weeks', later: 'Tracked every week in the pilot',
+    definition: 'Average change in the Hair Health Index from the first scan to the week-12 scan at home.', sim: '+7', simOnTrack: true },
   { id: 'retention', name: '90-day subscription retention', target: '60% or more by end 2028', later: '',
     definition: 'Share of subscribers who renew their 90-day plan.', sim: '58%', simOnTrack: false },
   { id: 'newsalon', name: 'New-to-salon customers', target: '30% of PRO•GO clients', later: '2028 review',
