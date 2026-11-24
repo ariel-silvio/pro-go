@@ -106,11 +106,11 @@ export default function SalonHome() {
         <Card>
           <label className="block">
             <span className="flex justify-between text-sm"><span className="t-card-title">Salon share</span><span>{sharePct}%</span></span>
-            <input type="range" min={20} max={60} step={1} value={sharePct}
+            <input type="range" min={40} max={90} step={1} value={sharePct}
               onChange={(e) => dispatch({ type: 'setShare', value: Number(e.target.value) / 100 })}
               className="mt-2 h-11 w-full accent-[var(--ink)]" aria-valuetext={`${sharePct} percent`} />
           </label>
-          <p className="text-sm">On a {aed(price)} visit ({state.plan === 'essential' ? 'Essential' : 'Signature'}, price variant {variant.id}) the salon receives <span className="t-card-title">{aed(Math.round(price * share))}</span>.</p>
+          <p className="text-sm">On a {aed(price)} visit (half of the AED 1,000 Colour Plan) the salon receives <span className="t-card-title">{aed(Math.round(price * share))}</span>.</p>
           {sharePct !== Math.round(CONFIG.SALON_SHARE_DEFAULT * 100) && <p className="t-source mt-1 text-muted">Default: {Math.round(CONFIG.SALON_SHARE_DEFAULT * 100)}%</p>}
         </Card>
         <Card>

@@ -8,7 +8,7 @@ export const CONFIG = {
   SHOW_EUR: true, // open item: AED only, or AED plus euro
   PILOT_CITY: 'Dubai',
   PILOT_COMMUNITIES: ['Downtown Dubai', 'Business Bay'], // D14 proposed, confirm
-  SALON_SHARE_DEFAULT: 0.35,
+  SALON_SHARE_DEFAULT: 0.7, // option A: 70% salon, 30% L'Oréal
   STORAGE_KEY: 'progo-demo-v1',
 };
 

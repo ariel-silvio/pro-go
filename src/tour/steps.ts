@@ -19,7 +19,7 @@ export const tourSteps: TourStep[] = [
   { path: '/customer/result', seconds: 17, target: 'index',
     caption: 'Hair Health Index 58 out of 100, with four sub-scores and a rule-based note. Not a medical measurement.' },
   { path: '/customer/plan', seconds: 25, target: 'plans',
-    caption: 'One price for a 90-day plan with two home visits. Visitors see one of three price variants. "Reserve my place" is a fake door: no payment.' },
+    caption: 'One price: AED 1,000 for a 12-week plan with two home visits, scans and a care kit. "Reserve my place" is a fake door: no payment.' },
   { path: '/customer/slot', seconds: 15, target: 'chat',
     enter: (d) => d({ type: 'chooseSlot', slotId: 's2' }),
     caption: 'She books the same colourist. The salon confirms by chat, with a patch-test reminder 48 h before.' },
@@ -37,17 +37,17 @@ export const tourSteps: TourStep[] = [
   { path: '/ceo', seconds: 25, target: 'calc',
     enter: (d) => d({ type: 'resetCalc' }),
     run: (d) => {
-      // After 6 s, lower the price from AED 500 to 360 so the margin crosses break-even (AED 375).
+      // After 6 s, lower the price from AED 500 to 420 so the margin crosses break-even (AED 434).
       let price = 500;
       let iv: ReturnType<typeof setInterval> | undefined;
       const t = setTimeout(() => {
         iv = setInterval(() => {
           price -= 10;
           d({ type: 'setCalc', key: 'price', value: price });
-          if (price <= 360 && iv) clearInterval(iv);
+          if (price <= 420 && iv) clearInterval(iv);
         }, 700);
       }, 6000);
       return () => { clearTimeout(t); if (iv) clearInterval(iv); };
     },
-    caption: 'The CEO view: targets for the Q4 2027 review, and the margin per visit. Below about AED 375 a visit loses money.' },
+    caption: 'The CEO view: targets for the Q4 2027 review, and the margin per visit. Below about AED 435 a visit loses money for L’Oréal.' },
 ];

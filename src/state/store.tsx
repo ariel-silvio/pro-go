@@ -84,7 +84,7 @@ function reducer(state: DemoState, a: Action): DemoState {
     case 'toggleSim': return { ...state, showSim: !state.showSim };
     case 'setCalc': return { ...state, calc: { ...state.calc, [a.key]: a.value } };
     case 'resetCalc': return { ...state, calc: { ...calcDefaults } };
-    // Clean state for the guided tour and recorded demo: always price variant v1 (AED 450/600).
+    // Clean state for the guided tour and recorded demo: the single AED 1,000 plan.
     case 'demoReset': return { ...initialState(), variantId: 'v1' };
   }
 }

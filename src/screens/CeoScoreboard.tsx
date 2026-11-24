@@ -6,9 +6,9 @@ import { useStore } from '../state/store';
 type CalcKey = keyof typeof calcDefaults;
 const inputs: { key: CalcKey; label: string; min: number; max: number; step: number; unit: 'aed' | 'n' }[] = [
   { key: 'price', label: 'Price per visit', min: 350, max: 700, step: 10, unit: 'aed' },
-  { key: 'salonPay', label: 'Pay to partner salon (professional time and salon share)', min: 100, max: 400, step: 5, unit: 'aed' },
-  { key: 'travel', label: 'Travel', min: 0, max: 150, step: 5, unit: 'aed' },
-  { key: 'products', label: 'Products', min: 0, max: 200, step: 5, unit: 'aed' },
+  { key: 'salonPay', label: 'Partner salon share (colourist time, travel and products)', min: 200, max: 450, step: 5, unit: 'aed' },
+  { key: 'travel', label: 'Operator fee (booking, payment, insurance, permits)', min: 0, max: 150, step: 2, unit: 'aed' },
+  { key: 'products', label: 'Other L’Oréal costs per visit', min: 0, max: 200, step: 5, unit: 'aed' },
   { key: 'visitsPerDay', label: 'Visits per day per colourist', min: 1.5, max: 4, step: 0.5, unit: 'n' },
 ];
 
@@ -58,7 +58,7 @@ function MarginCalculator() {
         </dl>
         <p className="t-card-body mt-3">Per colourist day ({c.visitsPerDay} visits): <span className="t-card-title">{margin >= 0 ? '+' : '−'}{aed(Math.round(Math.abs(margin * c.visitsPerDay)))}</span></p>
       </div>
-      <Note>Roots-only visits at AED 150 to 420 in salons would not cover this. That is why the pilot bundles colour with a treatment and a scan. Team D break-even estimate: about AED 420 to 500 or more per visit (LOW).</Note>
+      <Note>Option A: the salon keeps 70% and covers colourist time, travel and products; L’Oréal keeps 30% and pays the operator fee. At AED 500 a visit, L’Oréal keeps about AED 66 (about €16), or about €31 per 12-week plan, before fixed costs.</Note>
       <button type="button" className={btnSecondary} onClick={() => dispatch({ type: 'resetCalc' })}>Reset to Team D defaults</button>
     </section>
   );
@@ -127,7 +127,7 @@ export default function CeoScoreboard() {
               <tr className="border-t border-ink"><td className="t-card-title px-3 py-2">Total</td><td className="t-card-title px-3 py-2 text-right">{total.toLocaleString('en-GB')}</td></tr>
             </tbody>
           </table>
-          <p className="t-source px-3 pb-3 text-muted">Team D assumptions, LOW confidence.</p>
+          <p className="t-source px-3 pb-3 text-muted">Team D plan, approved 24 Nov 2026. The direct pilot is up to EUR 150k; about EUR 1.2m is released only if the pilot passes the Q4 2027 review.</p>
         </div>
       </details>
     </Screen>

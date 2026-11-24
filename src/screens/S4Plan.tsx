@@ -23,7 +23,7 @@ export default function S4Plan() {
     <Screen>
       <Steps current={4} />
       <div>
-        <Label>Your 90-day plan</Label>
+        <Label>Your 12-week plan</Label>
         <Headline>Two home visits, one result you can see</Headline>
       </div>
       <ol className="flex flex-col gap-2 text-sm leading-relaxed">
@@ -33,7 +33,7 @@ export default function S4Plan() {
       </ol>
 
       <fieldset data-tour="plans" className="flex flex-col gap-3">
-        <legend className="t-label mb-2 text-muted">Choose a plan</legend>
+        <legend className="t-label mb-2 text-muted">Your plan</legend>
         {plans.map((p) => {
           const selected = state.plan === p.id;
           return (
@@ -52,14 +52,13 @@ export default function S4Plan() {
               </ul>
               <div className="mt-4 border-t border-hairline pt-3">
                 <p className="t-card-title">
-                  {aed(p.priceAED * p.visits)} <span className="font-normal text-muted">per 90-day plan</span>
+                  {aed(p.priceAED * p.visits)} <span className="font-normal text-muted">per 12-week plan</span>
                 </p>
                 {CONFIG.SHOW_EUR && <p className="t-source text-muted">about {eur(p.priceAED * p.visits)}</p>}
                 <p className="t-source mt-1 text-muted">
-                  Subscription, renews every 90 days. Includes {p.visits} home visits <span className="whitespace-nowrap">(about {aed(p.priceAED)} each)</span>.
+                  Subscription, renews every 12 weeks. Includes {p.visits} home visits <span className="whitespace-nowrap">(about {aed(p.priceAED)} each)</span>.
                 </p>
               </div>
-              <p className="t-source mt-2 text-right text-muted"><span className="sr-only">Price variant </span>{variant.id}</p>
             </label>
           );
         })}

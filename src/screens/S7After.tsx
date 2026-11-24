@@ -36,7 +36,7 @@ export function NextVisitActions() {
         : <button type="button" className={btnPrimary} onClick={() => dispatch({ type: 'bookNext' })}>Book my next visit · {nextVisit.label}</button>}
       {state.renewed
         ? <Note>Plan renewal noted. No payment in this prototype.</Note>
-        : <button type="button" className={btnSecondary} onClick={() => dispatch({ type: 'renew' })}>Renew my 90-day plan</button>}
+        : <button type="button" className={btnSecondary} onClick={() => dispatch({ type: 'renew' })}>Renew my 12-week plan</button>}
       {(state.nextBooked || state.renewed) && <LinkButton to="/customer/account" secondary>See my plan summary</LinkButton>}
     </div>
   );

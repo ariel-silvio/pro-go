@@ -11,10 +11,9 @@ export interface Plan { id: PlanId; name: string; visits: number; priceAED: numb
 export interface PriceVariant { id: VariantId; essential: number; signature: number; }
 export interface Slot { id: string; date: string; label: string; time: string; }
 
+// One price, as on the board and in the film: AED 1,000 for the 12-week Colour Plan (2 visits, about AED 500 each).
 export const priceVariants: PriceVariant[] = [
-  { id: 'v1', essential: 450, signature: 600 },
-  { id: 'v2', essential: 550, signature: 700 },
-  { id: 'v3', essential: 650, signature: 800 },
+  { id: 'v1', essential: 500, signature: 500 },
 ];
 
 export const scenarios: Record<Scenario, { label: string; delta: Omit<Scan, 'takenAt'> }> = {
@@ -49,10 +48,8 @@ export const metrics: { key: MetricKey; label: string; line: string }[] = [
 
 export function plansFor(v: PriceVariant): Plan[] {
   return [
-    { id: 'essential', name: 'Essential', visits: 2, priceAED: v.essential,
-      includes: ['Colour or roots touch-up', 'Hair treatment', 'Before-and-after scan', 'Colour-care kit between visits'] },
-    { id: 'signature', name: 'Signature', visits: 2, priceAED: v.signature,
-      includes: ['Balayage or highlights touch-up', 'Hair treatment', 'Before-and-after scan', 'Colour-care kit between visits'] },
+    { id: 'essential', name: 'Colour Plan', visits: 2, priceAED: v.essential,
+      includes: ['Colour, roots or balayage touch-up', 'Hair treatment', 'Before-and-after scan', 'Colour-care kit between visits'] },
   ];
 }
 
@@ -119,8 +116,8 @@ export function aiNotes(scan: Scan, cycleWeeks = customer.cycleWeeks): string[] 
 
 // Dana's day. Layla's card reads live demo state; the other two are fixed.
 export const todaysVisits = [
-  { id: 'v-hala', time: '10:00', customer: 'Hala', area: 'Downtown Dubai', service: 'Essential: roots touch-up + treatment', scan: 64, note: 'Prefers ammonia-free colour.' },
-  { id: 'v-sara', time: '14:00', customer: 'Sara', area: 'Business Bay', service: 'Signature: balayage touch-up + treatment', scan: 71, note: 'Second visit of her plan.' },
+  { id: 'v-hala', time: '10:00', customer: 'Hala', area: 'Downtown Dubai', service: 'Colour Plan: roots touch-up + treatment', scan: 64, note: 'Prefers ammonia-free colour.' },
+  { id: 'v-sara', time: '14:00', customer: 'Sara', area: 'Business Bay', service: 'Colour Plan: balayage touch-up + treatment', scan: 71, note: 'Second visit of her plan.' },
   { id: 'v-maya', time: '18:00', customer: 'Layla', area: 'Business Bay', service: '', scan: firstScan.index, note: 'First visit. Low moisture.' },
 ];
 
@@ -155,13 +152,13 @@ export const kpis: Kpi[] = [
   { id: 'subs', name: 'Active care subscribers', target: '300 in 2027', later: '25k in 2030 · 1m in 2035',
     definition: 'Customers with an active product subscription linked to a certified professional.', sim: '212', simOnTrack: false },
   { id: 'repeat', name: 'Repeat-visit rate', target: '40% pass line, 2027 pilot', later: '60% in 2030 · 70% in 2035',
-    definition: 'Share of customers who book a second at-home PRO•GO visit within 90 days, instead of going back to the salon chair.', sim: '43%', simOnTrack: true },
+    definition: 'Share of customers who renew and book a visit on a second plan within 90 days. The week-10 visit inside the plan does not count.', sim: '43%', simOnTrack: true },
   { id: 'margin', name: 'Margin per visit', target: 'Positive by Q4 2027', later: 'Checked at the Q4 2027 review',
-    definition: 'Visit price minus pay to the partner salon, travel and products.', sim: 'AED +125', simOnTrack: true },
+    definition: 'Visit price minus the partner salon’s 70% and the operator fee.', sim: 'AED +60', simOnTrack: true },
   { id: 'score', name: 'Hair score change', target: '+5 points or more in 12 weeks', later: 'Tracked every week in the pilot',
     definition: 'Average change in the Hair Health Index from the first scan to the week-12 scan at home.', sim: '+7', simOnTrack: true },
-  { id: 'retention', name: '90-day subscription retention', target: '60% or more by end 2028', later: '',
-    definition: 'Share of subscribers who renew their 90-day plan.', sim: '58%', simOnTrack: false },
+  { id: 'retention', name: '12-week plan renewal', target: '60% or more by end 2028', later: '',
+    definition: 'Share of subscribers who renew their 12-week plan.', sim: '58%', simOnTrack: false },
   { id: 'newsalon', name: 'New-to-salon customers', target: '30% of PRO•GO clients', later: '2028 review',
     definition: 'PRO•GO clients who were not clients of the partner salon before.', sim: '4%', simOnTrack: false },
   { id: 'uplift', name: 'Partner salon income uplift', target: '+10% per partner salon by 2030', later: '',
@@ -169,20 +166,15 @@ export const kpis: Kpi[] = [
 ];
 
 // Margin per visit calculator defaults (Team D estimates, LOW confidence).
-export const calcDefaults = { price: 500, salonPay: 230, travel: 60, products: 85, visitsPerDay: 2.5 };
+// Option A (70/30): the salon keeps 70% and covers colourist time, travel and products; the operator fee is about EUR 20 (AED 84) per visit.
+export const calcDefaults = { price: 500, salonPay: 350, travel: 84, products: 0, visitsPerDay: 2.5 };
 
-// Appendix B: where the first EUR 3m goes (Team D assumptions, LOW). EUR thousands.
+// Where the EUR 3m 2027 tranche goes (Team D, approved 24 Nov; same split as the Miro board). EUR thousands.
 export const firstThreeMillion = [
-  { line: 'PRO•GO venture team (about 5 people, 12 months)', k: 700 },
-  { line: 'Customer acquisition (resident events, concierge, launch offers)', k: 400 },
-  { line: 'Contingency (about 13%)', k: 350 },
-  { line: 'Prep for the 2028 build (design, discovery, vendors)', k: 300 },
-  { line: 'Partner salon onboarding and minimum-income floor', k: 250 },
-  { line: 'Legal, permits, insurance, data protection, claims review', k: 200 },
-  { line: 'Quality and safety (dermatologist advisor, mystery visits)', k: 150 },
-  { line: 'Research and measurement', k: 150 },
-  { line: 'Products and samples', k: 150 },
-  { line: 'Professional training, certification, scan kits', k: 120 },
-  { line: 'Manual-MVP tools (chat booking, CRM, payments, dashboard)', k: 120 },
-  { line: 'Visit delivery (about 1,800 visits at about EUR 60)', k: 110 },
+  { line: 'PRO•GO venture team (about 9 to 12 months)', k: 900 },
+  { line: 'Scan and manual-MVP tools (chat booking, CRM, payments, dashboard)', k: 400 },
+  { line: 'Legal, permits, insurance, data protection', k: 200 },
+  { line: 'Direct pilot: EUR 30k test, salon onboarding, training, booking set-up', k: 150 },
+  { line: 'First clients (salon-led marketing, launch offers)', k: 150 },
+  { line: 'Held back until the Q4 2027 review', k: 1200 },
 ];

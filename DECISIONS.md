@@ -96,3 +96,12 @@ Defaults picked where the handoff was ambiguous or not possible in this environm
 | # | Decision | Why |
 |---|---|---|
 | V-2 | **Open bug, not fixed:** S7 shows the re-scan dated "After · 9 Jun" and the button "Book my next visit · Wed 9 Jun", the same day. The next visit should be about 8 weeks after the second one. For the video, the button is hidden in the recording (`video/scripts/film_prototype.cjs`), not in the app. | Found while filming p4. Fix the next-visit date in `S7After.tsx` / `mock.ts` when the prototype is next touched. |
+
+## V-2 · 24 Nov 2026 · Prototype aligned with the final Miro board and the film
+
+| # | Decision | Why |
+|---|---|---|
+| V-2 | One plan, one price: the **PRO•GO Colour Plan, AED 1,000 per 12-week plan** (2 home visits, about AED 500 each). The three price variants (AED 900–1,600 per 90-day plan) and the Essential / Signature split are removed. "90-day plan" becomes "12-week plan" everywhere. | The film ("about 1,000 dirhams for 12 weeks") and the board (M3–M5, option A) use one price. |
+| V-3 | Salon share default **70%** (option A, 70/30). The CEO margin calculator now reads: price AED 500 per visit, salon share AED 350 (covers colourist time, travel and products), operator fee about AED 84 (€20), so L'Oréal keeps about AED 66 (€16) per visit, about €31 per plan. Tour step: break-even about AED 435. | Same numbers as the board (M3 value, M4 deal). |
+| V-4 | "Where the first EUR 3m goes" follows the split approved by Nacho on 24 Nov: team 900k, scan and tools 400k, legal and permits 200k, direct pilot 150k, first clients 150k, **1,200k held back** until the Q4 2027 review. | Board M3 and M4 CEO card 1. |
+| V-5 | Repeat-visit KPI defined as renewal: a visit on a second plan within 90 days; the week-10 visit inside the plan does not count. | Board decision, 24 Nov. |

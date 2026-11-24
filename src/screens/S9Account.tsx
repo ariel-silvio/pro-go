@@ -24,7 +24,7 @@ export default function S9Account() {
           <span className="font-serif text-2xl">{plan.name}</span>
           <span className="t-source font-medium uppercase tracking-[0.1em] text-positive">Active</span>
         </div>
-        <p className="t-card-title mt-2">{aed(planPrice)} <span className="font-normal text-muted">per 90-day plan</span></p>
+        <p className="t-card-title mt-2">{aed(planPrice)} <span className="font-normal text-muted">per 12-week plan</span></p>
         {CONFIG.SHOW_EUR && <p className="t-source text-muted">about {eur(planPrice)} · {plan.visits} home visits included</p>}
       </Card>
 
@@ -47,7 +47,7 @@ export default function S9Account() {
           <RefreshCw size={18} className="mt-0.5 shrink-0 text-gold-text" aria-hidden />
           <div>
             <p className="t-card-title">Renewal</p>
-            <p className="t-card-body">{state.renewed ? 'Renewal noted for' : 'Plan renews on'} 13 Jul 2027 (90 days after your first visit). Cancel any time before.</p>
+            <p className="t-card-body">{state.renewed ? 'Renewal noted for' : 'Plan renews on'} 7 Jul 2027 (12 weeks after your first visit). Cancel any time before.</p>
           </div>
         </div>
       </div>
