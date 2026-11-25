@@ -8,7 +8,6 @@ const inputs: { key: CalcKey; label: string; min: number; max: number; step: num
   { key: 'price', label: 'Price per visit', min: 350, max: 700, step: 10, unit: 'aed' },
   { key: 'salonPay', label: 'Partner salon share (colourist time, travel and products)', min: 200, max: 450, step: 5, unit: 'aed' },
   { key: 'travel', label: 'Operator fee (booking, payment, insurance, permits)', min: 0, max: 150, step: 2, unit: 'aed' },
-  { key: 'products', label: 'Other L’Oréal costs per visit', min: 0, max: 200, step: 5, unit: 'aed' },
   { key: 'visitsPerDay', label: 'Visits per day per colourist', min: 1.5, max: 4, step: 0.5, unit: 'n' },
 ];
 
