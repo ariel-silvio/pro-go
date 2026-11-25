@@ -37,7 +37,7 @@ export const customerScreens: ScreenMeta[] = [
     tests: 'Customers stay when a result is flat, if the salon owns the fix.' },
   { id: 'S9', path: '/customer/account', title: 'Account and plan summary',
     seeing: 'Her active plan, next visit, colour-care kit and renewal date in one place.',
-    tests: 'A plan that renews every 90 days feels clear and easy to keep.' },
+    tests: 'A plan that renews every 12 weeks feels clear and easy to keep.' },
 ];
 
 export const otherScreens: ScreenMeta[] = [

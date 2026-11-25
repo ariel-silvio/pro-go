@@ -26,7 +26,7 @@ export default function ColouristHome() {
       <ul className="flex flex-col gap-3">
         {todaysVisits.map((v) => {
           const isMaya = v.id === 'v-maya';
-          const service = isMaya ? `${mayaPlan.name}: ${mayaPlan.includes[0].toLowerCase()} + treatment` : v.service;
+          const service = isMaya ? `${mayaPlan.name}: colour + treatment` : v.service;
           const done = state.stepsDone[v.id] ?? 0;
           const patchOk = isMaya ? !!state.checklist.patch : true;
           return (
